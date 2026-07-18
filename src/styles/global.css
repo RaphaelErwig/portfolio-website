@@ -159,6 +159,17 @@
         background: rgba(255, 255, 255, 0.04);
       }
 
+      .button-linkedin {
+        color: #ffffff;
+        background: #0A66C2;
+       border-color: #0A66C2;
+      }
+
+      .button-linkedin:hover {
+        background: #004182;
+       border-color: #004182;
+      }
+
       section {
         padding: 95px 0;
       }
