@@ -1,0 +1,137 @@
+---
+interface Project {
+  number: string;
+  category: string;
+  title: string;
+  description: string;
+  highlights: string[];
+}
+
+interface Strength {
+  title: string;
+  text: string;
+}
+
+interface Experience {
+  role: string;
+  company: string;
+  area: string;
+  text: string;
+}
+
+interface Props {
+  projects: Project[];
+  strengths: Strength[];
+  skills: string[];
+  experience: Experience[];
+  content: any;
+}
+
+const { projects, strengths, skills, experience, content } = Astro.props;
+---
+
+<main>
+  <section class="hero container">
+    <div class="hero-content">
+      <p class="eyebrow">{content.hero.eyebrow}</p>
+      <h1>
+        {content.hero.title}
+        <span class="highlight">{content.hero.highlight}</span>
+      </h1>
+      <p class="intro">{content.hero.intro}</p>
+      <div class="buttons">
+        <a class="button button-primary" href="#projects">{content.hero.primary}</a>
+        <a class="button button-secondary" href="#about">{content.hero.secondary}</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="container">
+    <div class="section-heading">
+      <h2>{content.about.title}</h2>
+      <p>{content.about.lead}</p>
+    </div>
+    <div class="about-grid">
+      <div>
+        {content.about.paragraphs.map((paragraph: string) => <p class="about-text">{paragraph}</p>)}
+      </div>
+      <aside class="quote-card">
+        <blockquote>{content.about.quote}</blockquote>
+        <p>{content.about.quoteText}</p>
+      </aside>
+    </div>
+  </section>
+
+  <section id="approach" class="container">
+    <div class="section-heading">
+      <h2>{content.approach.title}</h2>
+      <p>{content.approach.lead}</p>
+    </div>
+    <div class="strength-grid">
+      {strengths.map((strength) => (
+        <article class="strength-card">
+          <h3>{strength.title}</h3>
+          <p>{strength.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section id="projects" class="container">
+    <div class="section-heading">
+      <h2>{content.projects.title}</h2>
+      <p>{content.projects.lead}</p>
+    </div>
+    <div class="project-grid">
+      {projects.map((project) => (
+        <article class="project-card">
+          <div class="project-top">
+            <span class="project-number">{project.number}</span>
+            <span class="project-category">{project.category}</span>
+          </div>
+          <h3>{project.title}</h3>
+          <p>{project.description}</p>
+          <ul class="highlight-list">
+            {project.highlights.map((highlight) => <li>{highlight}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section id="experience" class="container">
+    <div class="section-heading">
+      <h2>{content.experience.title}</h2>
+      <p>{content.experience.lead}</p>
+    </div>
+    <div class="experience-list">
+      {experience.map((item) => (
+        <article class="experience-card">
+          <div>
+            <div class="experience-role">{item.role}</div>
+            <div>{item.area}</div>
+          </div>
+          <div class="experience-company">{item.company}</div>
+          <p class="experience-description">{item.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="section-heading">
+      <h2>{content.skills.title}</h2>
+      <p>{content.skills.lead}</p>
+    </div>
+    <div class="skills">
+      {skills.map((skill) => <span class="skill">{skill}</span>)}
+    </div>
+  </section>
+
+  <section id="contact" class="contact container">
+    <p class="eyebrow">{content.contact.eyebrow}</p>
+    <h2>{content.contact.title}</h2>
+    <p>{content.contact.text}</p>
+    <a class="button button-primary" href="mailto:Raphael.Erwig@icloud.com">{content.contact.button}</a>
+  </section>
+</main>

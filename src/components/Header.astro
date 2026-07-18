@@ -1,0 +1,34 @@
+---
+interface Props {
+  lang: 'en' | 'de';
+  labels: {
+    about: string;
+    approach: string;
+    projects: string;
+    experience: string;
+    contact: string;
+  };
+}
+
+const { lang, labels } = Astro.props;
+const homeHref = lang === 'de' ? '/de/' : '/';
+---
+
+<header>
+  <nav class="container">
+    <a class="logo" href={homeHref}>Raphael Erwig</a>
+
+    <div class="nav-links">
+      <a href="#about">{labels.about}</a>
+      <a href="#approach">{labels.approach}</a>
+      <a href="#projects">{labels.projects}</a>
+      <a href="#experience">{labels.experience}</a>
+      <a href="#contact">{labels.contact}</a>
+
+      <div class="language-switch">
+        <a class:list={[lang === 'en' && 'active']} href="/">EN</a>
+        <a class:list={[lang === 'de' && 'active']} href="/de/">DE</a>
+      </div>
+    </div>
+  </nav>
+</header>
