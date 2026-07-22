@@ -3,32 +3,84 @@ interface Props {
   lang: 'en' | 'de';
   labels: {
     about: string;
-    approach: string;
     projects: string;
     experience: string;
+    skills: string;
     contact: string;
+    menu: string;
+    navigation: string;
+  };
+  languageHrefs?: {
+    en: string;
+    de: string;
   };
 }
 
-const { lang, labels } = Astro.props;
+const { lang, labels, languageHrefs = { en: '/', de: '/de/' } } = Astro.props;
 const homeHref = lang === 'de' ? '/de/' : '/';
+const sectionHref = (id: string) => `${homeHref}#${id}`;
 ---
 
-<header>
-  <nav class="container">
+<header data-site-header>
+  <nav class="container" aria-label={labels.navigation}>
     <a class="logo" href={homeHref}>Raphael Erwig</a>
 
-    <div class="nav-links">
-      <a href="#about">{labels.about}</a>
-      <a href="#approach">{labels.approach}</a>
-      <a href="#projects">{labels.projects}</a>
-      <a href="#experience">{labels.experience}</a>
-      <a href="#contact">{labels.contact}</a>
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="primary-navigation"
+      aria-label={labels.menu}
+      data-menu-toggle
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
 
-      <div class="language-switch">
-        <a class:list={[lang === 'en' && 'active']} href="/">EN</a>
-        <a class:list={[lang === 'de' && 'active']} href="/de/">DE</a>
+    <div class="nav-links" id="primary-navigation" data-nav-links>
+      <a href={sectionHref('projects')}>{labels.projects}</a>
+      <a href={sectionHref('experience')}>{labels.experience}</a>
+      <a href={sectionHref('about')}>{labels.about}</a>
+      <a href={sectionHref('skills')}>{labels.skills}</a>
+      <a href={sectionHref('contact')}>{labels.contact}</a>
+
+      <div class="language-switch" aria-label="Language">
+        <a class:list={[lang === 'en' && 'active']} aria-current={lang === 'en' ? 'page' : undefined} href={languageHrefs.en}>EN</a>
+        <a class:list={[lang === 'de' && 'active']} aria-current={lang === 'de' ? 'page' : undefined} href={languageHrefs.de}>DE</a>
       </div>
     </div>
   </nav>
 </header>
+
+<script>
+  const siteHeader = document.querySelector('[data-site-header]');
+  const menuToggle = siteHeader?.querySelector('[data-menu-toggle]');
+  const navigation = siteHeader?.querySelector('[data-nav-links]');
+
+  if (menuToggle instanceof HTMLButtonElement && navigation instanceof HTMLElement) {
+    const setOpen = (open: boolean) => {
+      menuToggle.setAttribute('aria-expanded', String(open));
+      navigation.dataset.open = String(open);
+    };
+
+    menuToggle.addEventListener('click', () => {
+      setOpen(menuToggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    navigation.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => setOpen(false));
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+        menuToggle.focus();
+      }
+    });
+
+    window.matchMedia('(min-width: 761px)').addEventListener('change', (event) => {
+      if (event.matches) setOpen(false);
+    });
+  }
+</script>

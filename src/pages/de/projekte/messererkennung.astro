@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import ProjectDetail from '../../../components/ProjectDetail.astro';
+import Footer from '../../../components/Footer.astro';
+
+const nav = {
+  about: 'Über mich',
+  projects: 'Projekte',
+  experience: 'Erfahrung',
+  skills: 'Fähigkeiten',
+  contact: 'Kontakt',
+  menu: 'Navigation öffnen',
+  navigation: 'Hauptnavigation',
+};
+
+const facts = [
+  { label: 'Dauer', value: '5 Monate' },
+  { label: 'Modell', value: 'YOLOv11 · Ultralytics' },
+  { label: 'Programmiersprache', value: 'Python' },
+  { label: 'Ausführung', value: 'Desktop · Laptop · NVIDIA Jetson' },
+];
+
+const sections = [
+  {
+    title: 'Zielsetzung',
+    paragraphs: [
+      'Das Projekt untersuchte, ob ein eigenes Objekterkennungsmodell Messer in unterschiedlichen Umgebungen und auf verschiedenen Hardwareplattformen in Echtzeit erkennen kann. Im Mittelpunkt stand der vollständige Ablauf von der Datenerstellung bis zur Ausführung.',
+    ],
+  },
+  {
+    title: 'Datensatz und Training',
+    paragraphs: [
+      'Ich erstellte und labelte einen eigenen Datensatz, konfigurierte die Trainingspipeline für YOLOv11 und trainierte das Modell auf einem Desktop-PC. Datensatz und Trainingseinstellungen wurden anhand des Modellverhaltens in realen Szenen schrittweise verbessert.',
+    ],
+    bullets: [
+      'Sammlung und manuelles Labeln eines eigenen Datensatzes',
+      'Training mit YOLOv11 und Ultralytics',
+      'Desktop-PC für das Modelltraining',
+      'Echtzeit-Inferenz auf unterschiedlichen Zielgeräten',
+    ],
+  },
+  {
+    title: 'False Positives als Datenproblem',
+    paragraphs: [
+      'Die erste Trainingsversion enthielt nicht genügend Negativbeispiele. Dadurch erzeugte das Modell auch in Szenen ohne Messer False Positives. Statt dies nur als Modellfehler zu betrachten, führte ich das Verhalten auf die Zusammensetzung des Datensatzes zurück und überarbeitete die Trainingsdaten entsprechend.',
+    ],
+    bullets: [
+      'Systematische Prüfung falsch positiver Erkennungen',
+      'Ergänzung relevanter Negativbeispiele',
+      'Wiederholtes Labeln, Trainieren und Validieren',
+    ],
+  },
+  {
+    title: 'Ausführung',
+    paragraphs: [
+      'Der abgeschlossene Prototyp kann auf einem Laptop, Desktop-PC oder NVIDIA Jetson ausgeführt werden. Die Inferenzgeschwindigkeit hängt von Gerät, Modellkonfiguration und Eingabeauflösung ab. Leistungswerte werden deshalb erst nach einem einheitlichen Benchmark veröffentlicht.',
+    ],
+  },
+  {
+    title: 'Ergebnis und Grenzen',
+    paragraphs: [
+      'Das Projekt führte zu einem funktionsfähigen Echtzeit-Prototyp und einer aufgezeichneten Videodemonstration. Es handelt sich um ein experimentelles Computer-Vision-System und nicht um ein zertifiziertes Sicherheitsprodukt. Precision, Recall, mAP und gerätespezifische FPS werden ergänzt, sobald die vorhandenen Ergebnisse geprüft und unter vergleichbaren Bedingungen gemessen wurden.',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  lang="de"
+  title="Echtzeit-Messererkennung | Raphael Erwig"
+  description="Projektbericht zu Datensatzerstellung, YOLOv11-Training, False-Positive-Analyse und Echtzeit-Ausführung eines Computer-Vision-Prototyps."
+  canonicalPath="/de/projekte/messererkennung/"
+  enPath="/projects/knife-detection/"
+  dePath="/de/projekte/messererkennung/"
+>
+  <Header
+    lang="de"
+    labels={nav}
+    languageHrefs={{ en: '/projects/knife-detection/', de: '/de/projekte/messererkennung/' }}
+  />
+  <ProjectDetail
+    backHref="/de/#projects"
+    backLabel="Zurück zu den Projekten"
+    eyebrow="KI · Computer Vision · Python"
+    title="Echtzeit-Messererkennung mit einem eigenen YOLOv11-Modell"
+    lead="Ein fünfmonatiges Computer-Vision-Projekt von der Datensatzerstellung über das Training bis zur False-Positive-Analyse und Ausführung auf unterschiedlichen Geräten."
+    status="Abgeschlossener funktionsfähiger Prototyp"
+    {facts}
+    {sections}
+    nextLabel="Nächstes Projekt"
+    nextHref="/de/projekte/high-speed-drohne/"
+    nextTitle="Eigene High-Speed-Drohne"
+  />
+  <Footer />
+</BaseLayout>

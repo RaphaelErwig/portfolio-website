@@ -6,132 +6,165 @@ import Footer from '../../components/Footer.astro';
 
 const projects = [
   {
-    number: "01",
-    category: "Hardware · CAD · FPV",
-    title: "Eigene High-Speed-FPV-Drohne",
+    number: '01',
+    category: 'Hardware · CAD · Additive Fertigung',
+    title: 'Eigene High-Speed-Drohne',
     description:
-      "Konstruktion und Entwicklung einer eigenen High-Speed-FPV-Drohne – von der CAD-Konstruktion und additiven Fertigung bis zur Komponentenauswahl, Verkabelung und vollständigen Systemintegration.",
+      'Ein flugfähiger, in Onshape konstruierter und aus PA-CF gefertigter Prototyp. Die Erkenntnisse aus dem ersten Aufbau fließen in eine überarbeitete Version mit verbesserter Kühlung, Materialwahl und Gewichtsverteilung ein.',
     highlights: [
-      "Vollständige CAD-Konstruktion",
-      "Eigener 3D-gedruckter Flugkörper",
-      "6S-Antriebssystem",
-      "Integration der Elektronik",
-      "Wärmemanagement",
-      "Optimierung von Komponenten und Gewicht",
+      'Eigenes Gehäuse vollständig in Onshape konstruiert',
+      'PA-CF-Prototyp selbst gefertigt',
+      'Analyse von Vibrationen und Wärmeentwicklung',
     ],
+    href: '/de/projekte/high-speed-drohne/',
+    duration: '3 Monate',
+    status: 'Version 2 in Entwicklung',
   },
   {
-    number: "02",
-    category: "KI · Computer Vision · Python",
-    title: "Echtzeit-Messererkennung",
+    number: '02',
+    category: 'KI · Computer Vision · Python',
+    title: 'Echtzeit-Messererkennung',
     description:
-      "Entwicklung eines echtzeitfähigen Computer-Vision-Systems zur Erkennung von Messern in unterschiedlichen Umgebungen mit einem eigenen Datensatz und YOLOv11.",
+      'Ein abgeschlossener Computer-Vision-Prototyp mit eigenem Datensatz und YOLOv11, iterativer Analyse von False Positives und Ausführung auf unterschiedlichen Hardwareplattformen.',
     highlights: [
-      "Mehr als 2.000 gelabelte Bilder",
-      "Aufbau eines eigenen Datensatzes",
-      "YOLOv11 und Ultralytics",
-      "Training auf einer NVIDIA Tesla T4",
-      "Echtzeit-Inferenz",
-      "Iterative Analyse von False Positives",
+      'Eigener Datensatz und manuelles Labeln',
+      'Training und Evaluation mit YOLOv11',
+      'Einsatz auf Desktop, Laptop und NVIDIA Jetson',
     ],
+    href: '/de/projekte/messererkennung/',
+    duration: '5 Monate',
+    status: 'Abgeschlossener Prototyp',
   },
 ];
 
 const strengths = [
   {
-    title: "Komplette Systeme",
-    text: "Ich entwickle gerne vollständige Lösungen, statt mich nur auf eine einzelne Komponente zu konzentrieren – von der ersten Idee bis zum funktionsfähigen Prototyp.",
+    title: 'Systeme ganzheitlich entwickeln',
+    text: 'Ich verbinde Mechanik, Elektronik und Software, statt die einzelnen Disziplinen isoliert zu betrachten.',
   },
   {
-    title: "Schnelles Lernen",
-    text: "Erfordert ein Projekt neue Fähigkeiten, eigne ich mir die notwendigen Werkzeuge selbstständig an und wende sie direkt auf eine reale technische Herausforderung an.",
+    title: 'Testen und iterieren',
+    text: 'Prototypen werden praktisch geprüft, Schwächen analysiert und die nächste Version auf Basis der Ergebnisse entwickelt.',
   },
   {
-    title: "Hohe Eigeninitiative",
-    text: "Ich investiere eigene Zeit und Ressourcen in anspruchsvolle technische Projekte, die über die Inhalte meines Studiums hinausgehen.",
-  },
-  {
-    title: "Wirtschaftliches Denken",
-    text: "Ich bewerte technische Entscheidungen nicht nur nach ihrer Leistung, sondern auch anhand von Kosten, Effizienz, Machbarkeit und praktischem Nutzen.",
+    title: 'Zielkonflikte abwägen',
+    text: 'Leistung, Kosten, Fertigbarkeit und praktischer Nutzen gehören für mich zur selben technischen Entscheidung.',
   },
 ];
 
-const skills = [
-  "Elektrotechnik",
-  "CAD-Konstruktion",
-  "3D-Druck",
-  "Hardware-Integration",
-  "Computer Vision",
-  "YOLOv11",
-  "Python",
-  "Raspberry Pi",
-  "ESP32",
-  "Prototyping",
-  "Technische Analyse",
-  "Wirtschaftliche Bewertung",
+const skillGroups = [
+  {
+    title: 'Hardware und Prototyping',
+    skills: ['Elektrotechnik', 'Onshape', 'CAD-Konstruktion', '3D-Druck', 'Hardware-Integration'],
+  },
+  {
+    title: 'Software und Embedded',
+    skills: ['C++', 'Python', 'ESP32', 'Raspberry Pi', 'e² studio', 'Renesas FSP'],
+  },
+  {
+    title: 'Computer Vision',
+    skills: ['YOLOv11', 'Ultralytics', 'Datensatzerstellung', 'Echtzeit-Inferenz'],
+  },
+  {
+    title: 'Wirtschaft und Automatisierung',
+    skills: ['Microsoft Excel', 'SharePoint', 'Power Automate', 'Wirtschaftliche Bewertung'],
+  },
 ];
 
 const experience = [
   {
-    role: "Werkstudent",
-    company: "Renesas Electronics",
-    area: "High Performance Computing",
-    text: "Praktische Erfahrung im High-Performance-Computing-Umfeld eines internationalen Halbleiterunternehmens.",
+    role: 'Werkstudent – HPC Engineering Support',
+    company: 'Renesas Electronics',
+    area: 'High Performance Computing · Düsseldorf',
+    period: 'Seit 01/2026',
+    text: 'Technische Unterstützung der HPC-Abteilung in den Bereichen interne Automatisierung, Produktprüfung, Demos und Partnerlieferungen.',
+    highlights: [
+      'Entwicklung eines internen Workflows mit SharePoint-Formular und Power Automate',
+      'Funktionsprüfung von Produkten, internen Entwicklungsprojekten und technischen Demos',
+      'Vorbereitung, Prüfung und Versand von Produkten an Partner und andere Renesas-Standorte',
+    ],
+    tools: ['C++', 'e² studio', 'Renesas FSP', 'VS Code', 'SharePoint', 'Power Automate'],
   },
   {
-    role: "Praktikum",
-    company: "Immobilienunternehmen",
-    area: "Controlling",
-    text: "Erfahrung mit wirtschaftlichen Analysen, Controlling-Prozessen und der Bewertung betrieblicher Informationen.",
-  },
-  {
-    role: "Praktikum",
-    company: "Bank",
-    area: "Finanzdienstleistungen",
-    text: "Erste berufliche Erfahrungen in einem strukturierten finanzwirtschaftlichen und unternehmerischen Umfeld.",
+    role: 'Praktikum – Finanz- und Konzerncontrolling',
+    company: 'Immobilien Management Essen GmbH (IME)',
+    area: 'Finanz- und Konzerncontrolling · Essen',
+    period: '02.–06.09.2024',
+    text: 'Berufsorientierungspraktikum mit praktischer Mitarbeit bei Finanzanalyse, Darlehenskalkulation und Liquiditätsplanung.',
+    highlights: [
+      'Aufbau einer Analyse- und Auswertungstabelle in Excel für ein Mengengerüst',
+      'Erstellung eines Annuitätenmodells zur Kalkulation von Darlehen',
+      'Aktive Teilnahme an Gesprächen zur Liquiditätsplanung',
+    ],
+    tools: ['Microsoft Excel', 'Finanzanalyse', 'Darlehenskalkulation'],
   },
 ];
 
 const content = {
-  nav: { about: "Über mich", approach: "Arbeitsweise", projects: "Projekte", experience: "Erfahrung", contact: "Kontakt" },
+  nav: {
+    about: 'Über mich',
+    projects: 'Projekte',
+    experience: 'Erfahrung',
+    skills: 'Fähigkeiten',
+    contact: 'Kontakt',
+    menu: 'Navigation öffnen',
+    navigation: 'Hauptnavigation',
+  },
   hero: {
-    eyebrow: "Engineering · Technologie · Wirtschaftliches Denken",
-    title: "Entwicklung kompletter Systeme mit",
-    highlight: "technischer Präzision und wirtschaftlichem Denken.",
-    intro: "Ich bin Raphael Erwig und studiere Wirtschaftsingenieurwesen mit Schwerpunkt Elektrotechnik. Ich entwickle technische Lösungen von der ersten Idee bis zum funktionsfähigen Prototyp und berücksichtige dabei Leistung, Machbarkeit, Kosten und praktischen Nutzen.",
-    primary: "Meine Projekte",
-    secondary: "Über mich",
+    eyebrow: 'Elektrotechnik · Embedded Systems · Computer Vision',
+    title: 'Komplette technische Systeme.',
+    highlight: 'Präzise entwickelt. Wirtschaftlich durchdacht.',
+    intro:
+      'Ich bin Raphael Erwig und studiere Wirtschaftsingenieurwesen mit Schwerpunkt Elektrotechnik. Ich entwickle technische Ideen zu funktionierenden Prototypen und bewerte sie anhand von Leistung, Machbarkeit und praktischem Nutzen.',
+    primary: 'Meine Projekte',
+    secondary: 'Berufliche Erfahrung',
+  },
+  projects: {
+    kicker: 'Ausgewählte Arbeiten',
+    title: 'Engineering in der Praxis',
+    lead: 'Zwei eigenständige Projekte zeigen, wie ich Hardware, Software, Experimente und nachvollziehbare Iteration miteinander verbinde.',
+    linkLabel: 'Projekt ansehen',
+  },
+  experience: {
+    kicker: 'Berufliche Erfahrung',
+    title: 'Technik und Wirtschaft',
+    lead: 'Praktische Erfahrung in der Halbleiterentwicklung, Prozessautomatisierung und im Finanzcontrolling.',
+    toolsLabel: 'Werkzeuge und Technologien',
   },
   about: {
-    title: "Über mich",
-    lead: "Technik fasziniert mich seit meiner Kindheit. Heute verbinde ich technische Entwicklung mit meinem Interesse an Wirtschaft, Zahlen und fundierten unternehmerischen Entscheidungen.",
+    kicker: 'Über mich',
+    title: 'Aus Neugier wurde Engineering',
+    lead: 'Ich verbinde Elektrotechnik, praktisches Prototyping und eine wirtschaftliche Perspektive auf technische Entscheidungen.',
     paragraphs: [
-      "Meine Begeisterung für Technik begann, als ich gemeinsam mit meinem Vater Verbrenner-RC-Autos aufgebaut und modifiziert habe. Aus dieser Neugier entwickelte sich mit der Zeit der Anspruch, immer komplexere Hard- und Softwareprojekte selbstständig umzusetzen.",
-      "Ich studiere Wirtschaftsingenieurwesen mit Schwerpunkt Elektrotechnik, weil erfolgreiche technische Entwicklung mehr als reines Ingenieurwissen erfordert. Technische Leistung, Kosten, Effizienz, Machbarkeit und wirtschaftlicher Nutzen entscheiden gemeinsam darüber, ob aus einer Idee eine erfolgreiche Lösung wird.",
-      "Aktuell befinde ich mich im vierten Semester. Besonders interessieren mich Hardwareentwicklung, Embedded Systems, Computer Vision, additive Fertigung und die Verbindung von Technik und Wirtschaft.",
+      'Meine Begeisterung für Technik begann, als ich gemeinsam mit meinem Vater Verbrenner-RC-Autos aufgebaut und modifiziert habe. Aus dieser frühen Neugier entwickelte sich der Anspruch, zunehmend komplexe Hard- und Softwaresysteme selbstständig umzusetzen.',
+      'Ich studiere Wirtschaftsingenieurwesen mit Schwerpunkt Elektrotechnik. Besonders interessieren mich Embedded Systems, Hardwareentwicklung, Computer Vision und additive Fertigung – vor allem dort, wo mehrere Disziplinen in einem zuverlässigen Gesamtsystem zusammenarbeiten müssen.',
     ],
-    quote: "„Ich warte nicht auf Projekte. Ich schaffe sie selbst.“",
-    quoteText: "Ich investiere regelmäßig eigene Zeit und Ressourcen in technische Projekte und eigne mir selbstständig die Fähigkeiten an, die notwendig sind, um eine Idee in ein funktionierendes System zu verwandeln.",
+    principlesTitle: 'So gehe ich technische Aufgaben an',
   },
-  approach: { title: "Meine Arbeitsweise", lead: "Meine Projekte verbinden technisches Verständnis, selbstständiges Lernen, Eigeninitiative und wirtschaftliche Bewertung." },
-  projects: { title: "Ausgewählte Projekte", lead: "Eigenständige Projekte, die Engineering, Experimentieren, Software, Hardware und systemisches Problemlösen miteinander verbinden." },
-  experience: { title: "Berufliche Erfahrung", lead: "Erfahrungen aus Technologie, Controlling und Finanzwirtschaft geben mir Einblicke in technische und wirtschaftliche Arbeitsumfelder." },
-  skills: { title: "Fähigkeiten und Interessen", lead: "Eine Kombination aus technischen Werkzeugen, praktischer Engineering-Erfahrung und Interesse an wirtschaftlicher Entscheidungsfindung." },
+  skills: {
+    kicker: 'Fähigkeiten',
+    title: 'Werkzeuge aus der Praxis',
+    lead: 'Nach Anwendungsbereichen geordnet und mit konkreten Projekten beziehungsweise Berufserfahrung verknüpft.',
+  },
   contact: {
-    eyebrow: "Kontakt",
-    title: "Lassen Sie uns etwas Wertvolles entwickeln.",
-    text: "Ich interessiere mich für Praktika, Werkstudentenstellen und anspruchsvolle Projekte an der Schnittstelle zwischen Engineering, Technologie und Wirtschaft.",
-    button: "E-Mail senden",
+    eyebrow: 'Kontakt',
+    title: 'Sie möchten ein reales technisches Problem lösen?',
+    text: 'Ich bin offen für anspruchsvolle Projekte und zukünftige Möglichkeiten an der Schnittstelle zwischen Engineering, Technologie und Wirtschaft.',
+    button: 'E-Mail senden',
+    linkedin: 'Auf LinkedIn vernetzen',
   },
 };
 ---
 
 <BaseLayout
   lang="de"
-  title="Raphael Erwig | Engineering Portfolio"
-  description="Engineering-Portfolio von Raphael Erwig, Student des Wirtschaftsingenieurwesens mit Schwerpunkt Elektrotechnik."
+  title="Raphael Erwig | Wirtschaftsingenieurwesen & Elektrotechnik"
+  description="Engineering-Portfolio von Raphael Erwig mit Projekten aus Embedded Systems, Computer Vision, Hardwareentwicklung und Prototyping."
+  canonicalPath="/de/"
+  enPath="/"
+  dePath="/de/"
 >
   <Header lang="de" labels={content.nav} />
-  <HomeContent {projects} {strengths} {skills} {experience} {content} />
+  <HomeContent {projects} {strengths} {skillGroups} {experience} {content} />
   <Footer />
 </BaseLayout>

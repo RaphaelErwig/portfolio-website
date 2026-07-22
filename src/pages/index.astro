@@ -6,132 +6,165 @@ import Footer from '../components/Footer.astro';
 
 const projects = [
   {
-    number: "01",
-    category: "Hardware · CAD · FPV",
-    title: "Custom High-Speed FPV Drone",
+    number: '01',
+    category: 'Hardware · CAD · Additive Manufacturing',
+    title: 'Custom High-Speed Drone',
     description:
-      "Design and development of a custom high-speed FPV drone, including CAD construction, additive manufacturing, component selection, soldering and complete system integration.",
+      'A flight-capable prototype designed in Onshape and manufactured in PA-CF. Findings from the first build now inform a revised version with improved cooling, material choice and weight distribution.',
     highlights: [
-      "Complete CAD design",
-      "Custom 3D-printed airframe",
-      "6S power system",
-      "Electronic system integration",
-      "Thermal management",
-      "Component and weight optimization",
+      'Custom body designed in Onshape',
+      'PA-CF prototype manufactured in-house',
+      'Vibration and thermal analysis',
     ],
+    href: '/projects/high-speed-drone/',
+    duration: '3 months',
+    status: 'Revision 2 in development',
   },
   {
-    number: "02",
-    category: "AI · Computer Vision · Python",
-    title: "Real-Time Knife Detection",
+    number: '02',
+    category: 'AI · Computer Vision · Python',
+    title: 'Real-Time Knife Detection',
     description:
-      "A real-time computer vision system developed to detect knives in different environments using a custom dataset and YOLOv11.",
+      'A completed computer-vision prototype built around a custom dataset and YOLOv11, with iterative analysis of false positives and deployment across different hardware platforms.',
     highlights: [
-      "More than 2,000 labeled images",
-      "Custom dataset creation",
-      "YOLOv11 and Ultralytics",
-      "Training on an NVIDIA Tesla T4",
-      "Real-time inference",
-      "Iterative false-positive analysis",
+      'Custom dataset and manual labeling',
+      'YOLOv11 training and evaluation',
+      'Desktop, laptop and NVIDIA Jetson deployment',
     ],
+    href: '/projects/knife-detection/',
+    duration: '5 months',
+    status: 'Completed prototype',
   },
 ];
 
 const strengths = [
   {
-    title: "Complete Systems",
-    text: "I enjoy developing complete solutions instead of focusing on only one component—from the first concept to a functional prototype.",
+    title: 'End-to-end systems',
+    text: 'I connect mechanics, electronics and software instead of considering each discipline in isolation.',
   },
   {
-    title: "Rapid Learning",
-    text: "When a project requires new skills, I independently learn the necessary tools and apply them directly to a real technical challenge.",
+    title: 'Test and iterate',
+    text: 'Prototypes are validated in practice, weaknesses are analyzed and the next revision is based on evidence.',
   },
   {
-    title: "Personal Initiative",
-    text: "I invest my own time and resources into ambitious engineering projects beyond university coursework.",
-  },
-  {
-    title: "Economic Thinking",
-    text: "I evaluate technical decisions not only by performance, but also by cost, efficiency, feasibility and practical value.",
+    title: 'Engineering trade-offs',
+    text: 'Performance, cost, manufacturability and practical value are part of the same technical decision.',
   },
 ];
 
-const skills = [
-  "Electrical Engineering",
-  "CAD Design",
-  "3D Printing",
-  "Hardware Integration",
-  "Computer Vision",
-  "YOLOv11",
-  "Python",
-  "Raspberry Pi",
-  "ESP32",
-  "Prototyping",
-  "Technical Analysis",
-  "Economic Evaluation",
+const skillGroups = [
+  {
+    title: 'Hardware & prototyping',
+    skills: ['Electrical Engineering', 'Onshape', 'CAD Design', '3D Printing', 'Hardware Integration'],
+  },
+  {
+    title: 'Software & embedded',
+    skills: ['C++', 'Python', 'ESP32', 'Raspberry Pi', 'e² studio', 'Renesas FSP'],
+  },
+  {
+    title: 'Computer vision',
+    skills: ['YOLOv11', 'Ultralytics', 'Dataset Creation', 'Real-Time Inference'],
+  },
+  {
+    title: 'Business & automation',
+    skills: ['Microsoft Excel', 'SharePoint', 'Power Automate', 'Economic Evaluation'],
+  },
 ];
 
 const experience = [
   {
-    role: "Working Student",
-    company: "Renesas Electronics",
-    area: "High Performance Computing",
-    text: "Practical experience within the high-performance computing environment of an international semiconductor company.",
+    role: 'Working Student – HPC Engineering Support',
+    company: 'Renesas Electronics',
+    area: 'High Performance Computing · Düsseldorf',
+    period: 'Since Jan 2026',
+    text: 'Technical support for the HPC team across internal automation, product validation, demonstrations and partner deliveries.',
+    highlights: [
+      'Developed an internal workflow using a SharePoint form and Power Automate',
+      'Functionally tested products, internal development projects and technical demos',
+      'Prepared, verified and shipped products to partners and other Renesas offices',
+    ],
+    tools: ['C++', 'e² studio', 'Renesas FSP', 'VS Code', 'SharePoint', 'Power Automate'],
   },
   {
-    role: "Internship",
-    company: "Real Estate Company",
-    area: "Controlling",
-    text: "Experience with economic analysis, controlling processes and the evaluation of business information.",
-  },
-  {
-    role: "Internship",
-    company: "Bank",
-    area: "Financial Services",
-    text: "Initial professional experience in a structured financial and business environment.",
+    role: 'Intern – Finance & Group Controlling',
+    company: 'Immobilien Management Essen GmbH (IME)',
+    area: 'Finance & Group Controlling · Essen',
+    period: '02–06 Sep 2024',
+    text: 'Career-orientation internship with practical work in financial analysis, loan calculation and liquidity planning.',
+    highlights: [
+      'Built an Excel analysis and evaluation table for a quantity framework',
+      'Created an annuity model for loan calculations',
+      'Participated in liquidity-planning discussions',
+    ],
+    tools: ['Microsoft Excel', 'Financial Analysis', 'Loan Calculation'],
   },
 ];
 
 const content = {
-  nav: { about: "About", approach: "Approach", projects: "Projects", experience: "Experience", contact: "Contact" },
+  nav: {
+    about: 'About',
+    projects: 'Projects',
+    experience: 'Experience',
+    skills: 'Skills',
+    contact: 'Contact',
+    menu: 'Open navigation',
+    navigation: 'Main navigation',
+  },
   hero: {
-    eyebrow: "Engineering · Technology · Economic Thinking",
-    title: "Building complete systems with",
-    highlight: "technical precision and economic thinking.",
-    intro: "I am Raphael Erwig, an Industrial Engineering student specializing in Electrical Engineering. I develop technical solutions from the first concept to a functional prototype while considering performance, feasibility, cost and practical value.",
-    primary: "Explore my projects",
-    secondary: "About me",
+    eyebrow: 'Electrical Engineering · Embedded Systems · Computer Vision',
+    title: 'Complete technical systems.',
+    highlight: 'Precisely engineered. Economically sound.',
+    intro:
+      'I am Raphael Erwig, an Industrial Engineering student specializing in Electrical Engineering. I turn technical ideas into working prototypes and evaluate them through performance, feasibility and practical value.',
+    primary: 'Explore my projects',
+    secondary: 'View experience',
+  },
+  projects: {
+    kicker: 'Selected work',
+    title: 'Engineering in practice',
+    lead: 'Two independent projects show how I combine hardware, software, experimentation and evidence-based iteration.',
+    linkLabel: 'View case study',
+  },
+  experience: {
+    kicker: 'Professional experience',
+    title: 'Technology and business',
+    lead: 'Practical experience in semiconductor engineering support, workflow automation and financial controlling.',
+    toolsLabel: 'Tools and technologies',
   },
   about: {
-    title: "About me",
-    lead: "Engineering has fascinated me since childhood. Today, I combine technical development with an interest in business, numbers and economically sound decisions.",
+    kicker: 'About me',
+    title: 'Curiosity turned into engineering',
+    lead: 'I combine electrical engineering, hands-on prototyping and an economic perspective on technical decisions.',
     paragraphs: [
-      "My fascination for engineering began when I built and modified nitro-powered RC cars together with my father. Over time, this curiosity developed into the ambition to create increasingly complex hardware and software projects independently.",
-      "I study Industrial Engineering with a specialization in Electrical Engineering because successful technical development requires more than engineering knowledge alone. Technical performance, costs, efficiency, feasibility and business value all influence whether an idea becomes a successful solution.",
-      "I am currently in my fourth semester. I am particularly interested in hardware development, embedded systems, computer vision, additive manufacturing and the interaction between technology and economics.",
+      'My fascination for engineering began when I built and modified nitro-powered RC cars with my father. That early curiosity developed into the ambition to design increasingly complex hardware and software systems independently.',
+      'I study Industrial Engineering with a specialization in Electrical Engineering. My main interests are embedded systems, hardware development, computer vision and additive manufacturing – especially where several disciplines have to work together in one reliable system.',
     ],
-    quote: "“I do not wait for projects. I create them.”",
-    quoteText: "I regularly invest my own time and resources into technical projects and independently learn the skills required to turn an idea into a working system.",
+    principlesTitle: 'How I approach technical work',
   },
-  approach: { title: "How I work", lead: "My projects combine technical depth, independent learning, initiative and economic evaluation." },
-  projects: { title: "Selected projects", lead: "Independent projects that combine engineering, experimentation, software, hardware and system-level problem solving." },
-  experience: { title: "Experience", lead: "Experience across technology, controlling and financial services gives me insight into both engineering and business environments." },
-  skills: { title: "Skills and interests", lead: "A combination of technical tools, practical engineering experience and an interest in economic decision-making." },
+  skills: {
+    kicker: 'Capabilities',
+    title: 'Tools I use in practice',
+    lead: 'Grouped by application rather than presented as an unqualified list of keywords.',
+  },
   contact: {
-    eyebrow: "Contact",
-    title: "Let us build something valuable.",
-    text: "I am interested in internships, working-student positions and challenging projects at the intersection of engineering, technology and business.",
-    button: "Send me an email",
+    eyebrow: 'Contact',
+    title: 'Interested in solving a real technical problem?',
+    text: 'I am open to challenging projects and future opportunities at the intersection of engineering, technology and business.',
+    button: 'Send me an email',
+    linkedin: 'Connect on LinkedIn',
   },
 };
 ---
 
 <BaseLayout
   lang="en"
-  title="Raphael Erwig | Engineering Portfolio"
-  description="Engineering portfolio of Raphael Erwig, an Industrial Engineering student specializing in Electrical Engineering."
+  title="Raphael Erwig | Electrical Engineering Portfolio"
+  description="Engineering portfolio of Raphael Erwig: embedded systems, computer vision, hardware development and economically sound prototyping."
+  canonicalPath="/"
+  enPath="/"
+  dePath="/de/"
 >
   <Header lang="en" labels={content.nav} />
-  <HomeContent {projects} {strengths} {skills} {experience} {content} />
+  <HomeContent {projects} {strengths} {skillGroups} {experience} {content} />
   <Footer />
 </BaseLayout>

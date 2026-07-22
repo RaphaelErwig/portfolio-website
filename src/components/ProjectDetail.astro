@@ -1,0 +1,83 @@
+---
+interface Fact {
+  label: string;
+  value: string;
+}
+
+interface Section {
+  title: string;
+  paragraphs?: string[];
+  bullets?: string[];
+}
+
+interface Props {
+  backHref: string;
+  backLabel: string;
+  eyebrow: string;
+  title: string;
+  lead: string;
+  status: string;
+  facts: Fact[];
+  sections: Section[];
+  nextLabel: string;
+  nextHref: string;
+  nextTitle: string;
+}
+
+const {
+  backHref,
+  backLabel,
+  eyebrow,
+  title,
+  lead,
+  status,
+  facts,
+  sections,
+  nextLabel,
+  nextHref,
+  nextTitle,
+} = Astro.props;
+---
+
+<main id="main-content">
+  <article class="case-study container">
+    <a class="back-link" href={backHref}><span aria-hidden="true">←</span> {backLabel}</a>
+
+    <header class="case-study-hero">
+      <p class="eyebrow">{eyebrow}</p>
+      <h1>{title}</h1>
+      <p class="case-study-lead">{lead}</p>
+      <p class="status-pill">{status}</p>
+    </header>
+
+    <dl class="fact-grid">
+      {facts.map((fact) => (
+        <div>
+          <dt>{fact.label}</dt>
+          <dd>{fact.value}</dd>
+        </div>
+      ))}
+    </dl>
+
+    <div class="case-study-body">
+      {sections.map((section) => (
+        <section class="case-study-section">
+          <h2>{section.title}</h2>
+          <div>
+            {section.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+            {section.bullets && (
+              <ul class="case-study-list">
+                {section.bullets.map((bullet) => <li>{bullet}</li>)}
+              </ul>
+            )}
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <aside class="next-project">
+      <p>{nextLabel}</p>
+      <a href={nextHref}>{nextTitle}<span aria-hidden="true"> →</span></a>
+    </aside>
+  </article>
+</main>

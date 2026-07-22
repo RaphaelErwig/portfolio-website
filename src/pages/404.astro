@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const nav = {
+  about: 'About',
+  projects: 'Projects',
+  experience: 'Experience',
+  skills: 'Skills',
+  contact: 'Contact',
+  menu: 'Open navigation',
+  navigation: 'Main navigation',
+};
+---
+
+<BaseLayout
+  lang="en"
+  title="Page not found | Raphael Erwig"
+  description="The requested page could not be found."
+  canonicalPath="/404.html"
+  enPath="/404.html"
+  dePath="/404.html"
+  noindex
+>
+  <Header lang="en" labels={nav} />
+  <main id="main-content" class="not-found container">
+    <div class="not-found-content">
+      <p class="not-found-code">404 · PAGE NOT FOUND</p>
+      <h1>This system path does not exist.</h1>
+      <p>Return to the English or German portfolio and continue with the available projects.</p>
+      <div class="buttons">
+        <a class="button button-primary" href="/">English portfolio</a>
+        <a class="button button-secondary" href="/de/">Deutsches Portfolio</a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

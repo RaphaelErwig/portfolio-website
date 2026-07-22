@@ -1,46 +1,33 @@
-# Astro Starter Kit: Basics
+# Raphael Erwig – Engineering Portfolio
+
+Bilingual Astro portfolio for [raphaelerwig.com](https://raphaelerwig.com). The site presents engineering projects, professional experience and practical skills in German and English.
+
+## Local development
 
 ```sh
-npm create astro@latest -- --template basics
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The production build is created with:
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+```sh
+npm run build
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Important files
 
-## 🧞 Commands
+- `src/pages/index.astro` – English home page content
+- `src/pages/de/index.astro` – German home page content
+- `src/pages/projects/` – English project case studies
+- `src/pages/de/projekte/` – German project case studies
+- `src/components/` – shared header, home-page and project components
+- `src/styles/global.css` – complete visual system and responsive layout
+- `public/robots.txt` and `src/pages/sitemap.xml.ts` – search-engine configuration
+- `PROJECT_MEDIA_GUIDE.md` – filenames and preparation guidance for future project photos and video
 
-All commands are run from the root of the project, from a terminal:
+## Deployment
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+The repository is connected to Cloudflare Pages. A push to the configured production branch triggers the deployment automatically.
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Before publishing, run `npm run build` and verify that every project route is generated successfully.

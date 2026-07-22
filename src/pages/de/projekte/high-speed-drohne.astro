@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import ProjectDetail from '../../../components/ProjectDetail.astro';
+import Footer from '../../../components/Footer.astro';
+
+const nav = {
+  about: 'Über mich',
+  projects: 'Projekte',
+  experience: 'Erfahrung',
+  skills: 'Fähigkeiten',
+  contact: 'Kontakt',
+  menu: 'Navigation öffnen',
+  navigation: 'Hauptnavigation',
+};
+
+const facts = [
+  { label: 'Dauer', value: '3 Monate' },
+  { label: 'CAD', value: 'Onshape' },
+  { label: 'Fertigung', value: '3D-Druck · PA-CF-Prototyp' },
+  { label: 'Aktueller Stand', value: 'Flugfähig · noch ohne FPV' },
+];
+
+const sections = [
+  {
+    title: 'Zielsetzung',
+    paragraphs: [
+      'Ziel war die Entwicklung einer kompakten, leistungsorientierten Drohne als vollständiges System – von der mechanischen Konstruktion und Materialwahl bis zur Komponentenintegration und einem flugfähigen Prototyp.',
+    ],
+  },
+  {
+    title: 'Konstruktion und Aufbau',
+    paragraphs: [
+      'Ich konstruierte das vollständige Gehäuse in Onshape und fertigte es im 3D-Druck. Die erste Version bestand aus PA-CF und wurde gemeinsam mit der ausgewählten Elektronik zu einem funktionsfähigen Prototyp aufgebaut.',
+    ],
+    bullets: [
+      'Vollständige eigene CAD-Konstruktion in Onshape',
+      'Additive Fertigung des Gehäuses aus PA-CF',
+      'Mechanische und elektronische Systemintegration',
+      'Flugerprobung des ersten Prototyps',
+    ],
+  },
+  {
+    title: 'Erkenntnisse aus dem ersten Prototyp',
+    paragraphs: [
+      'Die praktische Erprobung zeigte drei zentrale Verbesserungsbereiche: Vibrationen, Kühlung der Komponenten und Gewichtsverteilung. Zudem veränderte sich die Flexibilität des PA-CF-Gehäuses durch Feuchtigkeitsaufnahme über die Zeit. Diese Beobachtungen wurden zu konkreten Anforderungen für die zweite Version.',
+    ],
+  },
+  {
+    title: 'Version 2',
+    paragraphs: [
+      'Die überarbeitete Konstruktion soll die Erkenntnisse systematisch adressieren. Als neues Gehäusematerial ist ABS-CF vorgesehen. Gleichzeitig werden Komponentenlayout, Kühlung und Gewichtsverteilung überarbeitet, bevor die FPV-Hardware integriert und eine neue Testreihe durchgeführt wird.',
+    ],
+    bullets: [
+      'Geplanter Wechsel von PA-CF zu ABS-CF',
+      'Verbesserte Kühlung der Komponenten',
+      'Überarbeitete Gewichtsverteilung',
+      'FPV-Integration nach mechanischer Validierung',
+    ],
+  },
+  {
+    title: 'Ergebnis',
+    paragraphs: [
+      'Die erste Version ist ein flugfähiger Prototyp, aber noch nicht das finale FPV-System. Ihr wichtigstes Ergebnis sind die praktisch validierten Erkenntnisse für die nächste Konstruktion. Gewicht, Flugzeit und Höchstgeschwindigkeit werden erst ergänzt, sobald sie unter definierten Bedingungen gemessen wurden.',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  lang="de"
+  title="Eigene High-Speed-Drohne | Raphael Erwig"
+  description="Projektbericht zur CAD-Konstruktion, additiven Fertigung und iterativen Entwicklung eines eigenen flugfähigen Drohnenprototyps."
+  canonicalPath="/de/projekte/high-speed-drohne/"
+  enPath="/projects/high-speed-drone/"
+  dePath="/de/projekte/high-speed-drohne/"
+>
+  <Header
+    lang="de"
+    labels={nav}
+    languageHrefs={{ en: '/projects/high-speed-drone/', de: '/de/projekte/high-speed-drohne/' }}
+  />
+  <ProjectDetail
+    backHref="/de/#projects"
+    backLabel="Zurück zu den Projekten"
+    eyebrow="Hardware · CAD · Additive Fertigung"
+    title="Iterative Entwicklung einer eigenen High-Speed-Drohne"
+    lead="Ein selbst konstruierter, flugfähiger Prototyp zur praktischen Validierung von Mechanik, Materialwahl, Kühlung und Systemintegration."
+    status="Flugfähiger Prototyp · Version 2 in Entwicklung"
+    {facts}
+    {sections}
+    nextLabel="Nächstes Projekt"
+    nextHref="/de/projekte/messererkennung/"
+    nextTitle="Echtzeit-Messererkennung"
+  />
+  <Footer />
+</BaseLayout>

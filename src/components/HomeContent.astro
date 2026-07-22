@@ -5,6 +5,11 @@ interface Project {
   title: string;
   description: string;
   highlights: string[];
+  href: string;
+  duration: string;
+  status: string;
+  image?: string;
+  imageAlt?: string;
 }
 
 interface Strength {
@@ -16,21 +21,29 @@ interface Experience {
   role: string;
   company: string;
   area: string;
+  period: string;
   text: string;
+  highlights: string[];
+  tools: string[];
+}
+
+interface SkillGroup {
+  title: string;
+  skills: string[];
 }
 
 interface Props {
   projects: Project[];
   strengths: Strength[];
-  skills: string[];
+  skillGroups: SkillGroup[];
   experience: Experience[];
   content: any;
 }
 
-const { projects, strengths, skills, experience, content } = Astro.props;
+const { projects, strengths, skillGroups, experience, content } = Astro.props;
 ---
 
-<main>
+<main id="main-content">
   <section class="hero container">
     <div class="hero-content">
       <p class="eyebrow">{content.hero.eyebrow}</p>
@@ -41,59 +54,45 @@ const { projects, strengths, skills, experience, content } = Astro.props;
       <p class="intro">{content.hero.intro}</p>
       <div class="buttons">
         <a class="button button-primary" href="#projects">{content.hero.primary}</a>
-        <a class="button button-secondary" href="#about">{content.hero.secondary}</a>
+        <a class="button button-secondary" href="#experience">{content.hero.secondary}</a>
       </div>
-    </div>
-  </section>
-
-  <section id="about" class="container">
-    <div class="section-heading">
-      <h2>{content.about.title}</h2>
-      <p>{content.about.lead}</p>
-    </div>
-    <div class="about-grid">
-      <div>
-        {content.about.paragraphs.map((paragraph: string) => <p class="about-text">{paragraph}</p>)}
-      </div>
-      <aside class="quote-card">
-        <blockquote>{content.about.quote}</blockquote>
-        <p>{content.about.quoteText}</p>
-      </aside>
-    </div>
-  </section>
-
-  <section id="approach" class="container">
-    <div class="section-heading">
-      <h2>{content.approach.title}</h2>
-      <p>{content.approach.lead}</p>
-    </div>
-    <div class="strength-grid">
-      {strengths.map((strength) => (
-        <article class="strength-card">
-          <h3>{strength.title}</h3>
-          <p>{strength.text}</p>
-        </article>
-      ))}
     </div>
   </section>
 
   <section id="projects" class="container">
     <div class="section-heading">
-      <h2>{content.projects.title}</h2>
+      <div>
+        <p class="section-kicker">{content.projects.kicker}</p>
+        <h2>{content.projects.title}</h2>
+      </div>
       <p>{content.projects.lead}</p>
     </div>
     <div class="project-grid">
       {projects.map((project) => (
-        <article class="project-card">
-          <div class="project-top">
-            <span class="project-number">{project.number}</span>
-            <span class="project-category">{project.category}</span>
-          </div>
-          <h3>{project.title}</h3>
-          <p>{project.description}</p>
-          <ul class="highlight-list">
-            {project.highlights.map((highlight) => <li>{highlight}</li>)}
-          </ul>
+        <article>
+          <a class="project-card" href={project.href}>
+            {project.image && (
+              <figure class="project-media">
+                <img src={project.image} alt={project.imageAlt ?? ''} loading="lazy" />
+              </figure>
+            )}
+            <div class="project-content">
+              <div class="project-top">
+                <span class="project-number">{project.number}</span>
+                <span class="project-category">{project.category}</span>
+              </div>
+              <div class="project-meta">
+                <span>{project.duration}</span>
+                <span>{project.status}</span>
+              </div>
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              <ul class="highlight-list">
+                {project.highlights.map((highlight) => <li>{highlight}</li>)}
+              </ul>
+              <span class="project-link">{content.projects.linkLabel}<span aria-hidden="true"> →</span></span>
+            </div>
+          </a>
         </article>
       ))}
     </div>
@@ -101,30 +100,78 @@ const { projects, strengths, skills, experience, content } = Astro.props;
 
   <section id="experience" class="container">
     <div class="section-heading">
-      <h2>{content.experience.title}</h2>
+      <div>
+        <p class="section-kicker">{content.experience.kicker}</p>
+        <h2>{content.experience.title}</h2>
+      </div>
       <p>{content.experience.lead}</p>
     </div>
     <div class="experience-list">
       {experience.map((item) => (
         <article class="experience-card">
-          <div>
-            <div class="experience-role">{item.role}</div>
-            <div>{item.area}</div>
+          <div class="experience-summary">
+            <p class="experience-period">{item.period}</p>
+            <h3>{item.role}</h3>
+            <p>{item.area}</p>
           </div>
-          <div class="experience-company">{item.company}</div>
-          <p class="experience-description">{item.text}</p>
+          <div class="experience-details">
+            <div class="experience-company">{item.company}</div>
+            <p>{item.text}</p>
+            <ul class="experience-highlights">
+              {item.highlights.map((highlight) => <li>{highlight}</li>)}
+            </ul>
+            <div class="tool-list" aria-label={content.experience.toolsLabel}>
+              {item.tools.map((tool) => <span>{tool}</span>)}
+            </div>
+          </div>
         </article>
       ))}
     </div>
   </section>
 
-  <section class="container">
+  <section id="about" class="container">
     <div class="section-heading">
-      <h2>{content.skills.title}</h2>
+      <div>
+        <p class="section-kicker">{content.about.kicker}</p>
+        <h2>{content.about.title}</h2>
+      </div>
+      <p>{content.about.lead}</p>
+    </div>
+    <div class="about-grid">
+      <div>
+        {content.about.paragraphs.map((paragraph: string) => <p class="about-text">{paragraph}</p>)}
+      </div>
+      <aside class="principles-card">
+        <p class="principles-title">{content.about.principlesTitle}</p>
+        <div class="principles-list">
+          {strengths.map((strength) => (
+            <div>
+              <h3>{strength.title}</h3>
+              <p>{strength.text}</p>
+            </div>
+          ))}
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="skills" class="container">
+    <div class="section-heading">
+      <div>
+        <p class="section-kicker">{content.skills.kicker}</p>
+        <h2>{content.skills.title}</h2>
+      </div>
       <p>{content.skills.lead}</p>
     </div>
-    <div class="skills">
-      {skills.map((skill) => <span class="skill">{skill}</span>)}
+    <div class="skill-groups">
+      {skillGroups.map((group) => (
+        <article class="skill-group">
+          <h3>{group.title}</h3>
+          <div class="skills">
+            {group.skills.map((skill) => <span class="skill">{skill}</span>)}
+          </div>
+        </article>
+      ))}
     </div>
   </section>
 
@@ -132,7 +179,9 @@ const { projects, strengths, skills, experience, content } = Astro.props;
     <p class="eyebrow">{content.contact.eyebrow}</p>
     <h2>{content.contact.title}</h2>
     <p>{content.contact.text}</p>
-    <a class="button button-primary" href="mailto:Raphael.Erwig@icloud.com">{content.contact.button}</a>
-    <a class="button button-linkedin" href="https://www.linkedin.com/in/raphael-erwig-4557b8263/" target="_blank" rel="noopener noreferrer" >Connect on LinkedIn </a>
+    <div class="contact-actions">
+      <a class="button button-primary" href="mailto:Raphael.Erwig@icloud.com">{content.contact.button}</a>
+      <a class="button button-linkedin" href="https://www.linkedin.com/in/raphael-erwig-4557b8263/" target="_blank" rel="noopener noreferrer">{content.contact.linkedin}</a>
+    </div>
   </section>
 </main>

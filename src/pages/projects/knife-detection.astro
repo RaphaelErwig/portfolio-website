@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import ProjectDetail from '../../components/ProjectDetail.astro';
+import Footer from '../../components/Footer.astro';
+
+const nav = {
+  about: 'About',
+  projects: 'Projects',
+  experience: 'Experience',
+  skills: 'Skills',
+  contact: 'Contact',
+  menu: 'Open navigation',
+  navigation: 'Main navigation',
+};
+
+const facts = [
+  { label: 'Duration', value: '5 months' },
+  { label: 'Model', value: 'YOLOv11 · Ultralytics' },
+  { label: 'Language', value: 'Python' },
+  { label: 'Deployment', value: 'Desktop · Laptop · NVIDIA Jetson' },
+];
+
+const sections = [
+  {
+    title: 'Objective',
+    paragraphs: [
+      'The project explored whether a custom object-detection model could recognize knives in real time across different environments and hardware platforms. The focus was not only on model training, but on the complete workflow from data collection to deployment.',
+    ],
+  },
+  {
+    title: 'Dataset and training',
+    paragraphs: [
+      'I created and manually labeled a dedicated dataset, configured the YOLOv11 training pipeline and trained the model on a desktop workstation. The dataset and training configuration were iteratively adjusted based on the model’s behavior in real scenes.',
+    ],
+    bullets: [
+      'Collection and manual labeling of a custom dataset',
+      'Training with YOLOv11 and Ultralytics',
+      'Desktop workstation used for model training',
+      'Real-time inference on different target devices',
+    ],
+  },
+  {
+    title: 'False positives as a data problem',
+    paragraphs: [
+      'The first training iteration did not contain enough negative examples. As a result, the model produced false positives in scenes that did not contain a knife. Instead of treating this only as a model issue, I traced the behavior back to the composition of the dataset and revised the training data accordingly.',
+    ],
+    bullets: [
+      'Systematic review of false-positive detections',
+      'Addition of relevant negative examples',
+      'Repeated labeling, training and validation',
+    ],
+  },
+  {
+    title: 'Deployment',
+    paragraphs: [
+      'The completed prototype can run on a laptop, a desktop PC or an NVIDIA Jetson. Inference speed depends on the selected device, model configuration and input resolution, so performance values will be published only after a consistent benchmark has been completed.',
+    ],
+  },
+  {
+    title: 'Result and limitations',
+    paragraphs: [
+      'The project resulted in a functional real-time prototype and a recorded video demonstration. It is an experimental computer-vision system, not a certified safety product. Precision, recall, mAP and device-specific FPS will be added after the existing results have been reviewed and measured under comparable conditions.',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  lang="en"
+  title="Real-Time Knife Detection | Raphael Erwig"
+  description="Case study: custom dataset creation, YOLOv11 training, false-positive analysis and real-time computer-vision deployment."
+  canonicalPath="/projects/knife-detection/"
+  enPath="/projects/knife-detection/"
+  dePath="/de/projekte/messererkennung/"
+>
+  <Header
+    lang="en"
+    labels={nav}
+    languageHrefs={{ en: '/projects/knife-detection/', de: '/de/projekte/messererkennung/' }}
+  />
+  <ProjectDetail
+    backHref="/#projects"
+    backLabel="Back to projects"
+    eyebrow="AI · Computer Vision · Python"
+    title="Real-time knife detection with a custom YOLOv11 model"
+    lead="A five-month computer-vision project covering dataset creation, training, false-positive analysis and deployment across different devices."
+    status="Completed functional prototype"
+    {facts}
+    {sections}
+    nextLabel="Next case study"
+    nextHref="/projects/high-speed-drone/"
+    nextTitle="Custom High-Speed Drone"
+  />
+  <Footer />
+</BaseLayout>

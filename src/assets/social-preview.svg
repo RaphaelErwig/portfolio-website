@@ -1,0 +1,22 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#172033"/>
+      <stop offset="0.54" stop-color="#080A0F"/>
+      <stop offset="1" stop-color="#10251A"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1010 130) rotate(138) scale(420 330)">
+      <stop stop-color="#8DD7AC" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#8DD7AC" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" rx="30" fill="url(#background)"/>
+  <rect width="1200" height="630" rx="30" fill="url(#glow)"/>
+  <path d="M70 88H1130" stroke="white" stroke-opacity="0.08"/>
+  <path d="M70 542H1130" stroke="white" stroke-opacity="0.08"/>
+  <rect x="82" y="126" width="134" height="134" rx="26" fill="#8DD7AC" fill-opacity="0.08" stroke="#8DD7AC" stroke-opacity="0.38"/>
+  <text x="104" y="222" fill="#8DD7AC" font-family="Inter, Arial, sans-serif" font-size="72" font-weight="800" letter-spacing="-5">RE</text>
+  <text x="82" y="338" fill="#F5F7FA" font-family="Inter, Arial, sans-serif" font-size="76" font-weight="800" letter-spacing="-4">Raphael Erwig</text>
+  <text x="84" y="408" fill="#8DD7AC" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700">Electrical Engineering · Embedded Systems</text>
+  <text x="84" y="468" fill="#B8C0CC" font-family="Inter, Arial, sans-serif" font-size="28">Computer Vision · Hardware · Economically sound prototyping</text>
+</svg>

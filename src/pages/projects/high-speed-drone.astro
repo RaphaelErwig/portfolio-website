@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import ProjectDetail from '../../components/ProjectDetail.astro';
+import Footer from '../../components/Footer.astro';
+
+const nav = {
+  about: 'About',
+  projects: 'Projects',
+  experience: 'Experience',
+  skills: 'Skills',
+  contact: 'Contact',
+  menu: 'Open navigation',
+  navigation: 'Main navigation',
+};
+
+const facts = [
+  { label: 'Duration', value: '3 months' },
+  { label: 'CAD', value: 'Onshape' },
+  { label: 'Manufacturing', value: '3D printing · PA-CF prototype' },
+  { label: 'Current state', value: 'Flight-capable · without FPV' },
+];
+
+const sections = [
+  {
+    title: 'Objective',
+    paragraphs: [
+      'The goal was to develop a compact, high-performance drone as a complete system – from the mechanical design and material choice to component integration and a flight-capable prototype.',
+    ],
+  },
+  {
+    title: 'Design and build',
+    paragraphs: [
+      'I designed the complete body in Onshape and manufactured it using 3D printing. The first version used PA-CF and was assembled with the selected electronics into a functional prototype.',
+    ],
+    bullets: [
+      'Complete custom CAD design in Onshape',
+      'Additive manufacturing of the body in PA-CF',
+      'Mechanical and electronic system integration',
+      'Flight testing of the first prototype',
+    ],
+  },
+  {
+    title: 'Findings from the first prototype',
+    paragraphs: [
+      'Practical testing revealed three central areas for improvement: vibration, component cooling and weight distribution. The PA-CF body also showed moisture-related changes in flexibility over time. These findings became requirements for the second revision rather than being hidden as isolated defects.',
+    ],
+  },
+  {
+    title: 'Revision 2',
+    paragraphs: [
+      'The revised design is intended to address the findings systematically. ABS-CF is planned as the new body material, while the component layout and cooling concept are being reworked. Weight distribution is also being improved before FPV hardware is integrated and the next test series begins.',
+    ],
+    bullets: [
+      'Planned switch from PA-CF to ABS-CF',
+      'Improved component cooling',
+      'Revised weight distribution',
+      'FPV integration after mechanical validation',
+    ],
+  },
+  {
+    title: 'Result',
+    paragraphs: [
+      'The first version is a flight-capable prototype, but not yet the final FPV system. Its greatest value is the verified design feedback it produced. Weight, flight time and top speed will be added only after they have been measured under defined test conditions.',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  lang="en"
+  title="Custom High-Speed Drone | Raphael Erwig"
+  description="Case study: CAD design, additive manufacturing and iterative development of a custom flight-capable high-speed drone prototype."
+  canonicalPath="/projects/high-speed-drone/"
+  enPath="/projects/high-speed-drone/"
+  dePath="/de/projekte/high-speed-drohne/"
+>
+  <Header
+    lang="en"
+    labels={nav}
+    languageHrefs={{ en: '/projects/high-speed-drone/', de: '/de/projekte/high-speed-drohne/' }}
+  />
+  <ProjectDetail
+    backHref="/#projects"
+    backLabel="Back to projects"
+    eyebrow="Hardware · CAD · Additive Manufacturing"
+    title="Iterative development of a custom high-speed drone"
+    lead="A self-designed, flight-capable prototype used to validate mechanical design, material choice, cooling and system integration in practice."
+    status="Flight-capable prototype · Revision 2 in development"
+    {facts}
+    {sections}
+    nextLabel="Next case study"
+    nextHref="/projects/knife-detection/"
+    nextTitle="Real-Time Knife Detection"
+  />
+  <Footer />
+</BaseLayout>

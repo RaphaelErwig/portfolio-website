@@ -5,9 +5,35 @@ interface Props {
   lang: 'en' | 'de';
   title: string;
   description: string;
+  canonicalPath: string;
+  enPath: string;
+  dePath: string;
+  noindex?: boolean;
 }
 
-const { lang, title, description } = Astro.props;
+const { lang, title, description, canonicalPath, enPath, dePath, noindex = false } = Astro.props;
+const site = Astro.site ?? Astro.url.origin;
+const canonicalUrl = new URL(canonicalPath, site);
+const enUrl = new URL(enPath, site);
+const deUrl = new URL(dePath, site);
+const socialImageUrl = new URL('/social-preview.png', site);
+const locale = lang === 'de' ? 'de_DE' : 'en_US';
+const alternateLocale = lang === 'de' ? 'en_US' : 'de_DE';
+const skipLabel = lang === 'de' ? 'Zum Inhalt springen' : 'Skip to content';
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Raphael Erwig',
+  url: new URL('/', site).toString(),
+  sameAs: ['https://www.linkedin.com/in/raphael-erwig-4557b8263/'],
+  knowsAbout: [
+    'Electrical Engineering',
+    'Embedded Systems',
+    'Computer Vision',
+    'Additive Manufacturing',
+    'Engineering Economics',
+  ],
+};
 ---
 
 <!doctype html>
@@ -16,11 +42,33 @@ const { lang, title, description } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
+    <meta name="theme-color" content="#080a0f" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="de" href={deUrl} />
+    <link rel="alternate" hreflang="x-default" href={enUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Raphael Erwig" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={locale} />
+    <meta property="og:locale:alternate" content={alternateLocale} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageUrl} />
     <title>{title}</title>
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body>
+    <a class="skip-link" href="#main-content">{skipLabel}</a>
     <slot />
   </body>
 </html>
