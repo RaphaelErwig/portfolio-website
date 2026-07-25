@@ -15,53 +15,82 @@ const nav = {
 };
 
 const facts = [
-  { label: 'Duration', value: '3 months' },
+  { label: 'Effort', value: '≈ 200 hours' },
   { label: 'CAD', value: 'Onshape' },
-  { label: 'Manufacturing', value: '3D printing · PA-CF prototype' },
-  { label: 'Current state', value: 'Flight-capable · without FPV' },
+  { label: 'Build', value: 'PA-CF · Bambu Lab X1C' },
+  { label: 'Current state', value: 'Revision 1 flight-capable · Revision 2 in CAD' },
 ];
 
 const sections = [
   {
-    title: 'Objective',
+    title: 'Objective and scope',
     paragraphs: [
-      'The goal was to develop a compact, high-performance drone as a complete system – from the mechanical design and material choice to component integration and a flight-capable prototype.',
+      'The development target was a compact, performance-oriented drone with a long-term speed target of 300 km/h, built without an off-the-shelf frame. The target describes the design direction; it has not yet been validated by a speed measurement.',
+      'I completed the project independently: component selection, mechanical design, additive manufacturing, soldering, assembly, Betaflight configuration, PID work and flight testing.',
     ],
   },
   {
-    title: 'Design and build',
+    title: 'Mechanical and electrical design',
     paragraphs: [
-      'I designed the complete body in Onshape and manufactured it using 3D printing. The first version used PA-CF and was assembled with the selected electronics into a functional prototype.',
+      'The load-bearing frame, body and component packaging were developed through four to five major Onshape iterations. The geometry had to balance stiffness, aerodynamics, cooling, available space, repairability, printability and cost.',
+    ],
+    table: {
+      headers: ['Subsystem', 'Revision 1 choice', 'Design rationale'],
+      rows: [
+        ['Motors', 'T-Motor Velox V2207 V3 · 2050 KV · 6S', 'Performance at a controlled component cost'],
+        ['Flight control', 'SpeedyBee F405 V5 · 55 A stack', 'Reliability prioritized for a central system component'],
+        ['Control link', 'RadioMaster RP3 V2 · ELRS', 'Robust link with a compact receiver'],
+        ['Navigation', 'HGLRC M100 Pro GPS', 'Required positioning without paying for unused features'],
+        ['Propulsion', 'T-Motor T5143S · 5.1-inch · three-blade', 'Matched to the selected 6S powertrain'],
+      ],
+    },
+  },
+  {
+    title: 'Flight testing and learning',
+    paragraphs: [
+      'Revision 1 completed one hover test and two controlled flights. Early in testing, the prototype crashed while PID tuning and my own flight experience were still insufficient. I responded by practicing in a simulator and building a second, easier-to-fly training drone before continuing.',
+      'The first revision is flight-capable, but top speed, flight time and final mass have not yet been measured under defined conditions.',
+    ],
+  },
+  {
+    title: 'Evidence from revision 1',
+    paragraphs: [
+      'Practical tests revealed three linked weaknesses. Frame resonance complicated PID tuning, while the PA-CF structure became more flexible after absorbing moisture over time. Infrared measurements also showed heat build-up around the flight controller and 4-in-1 ESC. Finally, the top-mounted battery placed too much mass high in the structure.',
     ],
     bullets: [
-      'Complete custom CAD design in Onshape',
-      'Additive manufacturing of the body in PA-CF',
-      'Mechanical and electronic system integration',
-      'Flight testing of the first prototype',
+      'Vibration: revised geometry and a switch from PA-CF to ABS-CF',
+      'Cooling: ventilation slots and a new layout for flight controller and ESC',
+      'Weight distribution: battery positioned lower, lighter components higher',
+      'Control: DJI O4 FPV planned for revision 2 before performance testing',
     ],
   },
   {
-    title: 'Findings from the first prototype',
+    title: 'Revision 2 development process',
     paragraphs: [
-      'Practical testing revealed three central areas for improvement: vibration, component cooling and weight distribution. The PA-CF body also showed moisture-related changes in flexibility over time. These findings became requirements for the second revision rather than being hidden as isolated defects.',
+      'Revision 2 is currently in its first CAD iteration. The next step is a low-cost PLA print used to identify packaging, assembly and structural weaknesses. The geometry will then be revised and printed again in PLA before the final ABS-CF build. All electronics from revision 1 are planned for reuse.',
+      'ABS-CF was selected because the outdoor durability advantage of the more expensive ASA-CF is not required for this use case, while avoiding PA-CF’s moisture sensitivity is central to maintaining predictable stiffness. The trade-off is that stiffness, strength and heat resistance can be lower than with dry PA-CF depending on the exact grade, so the selected material and revised geometry must be validated before high-load testing.',
     ],
   },
   {
-    title: 'Revision 2',
+    title: 'Commercial engineering',
     paragraphs: [
-      'The revised design is intended to address the findings systematically. ABS-CF is planned as the new body material, while the component layout and cooling concept are being reworked. Weight distribution is also being improved before FPV hardware is integrated and the next test series begins.',
+      'The project was planned against a €700 budget. Documented direct expenditure is approximately €424, including the transmitter, around 1.4 kg of development material and €105 of DJI O4 hardware reserved for revision 2. Excluding that future FPV hardware, documented expenditure is approximately €319. Printer depreciation and unrecorded small consumables are not included.',
     ],
-    bullets: [
-      'Planned switch from PA-CF to ABS-CF',
-      'Improved component cooling',
-      'Revised weight distribution',
-      'FPV integration after mechanical validation',
-    ],
+    table: {
+      headers: ['Decision', 'Economic reasoning', 'Technical consequence'],
+      rows: [
+        ['Motors, GPS and material', 'Selected for sufficient performance without paying for unused capability', 'Meet current prototype requirements; limits at the speed target remain to be validated'],
+        ['Flight controller and ESC', 'Higher spend on the central, reliability-critical electronics', '55 A stack selected instead of an unbranded alternative'],
+        ['Custom printed frame', 'No available frame matched the intended geometry', 'Fast design changes and learning, but 10–15 development prints'],
+        ['PLA before ABS-CF', 'Low-cost validation before final material', 'Assembly and structural weaknesses can be corrected before the expensive print'],
+        ['Reuse of electronics', 'Preserves most of the project investment', 'Revision 2 focuses spending on mechanics and FPV rather than replacing the system'],
+      ],
+    },
   },
   {
-    title: 'Result',
+    title: 'Current result and boundary',
     paragraphs: [
-      'The first version is a flight-capable prototype, but not yet the final FPV system. Its greatest value is the verified design feedback it produced. Weight, flight time and top speed will be added only after they have been measured under defined test conditions.',
+      'Revision 1 proves that the self-designed system can fly and provides concrete design evidence for the next build. It does not yet prove safe operation at the intended high-speed target. A measured speed, flight time and verified take-off mass will be published only after revision 2 has passed controlled mechanical, thermal and flight testing.',
     ],
   },
 ];
@@ -69,8 +98,8 @@ const sections = [
 
 <BaseLayout
   lang="en"
-  title="Custom High-Speed Drone | Raphael Erwig"
-  description="Case study: CAD design, additive manufacturing and iterative development of a custom flight-capable high-speed drone prototype."
+  title="Performance-Oriented Drone Prototype | Raphael Erwig"
+  description="Case study: custom CAD, additive manufacturing, flight testing and cost-aware revision of a self-developed drone prototype."
   canonicalPath="/projects/high-speed-drone/"
   enPath="/projects/high-speed-drone/"
   dePath="/de/projekte/high-speed-drohne/"
@@ -84,14 +113,14 @@ const sections = [
     backHref="/#projects"
     backLabel="Back to projects"
     eyebrow="Hardware · CAD · Additive Manufacturing"
-    title="Iterative development of a custom high-speed drone"
-    lead="A self-designed, flight-capable prototype used to validate mechanical design, material choice, cooling and system integration in practice."
-    status="Flight-capable prototype · Revision 2 in development"
+    title="Iterative development of a performance-oriented drone prototype"
+    lead="A self-designed 6S drone that turns practical flight tests, material behavior, thermal measurements and cost trade-offs into a structured second revision."
+    status="Revision 1 flight-capable · speed target not yet validated"
     {facts}
     {sections}
     nextLabel="Next case study"
     nextHref="/projects/knife-detection/"
-    nextTitle="Real-Time Knife Detection"
+    nextTitle="Live Knife Detection Prototype"
   />
   <Footer />
 </BaseLayout>

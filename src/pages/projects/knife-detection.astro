@@ -15,52 +15,68 @@ const nav = {
 };
 
 const facts = [
-  { label: 'Duration', value: '5 months' },
-  { label: 'Model', value: 'YOLOv11 · Ultralytics' },
-  { label: 'Language', value: 'Python' },
-  { label: 'Deployment', value: 'Desktop · Laptop · NVIDIA Jetson' },
+  { label: 'Effort', value: '≈ 250 hours' },
+  { label: 'Dataset', value: '731 positive · ≈ 2,000 negative images' },
+  { label: 'Model', value: 'YOLOv11-L · 640 × 640 · 160 epochs' },
+  { label: 'Deployment', value: 'Laptop · NVIDIA Jetson platforms' },
 ];
 
 const sections = [
   {
-    title: 'Objective',
+    title: 'Objective and ownership',
     paragraphs: [
-      'The project explored whether a custom object-detection model could recognize knives in real time across different environments and hardware platforms. The focus was not only on model training, but on the complete workflow from data collection to deployment.',
+      'The project explored early visual knife detection in live camera streams as a research prototype. I completed it independently and started with very little prior computer-vision experience, learning Python, data labeling, YOLO training and edge deployment as the project progressed.',
+      'The result is a functional prototype for experimentation, not a certified or market-ready safety system.',
     ],
   },
   {
-    title: 'Dataset and training',
+    title: 'Self-recorded dataset',
     paragraphs: [
-      'I created and manually labeled a dedicated dataset, configured the YOLOv11 training pipeline and trained the model on a desktop workstation. The dataset and training configuration were iteratively adjusted based on the model’s behavior in real scenes.',
+      'All images were recorded specifically for the project, including frames extracted from my own videos. The final working dataset contains 731 images with knives and approximately 2,000 negative examples without a knife. I manually reviewed the labels and later used auto-labeling to accelerate the process; total labeling effort was approximately 40–60 hours.',
+      'An 80/20 training-validation split and a separate small test set were used. Because frames from the same video scenes may have been randomly distributed between training and validation, benchmark metrics are not published yet. Before publishing them, the data should be re-split by scene or source video and evaluated again on an independent holdout set.',
+    ],
+  },
+  {
+    title: 'Training and iteration',
+    paragraphs: [
+      'The selected configuration used YOLOv11-L at 640 × 640 pixels for 160 epochs. Across approximately 20–50 training runs, I iterated on the dataset and training setup rather than treating the first output as final.',
+      'Early versions recognized many hand-held objects as knives because the dataset did not contain enough representative negative scenes. Adding approximately 2,000 negative examples reduced these false detections substantially.',
     ],
     bullets: [
-      'Collection and manual labeling of a custom dataset',
-      'Training with YOLOv11 and Ultralytics',
-      'Desktop workstation used for model training',
-      'Real-time inference on different target devices',
+      'One labeled class: knife',
+      'Self-recorded positive and negative scenes across different lighting and backgrounds',
+      'Repeated review of weak bounding boxes and false-positive examples',
+      'Final Precision, Recall and mAP pending a leakage-resistant re-evaluation',
     ],
   },
   {
-    title: 'False positives as a data problem',
+    title: 'Live deployment',
     paragraphs: [
-      'The first training iteration did not contain enough negative examples. As a result, the model produced false positives in scenes that did not contain a knife. Instead of treating this only as a model issue, I traced the behavior back to the composition of the dataset and revised the training data accordingly.',
-    ],
-    bullets: [
-      'Systematic review of false-positive detections',
-      'Addition of relevant negative examples',
-      'Repeated labeling, training and validation',
+      'The model was executed from a live webcam on a Lenovo Yoga Slim 6 and on NVIDIA Jetson platforms, including an Orin Nano Super. The laptop produced an observed 6–10 FPS, but device-specific figures will only be presented as benchmarks after model, input resolution and measurement method have been standardized.',
+      'The prototype was demonstrated in unfamiliar scenes and across different lighting conditions and backgrounds, but reliability drops with occlusion and unusual knife shapes.',
     ],
   },
   {
-    title: 'Deployment',
+    title: 'Cost-aware training infrastructure',
     paragraphs: [
-      'The completed prototype can run on a laptop, a desktop PC or an NVIDIA Jetson. Inference speed depends on the selected device, model configuration and input resolution, so performance values will be published only after a consistent benchmark has been completed.',
+      'Repeated cloud GPU usage would have created a continuing operating expense, so I compared that approach with owning a reusable workstation. In March 2025, I sourced almost all components second-hand and built a local AI workstation for approximately €910.',
     ],
+    table: {
+      headers: ['Decision factor', 'Local workstation'],
+      rows: [
+        ['Core hardware', 'NVIDIA Tesla T4 · Ryzen 7 5800X · 64 GB RAM · 1 TB Samsung 990 Pro'],
+        ['Acquisition', 'Almost entirely second-hand, including a negotiated CPU/mainboard/RAM bundle'],
+        ['Iteration', 'Available for repeated training without a new usage fee for each run'],
+        ['Residual value', 'Current second-hand estimate remains around the original acquisition cost'],
+        ['Energy use', 'Training intentionally scheduled during local PV generation after the 2 kWh battery was full; the exact solar share was not measured'],
+      ],
+    },
   },
   {
     title: 'Result and limitations',
     paragraphs: [
-      'The project resulted in a functional real-time prototype and a recorded video demonstration. It is an experimental computer-vision system, not a certified safety product. Precision, recall, mAP and device-specific FPS will be added after the existing results have been reviewed and measured under comparable conditions.',
+      'The project produced a working live demonstration and reusable training hardware. It also showed that data composition can matter more than simply increasing model size. The current model is an experimental prototype: it is not certified, not market-ready and should not be interpreted as a reliable public-safety product.',
+      'A new uncut demonstration video, standardized device benchmarks and a grouped dataset split are the next evidence steps. Only then will Precision, Recall, mAP and comparable FPS values be published.',
     ],
   },
 ];
@@ -68,8 +84,8 @@ const sections = [
 
 <BaseLayout
   lang="en"
-  title="Real-Time Knife Detection | Raphael Erwig"
-  description="Case study: custom dataset creation, YOLOv11 training, false-positive analysis and real-time computer-vision deployment."
+  title="Live Knife Detection Prototype | Raphael Erwig"
+  description="Case study: self-recorded data, YOLOv11-L training, false-positive analysis, edge deployment and cost-aware local AI infrastructure."
   canonicalPath="/projects/knife-detection/"
   enPath="/projects/knife-detection/"
   dePath="/de/projekte/messererkennung/"
@@ -83,14 +99,14 @@ const sections = [
     backHref="/#projects"
     backLabel="Back to projects"
     eyebrow="AI · Computer Vision · Python"
-    title="Real-time knife detection with a custom YOLOv11 model"
-    lead="A five-month computer-vision project covering dataset creation, training, false-positive analysis and deployment across different devices."
-    status="Completed functional prototype"
+    title="Live knife detection with a self-trained YOLOv11-L model"
+    lead="An independent research prototype covering self-recorded data, 20–50 training iterations, false-positive analysis, edge deployment and the economics of local AI infrastructure."
+    status="Functional research prototype · not a safety product"
     {facts}
     {sections}
     nextLabel="Next case study"
     nextHref="/projects/high-speed-drone/"
-    nextTitle="Custom High-Speed Drone"
+    nextTitle="Performance-Oriented Drone Prototype"
   />
   <Footer />
 </BaseLayout>

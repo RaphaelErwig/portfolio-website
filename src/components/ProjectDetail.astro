@@ -8,6 +8,15 @@ interface Section {
   title: string;
   paragraphs?: string[];
   bullets?: string[];
+  table?: {
+    headers: string[];
+    rows: string[][];
+  };
+  media?: {
+    src: string;
+    alt: string;
+    caption?: string;
+  };
 }
 
 interface Props {
@@ -69,6 +78,30 @@ const {
               <ul class="case-study-list">
                 {section.bullets.map((bullet) => <li>{bullet}</li>)}
               </ul>
+            )}
+            {section.table && (
+              <div class="case-study-table-wrap">
+                <table class="case-study-table">
+                  <thead>
+                    <tr>
+                      {section.table.headers.map((header) => <th scope="col">{header}</th>)}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {section.table.rows.map((row) => (
+                      <tr>
+                        {row.map((cell) => <td>{cell}</td>)}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+            {section.media && (
+              <figure class="case-study-media">
+                <img src={section.media.src} alt={section.media.alt} loading="lazy" />
+                {section.media.caption && <figcaption>{section.media.caption}</figcaption>}
+              </figure>
             )}
           </div>
         </section>

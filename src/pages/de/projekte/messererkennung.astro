@@ -15,52 +15,68 @@ const nav = {
 };
 
 const facts = [
-  { label: 'Dauer', value: '5 Monate' },
-  { label: 'Modell', value: 'YOLOv11 · Ultralytics' },
-  { label: 'Programmiersprache', value: 'Python' },
-  { label: 'Ausführung', value: 'Desktop · Laptop · NVIDIA Jetson' },
+  { label: 'Aufwand', value: '≈ 250 Stunden' },
+  { label: 'Datensatz', value: '731 Positivbilder · ≈ 2.000 Negativbilder' },
+  { label: 'Modell', value: 'YOLOv11-L · 640 × 640 · 160 Epochen' },
+  { label: 'Ausführung', value: 'Laptop · NVIDIA-Jetson-Plattformen' },
 ];
 
 const sections = [
   {
-    title: 'Zielsetzung',
+    title: 'Ziel und Eigenanteil',
     paragraphs: [
-      'Das Projekt untersuchte, ob ein eigenes Objekterkennungsmodell Messer in unterschiedlichen Umgebungen und auf verschiedenen Hardwareplattformen in Echtzeit erkennen kann. Im Mittelpunkt stand der vollständige Ablauf von der Datenerstellung bis zur Ausführung.',
+      'Das Projekt untersuchte die frühzeitige visuelle Erkennung von Messern in Live-Kamerabildern als Forschungsprototyp. Ich führte es vollständig eigenständig durch und startete mit kaum Computer-Vision-Vorerfahrung. Python, Datenlabeling, YOLO-Training und Edge-Ausführung erarbeitete ich mir im Projektverlauf.',
+      'Das Ergebnis ist ein funktionsfähiger Prototyp für Experimente, kein zertifiziertes oder marktreifes Sicherheitssystem.',
     ],
   },
   {
-    title: 'Datensatz und Training',
+    title: 'Selbst aufgenommener Datensatz',
     paragraphs: [
-      'Ich erstellte und labelte einen eigenen Datensatz, konfigurierte die Trainingspipeline für YOLOv11 und trainierte das Modell auf einem Desktop-PC. Datensatz und Trainingseinstellungen wurden anhand des Modellverhaltens in realen Szenen schrittweise verbessert.',
+      'Alle Bilder wurden gezielt für das Projekt selbst aufgenommen; ein Teil entstand als Einzelbilder aus eigenen Videos. Der finale Arbeitsdatensatz enthält 731 Bilder mit Messern und rund 2.000 Negativbeispiele ohne Messer. Die Labels kontrollierte ich selbst, später beschleunigte Auto-Labeling den Prozess. Der gesamte Labelingaufwand lag bei etwa 40–60 Stunden.',
+      'Verwendet wurden ein 80/20-Split für Training und Validierung sowie ein kleiner separater Testsatz. Da ähnliche Frames derselben Videoszene zufällig auf Training und Validierung verteilt worden sein können, werden noch keine Benchmarkmetriken veröffentlicht. Dafür muss der Datensatz zuerst nach Szene beziehungsweise Quellvideo getrennt und erneut auf einem unabhängigen Holdout-Satz geprüft werden.',
+    ],
+  },
+  {
+    title: 'Training und Iteration',
+    paragraphs: [
+      'Die gewählte Konfiguration nutzte YOLOv11-L mit 640 × 640 Pixeln über 160 Epochen. In ungefähr 20–50 Trainingsläufen überarbeitete ich Datensatz und Trainingsaufbau iterativ.',
+      'Frühe Versionen erkannten viele Gegenstände in Händen fälschlich als Messer, weil repräsentative Negativszenen fehlten. Durch die Ergänzung von rund 2.000 Negativbeispielen gingen diese Fehlklassifikationen deutlich zurück.',
     ],
     bullets: [
-      'Sammlung und manuelles Labeln eines eigenen Datensatzes',
-      'Training mit YOLOv11 und Ultralytics',
-      'Desktop-PC für das Modelltraining',
-      'Echtzeit-Inferenz auf unterschiedlichen Zielgeräten',
+      'Eine gelabelte Klasse: Messer',
+      'Eigene Positiv- und Negativszenen mit verschiedenen Lichtbedingungen und Hintergründen',
+      'Wiederholte Kontrolle schwacher Bounding Boxes und falsch positiver Beispiele',
+      'Precision, Recall und mAP erst nach einer gegen Datenleckage robusten Neuauswertung',
     ],
   },
   {
-    title: 'False Positives als Datenproblem',
+    title: 'Live-Ausführung',
     paragraphs: [
-      'Die erste Trainingsversion enthielt nicht genügend Negativbeispiele. Dadurch erzeugte das Modell auch in Szenen ohne Messer False Positives. Statt dies nur als Modellfehler zu betrachten, führte ich das Verhalten auf die Zusammensetzung des Datensatzes zurück und überarbeitete die Trainingsdaten entsprechend.',
-    ],
-    bullets: [
-      'Systematische Prüfung falsch positiver Erkennungen',
-      'Ergänzung relevanter Negativbeispiele',
-      'Wiederholtes Labeln, Trainieren und Validieren',
+      'Das Modell wurde mit einer Live-Webcam auf einem Lenovo Yoga Slim 6 und auf NVIDIA-Jetson-Plattformen einschließlich eines Orin Nano Super ausgeführt. Auf dem Laptop wurden ungefähr 6–10 FPS beobachtet. Gerätespezifische Werte werden jedoch erst als Benchmark veröffentlicht, wenn Modell, Eingabeauflösung und Messmethode vereinheitlicht sind.',
+      'Der Prototyp wurde auch in unbekannten Szenen sowie bei unterschiedlichen Lichtbedingungen und Hintergründen demonstriert. Bei Verdeckung und ungewöhnlichen Messerformen sinkt die Zuverlässigkeit.',
     ],
   },
   {
-    title: 'Ausführung',
+    title: 'Kostenbewusste Trainingsinfrastruktur',
     paragraphs: [
-      'Der abgeschlossene Prototyp kann auf einem Laptop, Desktop-PC oder NVIDIA Jetson ausgeführt werden. Die Inferenzgeschwindigkeit hängt von Gerät, Modellkonfiguration und Eingabeauflösung ab. Leistungswerte werden deshalb erst nach einem einheitlichen Benchmark veröffentlicht.',
+      'Wiederholte Cloud-GPU-Nutzung hätte bei jedem Trainingslauf neue Kosten verursacht. Deshalb verglich ich diesen Ansatz mit einer wiederverwendbaren eigenen Workstation. Im März 2025 beschaffte ich fast alle Komponenten gebraucht und baute für rund 910 € einen lokalen KI-PC.',
     ],
+    table: {
+      headers: ['Entscheidungsfaktor', 'Lokale Workstation'],
+      rows: [
+        ['Kernhardware', 'NVIDIA Tesla T4 · Ryzen 7 5800X · 64 GB RAM · 1 TB Samsung 990 Pro'],
+        ['Beschaffung', 'Fast vollständig gebraucht, einschließlich eines verhandelten CPU-/Mainboard-/RAM-Pakets'],
+        ['Iteration', 'Für wiederholte Trainings verfügbar, ohne neue Nutzungsgebühr je Lauf'],
+        ['Restwert', 'Aktuelle Gebrauchtmarktschätzung weiterhin ungefähr auf Höhe der Anschaffungskosten'],
+        ['Energie', 'Training bewusst während lokaler PV-Erzeugung bei bereits vollem 2-kWh-Speicher; der genaue Solaranteil wurde nicht gemessen'],
+      ],
+    },
   },
   {
     title: 'Ergebnis und Grenzen',
     paragraphs: [
-      'Das Projekt führte zu einem funktionsfähigen Echtzeit-Prototyp und einer aufgezeichneten Videodemonstration. Es handelt sich um ein experimentelles Computer-Vision-System und nicht um ein zertifiziertes Sicherheitsprodukt. Precision, Recall, mAP und gerätespezifische FPS werden ergänzt, sobald die vorhandenen Ergebnisse geprüft und unter vergleichbaren Bedingungen gemessen wurden.',
+      'Das Projekt führte zu einer funktionierenden Live-Demonstration und einer weiter nutzbaren Trainingsinfrastruktur. Es zeigte außerdem, dass die Zusammensetzung des Datensatzes wichtiger sein kann als eine bloße Vergrößerung des Modells. Das aktuelle Modell bleibt ein experimenteller Prototyp: Es ist nicht zertifiziert, nicht marktreif und nicht als zuverlässiges System für den öffentlichen Sicherheitseinsatz zu verstehen.',
+      'Als nächste Nachweise folgen ein neues ungeschnittenes Demonstrationsvideo, einheitliche Gerätebenchmarks und eine gruppierte Datensatzaufteilung. Erst danach werden Precision, Recall, mAP und vergleichbare FPS veröffentlicht.',
     ],
   },
 ];
@@ -68,8 +84,8 @@ const sections = [
 
 <BaseLayout
   lang="de"
-  title="Echtzeit-Messererkennung | Raphael Erwig"
-  description="Projektbericht zu Datensatzerstellung, YOLOv11-Training, False-Positive-Analyse und Echtzeit-Ausführung eines Computer-Vision-Prototyps."
+  title="Live-Prototyp zur Messererkennung | Raphael Erwig"
+  description="Projektbericht zu selbst aufgenommenen Daten, YOLOv11-L-Training, False-Positive-Analyse, Edge-Ausführung und kostenbewusster KI-Infrastruktur."
   canonicalPath="/de/projekte/messererkennung/"
   enPath="/projects/knife-detection/"
   dePath="/de/projekte/messererkennung/"
@@ -83,14 +99,14 @@ const sections = [
     backHref="/de/#projects"
     backLabel="Zurück zu den Projekten"
     eyebrow="KI · Computer Vision · Python"
-    title="Echtzeit-Messererkennung mit einem eigenen YOLOv11-Modell"
-    lead="Ein fünfmonatiges Computer-Vision-Projekt von der Datensatzerstellung über das Training bis zur False-Positive-Analyse und Ausführung auf unterschiedlichen Geräten."
-    status="Abgeschlossener funktionsfähiger Prototyp"
+    title="Live-Messererkennung mit einem selbst trainierten YOLOv11-L-Modell"
+    lead="Ein eigenständiger Forschungsprototyp mit selbst aufgenommenen Daten, 20–50 Trainingsiterationen, False-Positive-Analyse, Edge-Ausführung und wirtschaftlich geplanter KI-Infrastruktur."
+    status="Funktionsfähiger Forschungsprototyp · kein Sicherheitssystem"
     {facts}
     {sections}
     nextLabel="Nächstes Projekt"
     nextHref="/de/projekte/high-speed-drohne/"
-    nextTitle="Eigene High-Speed-Drohne"
+    nextTitle="Leistungsorientierter Drohnenprototyp"
   />
   <Footer />
 </BaseLayout>

@@ -700,6 +700,61 @@ h3 {
   margin-top: 20px;
 }
 
+.case-study-table-wrap {
+  margin-top: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  overflow-x: auto;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.case-study-table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.case-study-table th,
+.case-study-table td {
+  padding: 15px 17px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  vertical-align: top;
+}
+
+.case-study-table th {
+  color: #dfe5ed;
+  background: rgba(255, 255, 255, 0.035);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.case-study-table td {
+  color: #b8c0cc;
+  font-size: 0.94rem;
+}
+
+.case-study-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.case-study-media {
+  margin: 28px 0 0;
+}
+
+.case-study-media img {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+}
+
+.case-study-media figcaption {
+  margin-top: 10px;
+  color: #8d97a5;
+  font-size: 0.84rem;
+}
+
 .next-project {
   margin-top: 48px;
   padding: 30px;

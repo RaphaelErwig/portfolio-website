@@ -7,96 +7,109 @@ import Footer from '../components/Footer.astro';
 const projects = [
   {
     number: '01',
-    category: 'Hardware · CAD · Additive Manufacturing',
-    title: 'Custom High-Speed Drone',
+    category: 'Hardware · CAD · System Integration',
+    title: 'Performance-Oriented Drone Prototype',
     description:
-      'A flight-capable prototype designed in Onshape and manufactured in PA-CF. Findings from the first build now inform a revised version with improved cooling, material choice and weight distribution.',
+      'A self-designed, flight-capable 6S prototype with a 3D-printed load-bearing frame. Three initial flight tests produced the requirements for a more controllable, better-cooled second revision with FPV.',
     highlights: [
-      'Custom body designed in Onshape',
-      'PA-CF prototype manufactured in-house',
-      'Vibration and thermal analysis',
+      'Load-bearing frame and body designed in Onshape',
+      'PA-CF revision built, tuned and flight-tested',
+      'Revision 2 developed through low-cost PLA iterations',
     ],
     href: '/projects/high-speed-drone/',
-    duration: '3 months',
-    status: 'Revision 2 in development',
+    duration: '≈ 200 hours',
+    status: 'Revision 2 · first CAD iteration',
   },
   {
     number: '02',
-    category: 'AI · Computer Vision · Python',
-    title: 'Real-Time Knife Detection',
+    category: 'Computer Vision · Data · Edge AI',
+    title: 'Live Knife Detection Prototype',
     description:
-      'A completed computer-vision prototype built around a custom dataset and YOLOv11, with iterative analysis of false positives and deployment across different hardware platforms.',
+      'A functional research prototype using self-recorded data and YOLOv11-L. The project covers data collection, labeling, repeated training, false-positive analysis and deployment on laptop and NVIDIA Jetson hardware.',
     highlights: [
-      'Custom dataset and manual labeling',
-      'YOLOv11 training and evaluation',
-      'Desktop, laptop and NVIDIA Jetson deployment',
+      '731 positive and approximately 2,000 negative images',
+      '20–50 training iterations at 640 × 640',
+      'Cost-optimized local AI workstation built for about €910',
     ],
     href: '/projects/knife-detection/',
-    duration: '5 months',
-    status: 'Completed prototype',
+    duration: '≈ 250 hours',
+    status: 'Functional research prototype',
   },
 ];
 
 const strengths = [
   {
-    title: 'End-to-end systems',
-    text: 'I connect mechanics, electronics and software instead of considering each discipline in isolation.',
+    title: 'Take ownership',
+    text: 'I move from an open problem to a working prototype and take responsibility for research, sourcing, implementation and testing.',
   },
   {
-    title: 'Test and iterate',
-    text: 'Prototypes are validated in practice, weaknesses are analyzed and the next revision is based on evidence.',
+    title: 'Learn what the project requires',
+    text: 'When a project needs a skill I do not yet have, I build the foundation, apply it and validate the result in practice.',
   },
   {
-    title: 'Engineering trade-offs',
-    text: 'Performance, cost, manufacturability and practical value are part of the same technical decision.',
+    title: 'Think beyond technical feasibility',
+    text: 'Performance, cost, sourcing, energy use, manufacturability and residual value belong to the same engineering decision.',
   },
 ];
 
 const skillGroups = [
   {
-    title: 'Hardware & prototyping',
-    skills: ['Electrical Engineering', 'Onshape', 'CAD Design', '3D Printing', 'Hardware Integration'],
+    title: 'Product & hardware development',
+    skills: ['Electrical Systems', 'Onshape', 'CAD Design', '3D Printing', 'Soldering', 'Hardware Integration', 'Betaflight'],
   },
   {
-    title: 'Software & embedded',
-    skills: ['C++', 'Python', 'ESP32', 'Raspberry Pi', 'e² studio', 'Renesas FSP'],
+    title: 'Applied computer vision',
+    skills: ['Python', 'YOLOv11', 'Dataset Collection', 'Label Studio', 'Model Evaluation', 'Live Inference', 'NVIDIA Jetson'],
   },
   {
-    title: 'Computer vision',
-    skills: ['YOLOv11', 'Ultralytics', 'Dataset Creation', 'Real-Time Inference'],
+    title: 'Workflow & validation',
+    skills: ['SharePoint', 'Power Automate', 'Process Design', 'Functional Testing', 'Technical Documentation'],
   },
   {
-    title: 'Business & automation',
-    skills: ['Microsoft Excel', 'SharePoint', 'Power Automate', 'Economic Evaluation'],
+    title: 'Commercial engineering',
+    skills: ['Microsoft Excel', 'Cost–Benefit Analysis', 'Project Budgeting', 'Component Sourcing', 'Residual-Value Thinking'],
   },
 ];
 
 const experience = [
   {
-    role: 'Working Student – HPC Engineering Support',
-    company: 'Renesas Electronics',
-    area: 'High Performance Computing · Düsseldorf',
+    role: 'Working Student – HPC MCU Engineering Support',
+    company: 'Renesas Electronics Europe',
+    area: 'HPC MCU · Düsseldorf',
     period: 'Since Jan 2026',
-    text: 'Technical support for the HPC team across internal automation, product validation, demonstrations and partner deliveries.',
+    text: 'Supporting the HPC MCU team through workflow automation, functional testing, technical preparation and partner deliveries.',
     highlights: [
-      'Developed an internal workflow using a SharePoint form and Power Automate',
-      'Functionally tested products, internal development projects and technical demos',
-      'Prepared, verified and shipped products to partners and other Renesas offices',
+      'Independently designed and implemented a SharePoint and Power Automate workflow that replaces incomplete email requests with structured mandatory fields, automated responses and reminders',
+      'Reduced avoidable follow-up questions and improved traceability by storing request data in a central list',
+      'Test products, internal projects and demos using defined procedures; prepare configuration, accessories, documentation, packaging and shipment to partners and other offices',
     ],
-    tools: ['C++', 'e² studio', 'Renesas FSP', 'VS Code', 'SharePoint', 'Power Automate'],
+    tools: ['SharePoint', 'Power Automate', 'e² studio · testing', 'Functional Validation', 'Technical Logistics'],
+  },
+  {
+    role: 'B.Eng. Industrial Engineering – Electrical Engineering',
+    company: 'Hochschule Düsseldorf University of Applied Sciences',
+    area: 'Düsseldorf · 4th semester',
+    period: 'Since winter semester 2024',
+    text: 'Interdisciplinary degree combining electrical engineering and information technology with business fundamentals.',
+    highlights: [
+      'Technical and commercial foundations considered within the same degree programme',
+      'Independent projects used to deepen CAD, hardware integration and computer vision beyond the current curriculum',
+      'Bachelor’s degree expected after approximately three further semesters',
+    ],
+    tools: ['Electrical Engineering', 'Information Technology', 'Industrial Engineering'],
   },
   {
     role: 'Intern – Finance & Group Controlling',
     company: 'Immobilien Management Essen GmbH (IME)',
     area: 'Finance & Group Controlling · Essen',
     period: '02–06 Sep 2024',
-    text: 'Career-orientation internship with practical work in financial analysis, loan calculation and liquidity planning.',
+    text: 'A self-initiated one-week internship between secondary school and university, focused on practical Excel work and financial planning.',
     highlights: [
-      'Built an Excel analysis and evaluation table for a quantity framework',
-      'Created an annuity model for loan calculations',
-      'Participated in liquidity-planning discussions',
+      'Independently built an Excel analysis of the residential property portfolio that was subsequently used',
+      'Used an annuity-model exercise to understand financing logic and strengthen practical Excel skills',
+      'Prepared data for liquidity-planning discussions',
     ],
-    tools: ['Microsoft Excel', 'Financial Analysis', 'Loan Calculation'],
+    tools: ['Microsoft Excel', 'Portfolio Analysis', 'Financing Fundamentals'],
   },
 ];
 
@@ -111,45 +124,45 @@ const content = {
     navigation: 'Main navigation',
   },
   hero: {
-    eyebrow: 'Electrical Engineering · Embedded Systems · Computer Vision',
-    title: 'Complete technical systems.',
-    highlight: 'Precisely engineered. Economically sound.',
+    eyebrow: 'Industrial Engineering · Electrical Engineering · Product Development',
+    title: 'From technical idea to tested prototype.',
+    highlight: 'Built with commercial judgment.',
     intro:
-      'I am Raphael Erwig, an Industrial Engineering student specializing in Electrical Engineering. I turn technical ideas into working prototypes and evaluate them through performance, feasibility and practical value.',
+      'I am Raphael Erwig, an Industrial Engineering student focused on Electrical Engineering. I independently develop hardware and computer-vision prototypes, learn missing skills as needed and evaluate decisions through performance, effort, cost and practical value.',
     primary: 'Explore my projects',
     secondary: 'View experience',
   },
   projects: {
     kicker: 'Selected work',
-    title: 'Engineering in practice',
-    lead: 'Two independent projects show how I combine hardware, software, experimentation and evidence-based iteration.',
+    title: 'Engineering decisions in practice',
+    lead: 'Two independent projects show how I combine technical implementation with testing, iteration and commercial trade-offs.',
     linkLabel: 'View case study',
   },
   experience: {
-    kicker: 'Professional experience',
+    kicker: 'Experience and education',
     title: 'Technology and business',
-    lead: 'Practical experience in semiconductor engineering support, workflow automation and financial controlling.',
+    lead: 'Professional practice in semiconductor engineering support and process automation, combined with an interdisciplinary engineering degree and an early insight into financial controlling.',
     toolsLabel: 'Tools and technologies',
   },
   about: {
     kicker: 'About me',
-    title: 'Curiosity turned into engineering',
-    lead: 'I combine electrical engineering, hands-on prototyping and an economic perspective on technical decisions.',
+    title: 'Curiosity, ownership and commercial thinking',
+    lead: 'I combine electrical engineering, hands-on product development and an economic perspective on technical decisions.',
     paragraphs: [
       'My fascination for engineering began when I built and modified nitro-powered RC cars with my father. That early curiosity developed into the ambition to design increasingly complex hardware and software systems independently.',
-      'I study Industrial Engineering with a specialization in Electrical Engineering. My main interests are embedded systems, hardware development, computer vision and additive manufacturing – especially where several disciplines have to work together in one reliable system.',
+      'I chose Industrial Engineering because technical feasibility alone is not enough for a good product. I am most interested in work where performance, cost, manufacturability and real-world value have to be considered together – and I am open to international opportunities and collaborations.',
     ],
     principlesTitle: 'How I approach technical work',
   },
   skills: {
     kicker: 'Capabilities',
-    title: 'Tools I use in practice',
-    lead: 'Grouped by application rather than presented as an unqualified list of keywords.',
+    title: 'Applied capabilities',
+    lead: 'Tools and methods tied to projects or professional practice, rather than an unqualified list of keywords.',
   },
   contact: {
     eyebrow: 'Contact',
-    title: 'Interested in solving a real technical problem?',
-    text: 'I am open to challenging projects and future opportunities at the intersection of engineering, technology and business.',
+    title: 'Let’s start a conversation.',
+    text: 'I am open to international connections, challenging projects and future opportunities at the intersection of engineering, product development and business.',
     button: 'Send me an email',
     linkedin: 'Connect on LinkedIn',
   },
@@ -158,8 +171,8 @@ const content = {
 
 <BaseLayout
   lang="en"
-  title="Raphael Erwig | Electrical Engineering Portfolio"
-  description="Engineering portfolio of Raphael Erwig: embedded systems, computer vision, hardware development and economically sound prototyping."
+  title="Raphael Erwig | Engineering & Product Development"
+  description="Portfolio of Raphael Erwig: hardware development, computer vision, product engineering and commercially grounded technical decisions."
   canonicalPath="/"
   enPath="/"
   dePath="/de/"

@@ -16,7 +16,7 @@ const site = Astro.site ?? Astro.url.origin;
 const canonicalUrl = new URL(canonicalPath, site);
 const enUrl = new URL(enPath, site);
 const deUrl = new URL(dePath, site);
-const socialImageUrl = new URL('/social-preview.png', site);
+const socialImageUrl = new URL(lang === 'de' ? '/social-preview-de.png' : '/social-preview.png', site);
 const locale = lang === 'de' ? 'de_DE' : 'en_US';
 const alternateLocale = lang === 'de' ? 'en_US' : 'de_DE';
 const skipLabel = lang === 'de' ? 'Zum Inhalt springen' : 'Skip to content';
@@ -27,8 +27,9 @@ const structuredData = {
   url: new URL('/', site).toString(),
   sameAs: ['https://www.linkedin.com/in/raphael-erwig-4557b8263/'],
   knowsAbout: [
+    'Industrial Engineering',
     'Electrical Engineering',
-    'Embedded Systems',
+    'Product Development',
     'Computer Vision',
     'Additive Manufacturing',
     'Engineering Economics',
