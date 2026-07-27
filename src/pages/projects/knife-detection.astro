@@ -48,6 +48,14 @@ const sections = [
       'Repeated review of weak bounding boxes and false-positive examples',
       'Final Precision, Recall and mAP pending a leakage-resistant re-evaluation',
     ],
+    media: [
+      {
+        src: '/images/knife-detection-false-negative.png',
+        alt: 'Live camera frame showing scissors correctly not classified as a knife',
+        caption: 'Negative test example · the scissors were correctly not classified as a knife',
+        variant: 'contain',
+      },
+    ],
   },
   {
     title: 'Live deployment',
@@ -59,7 +67,7 @@ const sections = [
   {
     title: 'Cost-aware training infrastructure',
     paragraphs: [
-      'Repeated cloud GPU usage would have created a continuing operating expense, so I compared that approach with owning a reusable workstation. In March 2025, I sourced almost all components second-hand and built a local AI workstation for approximately €910.',
+      'Repeated cloud GPU usage would have created a continuing operating expense, so I considered that approach against owning a reusable workstation. In March 2025, I sourced almost all components second-hand and built a local AI workstation for approximately €910. A provider-specific break-even calculation is not presented because the original cloud quotations and total training hours were not retained.',
     ],
     table: {
       headers: ['Decision factor', 'Local workstation'],
@@ -67,7 +75,7 @@ const sections = [
         ['Core hardware', 'NVIDIA Tesla T4 · Ryzen 7 5800X · 64 GB RAM · 1 TB Samsung 990 Pro'],
         ['Acquisition', 'Almost entirely second-hand, including a negotiated CPU/mainboard/RAM bundle'],
         ['Iteration', 'Available for repeated training without a new usage fee for each run'],
-        ['Residual value', 'Current second-hand estimate remains around the original acquisition cost'],
+        ['Residual value', 'Second-hand listings suggest substantial residual value, but no resale price has been confirmed'],
         ['Energy use', 'Training intentionally scheduled during local PV generation after the 2 kWh battery was full; the exact solar share was not measured'],
       ],
     },
@@ -100,10 +108,16 @@ const sections = [
     backLabel="Back to projects"
     eyebrow="AI · Computer Vision · Python"
     title="Live knife detection with a self-trained YOLOv11-L model"
-    lead="An independent research prototype covering self-recorded data, 20–50 training iterations, false-positive analysis, edge deployment and the economics of local AI infrastructure."
+    lead="An independent research prototype covering self-recorded data, approximately 20–50 training runs, false-positive analysis, edge deployment and the economics of local AI infrastructure."
     status="Functional research prototype · not a safety product"
     {facts}
     {sections}
+    heroMedia={{
+      src: '/images/knife-detection-positive.png',
+      alt: 'Live camera frame showing one knife detected with an 82 percent displayed confidence score',
+      caption: 'Current demonstration · one knife detected with 82% displayed confidence',
+      variant: 'contain',
+    }}
     nextLabel="Next case study"
     nextHref="/projects/high-speed-drone/"
     nextTitle="Performance-Oriented Drone Prototype"

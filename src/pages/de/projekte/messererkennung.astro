@@ -48,6 +48,14 @@ const sections = [
       'Wiederholte Kontrolle schwacher Bounding Boxes und falsch positiver Beispiele',
       'Precision, Recall und mAP erst nach einer gegen Datenleckage robusten Neuauswertung',
     ],
+    media: [
+      {
+        src: '/images/knife-detection-false-negative.png',
+        alt: 'Live-Kamerabild mit einer Schere, die korrekt nicht als Messer klassifiziert wurde',
+        caption: 'Negatives Testbeispiel · die Schere wurde korrekt nicht als Messer klassifiziert',
+        variant: 'contain',
+      },
+    ],
   },
   {
     title: 'Live-Ausführung',
@@ -59,7 +67,7 @@ const sections = [
   {
     title: 'Kostenbewusste Trainingsinfrastruktur',
     paragraphs: [
-      'Wiederholte Cloud-GPU-Nutzung hätte bei jedem Trainingslauf neue Kosten verursacht. Deshalb verglich ich diesen Ansatz mit einer wiederverwendbaren eigenen Workstation. Im März 2025 beschaffte ich fast alle Komponenten gebraucht und baute für rund 910 € einen lokalen KI-PC.',
+      'Wiederholte Cloud-GPU-Nutzung hätte bei jedem Trainingslauf neue Kosten verursacht. Deshalb betrachtete ich diesen Ansatz im Vergleich zu einer wiederverwendbaren eigenen Workstation. Im März 2025 beschaffte ich fast alle Komponenten gebraucht und baute für rund 910 € einen lokalen KI-PC. Eine anbieterspezifische Break-even-Rechnung wird nicht ausgewiesen, weil die damaligen Cloud-Angebote und gesamten Trainingsstunden nicht mehr vorliegen.',
     ],
     table: {
       headers: ['Entscheidungsfaktor', 'Lokale Workstation'],
@@ -67,7 +75,7 @@ const sections = [
         ['Kernhardware', 'NVIDIA Tesla T4 · Ryzen 7 5800X · 64 GB RAM · 1 TB Samsung 990 Pro'],
         ['Beschaffung', 'Fast vollständig gebraucht, einschließlich eines verhandelten CPU-/Mainboard-/RAM-Pakets'],
         ['Iteration', 'Für wiederholte Trainings verfügbar, ohne neue Nutzungsgebühr je Lauf'],
-        ['Restwert', 'Aktuelle Gebrauchtmarktschätzung weiterhin ungefähr auf Höhe der Anschaffungskosten'],
+        ['Restwert', 'Gebrauchtangebote sprechen für einen erheblichen Restwert; ein tatsächlicher Verkaufspreis ist nicht bestätigt'],
         ['Energie', 'Training bewusst während lokaler PV-Erzeugung bei bereits vollem 2-kWh-Speicher; der genaue Solaranteil wurde nicht gemessen'],
       ],
     },
@@ -100,10 +108,16 @@ const sections = [
     backLabel="Zurück zu den Projekten"
     eyebrow="KI · Computer Vision · Python"
     title="Live-Messererkennung mit einem selbst trainierten YOLOv11-L-Modell"
-    lead="Ein eigenständiger Forschungsprototyp mit selbst aufgenommenen Daten, 20–50 Trainingsiterationen, False-Positive-Analyse, Edge-Ausführung und wirtschaftlich geplanter KI-Infrastruktur."
+    lead="Ein eigenständiger Forschungsprototyp mit selbst aufgenommenen Daten, ungefähr 20–50 Trainingsläufen, False-Positive-Analyse, Edge-Ausführung und wirtschaftlich geplanter KI-Infrastruktur."
     status="Funktionsfähiger Forschungsprototyp · kein Sicherheitssystem"
     {facts}
     {sections}
+    heroMedia={{
+      src: '/images/knife-detection-positive.png',
+      alt: 'Live-Kamerabild mit einem erkannten Messer und angezeigten 82 Prozent Konfidenz',
+      caption: 'Aktuelle Demonstration · ein Messer mit angezeigten 82 % Konfidenz erkannt',
+      variant: 'contain',
+    }}
     nextLabel="Nächstes Projekt"
     nextHref="/de/projekte/high-speed-drohne/"
     nextTitle="Leistungsorientierter Drohnenprototyp"

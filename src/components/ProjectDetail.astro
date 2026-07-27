@@ -8,7 +8,7 @@ interface Media {
   src: string;
   alt: string;
   caption?: string;
-  variant?: 'photo' | 'cad';
+  variant?: 'photo' | 'cad' | 'contain';
 }
 
 interface Section {
@@ -65,7 +65,7 @@ const {
     </header>
 
     {heroMedia && (
-      <figure class="case-study-cover">
+      <figure class:list={['case-study-cover', { 'case-study-cover-contain': heroMedia.variant === 'contain' }]}>
         <img src={heroMedia.src} alt={heroMedia.alt} />
         {heroMedia.caption && <figcaption>{heroMedia.caption}</figcaption>}
       </figure>
@@ -102,7 +102,9 @@ const {
                   <tbody>
                     {section.table.rows.map((row) => (
                       <tr>
-                        {row.map((cell) => <td>{cell}</td>)}
+                        {row.map((cell, index) => (
+                          <td data-label={section.table?.headers[index]}>{cell}</td>
+                        ))}
                       </tr>
                     ))}
                   </tbody>
@@ -110,7 +112,7 @@ const {
               </div>
             )}
             {section.media?.map((media) => (
-              <figure class:list={['case-study-media', { 'case-study-media-cad': media.variant === 'cad' }]}>
+              <figure class:list={['case-study-media', { 'case-study-media-cad': media.variant === 'cad' || media.variant === 'contain' }]}>
                 <img src={media.src} alt={media.alt} loading="lazy" />
                 {media.caption && <figcaption>{media.caption}</figcaption>}
               </figure>

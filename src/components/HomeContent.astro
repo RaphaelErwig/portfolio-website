@@ -10,6 +10,7 @@ interface Project {
   status: string;
   image?: string;
   imageAlt?: string;
+  imageFit?: 'cover' | 'contain';
 }
 
 interface Strength {
@@ -72,7 +73,7 @@ const { projects, strengths, skillGroups, experience, content } = Astro.props;
         <article>
           <a class="project-card" href={project.href}>
             {project.image && (
-              <figure class="project-media">
+              <figure class:list={['project-media', { 'project-media-contain': project.imageFit === 'contain' }]}>
                 <img src={project.image} alt={project.imageAlt ?? ''} loading="lazy" />
               </figure>
             )}
