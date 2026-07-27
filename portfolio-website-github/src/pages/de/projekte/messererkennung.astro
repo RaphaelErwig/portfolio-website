@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import ProjectDetail from '../../../components/ProjectDetail.astro';
+import Footer from '../../../components/Footer.astro';
+
+const nav = {
+  about: 'Über mich',
+  projects: 'Projekte',
+  experience: 'Erfahrung',
+  skills: 'Fähigkeiten',
+  contact: 'Kontakt',
+  menu: 'Navigation öffnen',
+  navigation: 'Hauptnavigation',
+};
+
+const facts = [
+  { label: 'Aufwand', value: '≈ 250 Stunden' },
+  { label: 'Datensatz', value: '731 Positivbilder · ≈ 2.000 Negativbilder' },
+  { label: 'Modell', value: 'YOLOv11-L · 640 × 640 · 160 Epochen' },
+  { label: 'Ausführung', value: 'Laptop · NVIDIA-Jetson-Plattformen' },
+];
+
+const sections = [
+  {
+    title: 'Ziel und Eigenanteil',
+    paragraphs: [
+      'Das Projekt untersuchte die frühzeitige visuelle Erkennung von Messern in Live-Kamerabildern als Forschungsprototyp. Ich führte es vollständig eigenständig durch und startete mit kaum Computer-Vision-Vorerfahrung. Python, Datenlabeling, YOLO-Training und Edge-Ausführung erarbeitete ich mir im Projektverlauf.',
+      'Das Ergebnis ist ein funktionsfähiger Prototyp für Experimente, kein zertifiziertes oder marktreifes Sicherheitssystem.',
+    ],
+  },
+  {
+    title: 'Selbst aufgenommener Datensatz',
+    paragraphs: [
+      'Alle Bilder wurden gezielt für das Projekt selbst aufgenommen; ein Teil entstand als Einzelbilder aus eigenen Videos. Der finale Arbeitsdatensatz enthält 731 Bilder mit Messern und rund 2.000 Negativbeispiele ohne Messer. Die Labels kontrollierte ich selbst, später beschleunigte Auto-Labeling den Prozess. Der gesamte Labelingaufwand lag bei etwa 40–60 Stunden.',
+      'Verwendet wurden ein 80/20-Split für Training und Validierung sowie ein kleiner separater Testsatz. Da ähnliche Frames derselben Videoszene zufällig auf Training und Validierung verteilt worden sein können, werden noch keine Benchmarkmetriken veröffentlicht. Dafür muss der Datensatz zuerst nach Szene beziehungsweise Quellvideo getrennt und erneut auf einem unabhängigen Holdout-Satz geprüft werden.',
+    ],
+  },
+  {
+    title: 'Training und Iteration',
+    paragraphs: [
+      'Die gewählte Konfiguration nutzte YOLOv11-L mit 640 × 640 Pixeln über 160 Epochen. In ungefähr 20–50 Trainingsläufen überarbeitete ich Datensatz und Trainingsaufbau iterativ.',
+      'Frühe Versionen erkannten viele Gegenstände in Händen fälschlich als Messer, weil repräsentative Negativszenen fehlten. Durch die Ergänzung von rund 2.000 Negativbeispielen gingen diese Fehlklassifikationen deutlich zurück.',
+    ],
+    bullets: [
+      'Eine gelabelte Klasse: Messer',
+      'Eigene Positiv- und Negativszenen mit verschiedenen Lichtbedingungen und Hintergründen',
+      'Wiederholte Kontrolle schwacher Bounding Boxes und falsch positiver Beispiele',
+      'Precision, Recall und mAP erst nach einer gegen Datenleckage robusten Neuauswertung',
+    ],
+  },
+  {
+    title: 'Live-Ausführung',
+    paragraphs: [
+      'Das Modell wurde mit einer Live-Webcam auf einem Lenovo Yoga Slim 6 und auf NVIDIA-Jetson-Plattformen einschließlich eines Orin Nano Super ausgeführt. Auf dem Laptop wurden ungefähr 6–10 FPS beobachtet. Gerätespezifische Werte werden jedoch erst als Benchmark veröffentlicht, wenn Modell, Eingabeauflösung und Messmethode vereinheitlicht sind.',
+      'Der Prototyp wurde auch in unbekannten Szenen sowie bei unterschiedlichen Lichtbedingungen und Hintergründen demonstriert. Bei Verdeckung und ungewöhnlichen Messerformen sinkt die Zuverlässigkeit.',
+    ],
+  },
+  {
+    title: 'Kostenbewusste Trainingsinfrastruktur',
+    paragraphs: [
+      'Wiederholte Cloud-GPU-Nutzung hätte bei jedem Trainingslauf neue Kosten verursacht. Deshalb verglich ich diesen Ansatz mit einer wiederverwendbaren eigenen Workstation. Im März 2025 beschaffte ich fast alle Komponenten gebraucht und baute für rund 910 € einen lokalen KI-PC.',
+    ],
+    table: {
+      headers: ['Entscheidungsfaktor', 'Lokale Workstation'],
+      rows: [
+        ['Kernhardware', 'NVIDIA Tesla T4 · Ryzen 7 5800X · 64 GB RAM · 1 TB Samsung 990 Pro'],
+        ['Beschaffung', 'Fast vollständig gebraucht, einschließlich eines verhandelten CPU-/Mainboard-/RAM-Pakets'],
+        ['Iteration', 'Für wiederholte Trainings verfügbar, ohne neue Nutzungsgebühr je Lauf'],
+        ['Restwert', 'Aktuelle Gebrauchtmarktschätzung weiterhin ungefähr auf Höhe der Anschaffungskosten'],
+        ['Energie', 'Training bewusst während lokaler PV-Erzeugung bei bereits vollem 2-kWh-Speicher; der genaue Solaranteil wurde nicht gemessen'],
+      ],
+    },
+  },
+  {
+    title: 'Ergebnis und Grenzen',
+    paragraphs: [
+      'Das Projekt führte zu einer funktionierenden Live-Demonstration und einer weiter nutzbaren Trainingsinfrastruktur. Es zeigte außerdem, dass die Zusammensetzung des Datensatzes wichtiger sein kann als eine bloße Vergrößerung des Modells. Das aktuelle Modell bleibt ein experimenteller Prototyp: Es ist nicht zertifiziert, nicht marktreif und nicht als zuverlässiges System für den öffentlichen Sicherheitseinsatz zu verstehen.',
+      'Als nächste Nachweise folgen ein neues ungeschnittenes Demonstrationsvideo, einheitliche Gerätebenchmarks und eine gruppierte Datensatzaufteilung. Erst danach werden Precision, Recall, mAP und vergleichbare FPS veröffentlicht.',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  lang="de"
+  title="Live-Prototyp zur Messererkennung | Raphael Erwig"
+  description="Projektbericht zu selbst aufgenommenen Daten, YOLOv11-L-Training, False-Positive-Analyse, Edge-Ausführung und kostenbewusster KI-Infrastruktur."
+  canonicalPath="/de/projekte/messererkennung/"
+  enPath="/projects/knife-detection/"
+  dePath="/de/projekte/messererkennung/"
+>
+  <Header
+    lang="de"
+    labels={nav}
+    languageHrefs={{ en: '/projects/knife-detection/', de: '/de/projekte/messererkennung/' }}
+  />
+  <ProjectDetail
+    backHref="/de/#projects"
+    backLabel="Zurück zu den Projekten"
+    eyebrow="KI · Computer Vision · Python"
+    title="Live-Messererkennung mit einem selbst trainierten YOLOv11-L-Modell"
+    lead="Ein eigenständiger Forschungsprototyp mit selbst aufgenommenen Daten, 20–50 Trainingsiterationen, False-Positive-Analyse, Edge-Ausführung und wirtschaftlich geplanter KI-Infrastruktur."
+    status="Funktionsfähiger Forschungsprototyp · kein Sicherheitssystem"
+    {facts}
+    {sections}
+    nextLabel="Nächstes Projekt"
+    nextHref="/de/projekte/high-speed-drohne/"
+    nextTitle="Leistungsorientierter Drohnenprototyp"
+  />
+  <Footer />
+</BaseLayout>

@@ -640,25 +640,6 @@ h3 {
   font-weight: 700;
 }
 
-.case-study-cover {
-  margin: 52px 0 0;
-}
-
-.case-study-cover img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 22px;
-}
-
-.case-study-cover figcaption {
-  margin-top: 10px;
-  color: #8d97a5;
-  font-size: 0.84rem;
-}
-
 .fact-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -763,17 +744,9 @@ h3 {
 }
 
 .case-study-media img {
-  display: block;
   width: 100%;
-  max-height: 760px;
-  object-fit: cover;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 18px;
-}
-
-.case-study-media-cad img {
-  background: #fff;
-  object-fit: contain;
 }
 
 .case-study-media figcaption {

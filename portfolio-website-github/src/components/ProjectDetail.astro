@@ -4,13 +4,6 @@ interface Fact {
   value: string;
 }
 
-interface Media {
-  src: string;
-  alt: string;
-  caption?: string;
-  variant?: 'photo' | 'cad';
-}
-
 interface Section {
   title: string;
   paragraphs?: string[];
@@ -19,7 +12,11 @@ interface Section {
     headers: string[];
     rows: string[][];
   };
-  media?: Media[];
+  media?: {
+    src: string;
+    alt: string;
+    caption?: string;
+  };
 }
 
 interface Props {
@@ -31,7 +28,6 @@ interface Props {
   status: string;
   facts: Fact[];
   sections: Section[];
-  heroMedia?: Media;
   nextLabel: string;
   nextHref: string;
   nextTitle: string;
@@ -46,7 +42,6 @@ const {
   status,
   facts,
   sections,
-  heroMedia,
   nextLabel,
   nextHref,
   nextTitle,
@@ -63,13 +58,6 @@ const {
       <p class="case-study-lead">{lead}</p>
       <p class="status-pill">{status}</p>
     </header>
-
-    {heroMedia && (
-      <figure class="case-study-cover">
-        <img src={heroMedia.src} alt={heroMedia.alt} />
-        {heroMedia.caption && <figcaption>{heroMedia.caption}</figcaption>}
-      </figure>
-    )}
 
     <dl class="fact-grid">
       {facts.map((fact) => (
@@ -109,12 +97,12 @@ const {
                 </table>
               </div>
             )}
-            {section.media?.map((media) => (
-              <figure class:list={['case-study-media', { 'case-study-media-cad': media.variant === 'cad' }]}>
-                <img src={media.src} alt={media.alt} loading="lazy" />
-                {media.caption && <figcaption>{media.caption}</figcaption>}
+            {section.media && (
+              <figure class="case-study-media">
+                <img src={section.media.src} alt={section.media.alt} loading="lazy" />
+                {section.media.caption && <figcaption>{section.media.caption}</figcaption>}
               </figure>
-            ))}
+            )}
           </div>
         </section>
       ))}

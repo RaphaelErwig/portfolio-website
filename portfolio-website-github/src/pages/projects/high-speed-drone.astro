@@ -34,19 +34,6 @@ const sections = [
     paragraphs: [
       'The load-bearing frame, body and component packaging were developed through four to five major Onshape iterations. The geometry had to balance stiffness, aerodynamics, cooling, available space, repairability, printability and cost.',
     ],
-    media: [
-      {
-        src: '/images/drone-top-dark.jpeg',
-        alt: 'Top view of the flight-capable first drone revision showing its four-motor layout and printed central body',
-        caption: 'Revision 1 · symmetrical motor layout and printed central body',
-      },
-      {
-        src: '/images/drone-cad-revision-1.png',
-        alt: 'Onshape CAD model of the first drone revision with the central component compartment visible',
-        caption: 'Revision 1 · CAD model of the self-designed frame, body and component packaging',
-        variant: 'cad',
-      },
-    ],
     table: {
       headers: ['Subsystem', 'Revision 1 choice', 'Design rationale'],
       rows: [
@@ -75,13 +62,6 @@ const sections = [
       'Cooling: ventilation slots and a new layout for flight controller and ESC',
       'Weight distribution: battery positioned lower, lighter components higher',
       'Control: DJI O4 FPV planned for revision 2 before performance testing',
-    ],
-    media: [
-      {
-        src: '/images/drone-detail-dark.jpeg',
-        alt: 'Three-quarter detail view of the first drone revision highlighting the printed body, arm geometry and propulsion layout',
-        caption: 'Revision 1 detail · printed body, arm geometry and propulsion layout',
-      },
     ],
   },
   {
@@ -136,11 +116,6 @@ const sections = [
     title="Iterative development of a performance-oriented drone prototype"
     lead="A self-designed 6S drone that turns practical flight tests, material behavior, thermal measurements and cost trade-offs into a structured second revision."
     status="Revision 1 flight-capable · speed target not yet validated"
-    heroMedia={{
-      src: '/images/drone-hero-dark.jpeg',
-      alt: 'Three-quarter view of the self-developed flight-capable first drone revision on a dark background',
-      caption: 'Revision 1 · self-designed PA-CF structure',
-    }}
     {facts}
     {sections}
     nextLabel="Next case study"
