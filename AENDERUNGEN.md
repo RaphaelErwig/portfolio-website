@@ -253,3 +253,77 @@ npm install
 npm run build
 npm run preview
 ```
+
+---
+
+## 6. Wenn lokal alles geht, online aber nicht
+
+`npm run verify` baut die Seite und prüft anschließend jede in den HTML-Dateien
+verlinkte Datei gegen den tatsächlichen Inhalt von `dist/`. Fehlt eine, bricht der
+Befehl mit Exit-Code 1 ab und nennt Datei und Fundstelle. Genau der Fall, dass ein
+Bild lokal existiert, aber nicht im Deploy landet.
+
+```bash
+npm run verify     # bauen und prüfen
+npm run check      # nur prüfen, wenn dist/ schon existiert
+```
+
+Das Skript meldet zusätzlich alle Dateien über 600 KB.
+
+### Fehlersuche in dieser Reihenfolge
+
+1. **Bild-URL direkt im Browser öffnen**, zum Beispiel
+   `https://raphaelerwig.com/images/knife-detection-positive.webp`.
+   Lädt es → das Bild ist da, dein Browser hatte altes HTML gecacht, harter Reload
+   mit Cmd+Shift+R. Kommt 404 → die Datei liegt nicht auf dem Server, weiter bei 2.
+2. **Ist die Datei überhaupt im Repo?**
+   `git status public/images/` und `git ls-files public/images/`.
+   Wenn die WebP-Dateien dort nicht auftauchen, wurden sie nie committet — dann
+   `git add public/images/ && git commit && git push`. Wichtig: die alten `.png`-
+   und `.jpeg`-Dateien wurden gelöscht, das muss ebenfalls committet werden
+   (`git add -A public/images/`).
+3. **Ist sie im Build?** `npm run verify` und danach `ls dist/images/`.
+4. **Cloudflare-Cache leeren.** Dashboard → Caching → Configuration →
+   Purge Everything. Bei einem Deploy, der Dateinamen ändert, ist das fast immer
+   nötig: Der alte Pfad ist weg, der neue kann noch als 404 im Cache stehen.
+
+---
+
+## 7. Bilddarstellung auf dem Handy
+
+Die Bild-Container hatten ein festes Seitenverhältnis von 16:9 und `object-fit: cover`.
+Das skaliert ein Bild hoch, bis der Container gefüllt ist, und schneidet den Überstand
+weg. Bei den Drohnenfotos war das viel:
+
+| Bild | Verhältnis | im 16:9-Container |
+|---|---|---|
+| `drone-hero-dark` | 1,78 | passt exakt |
+| `drone-cad-revision-1` | 1,37 | 23 % der Höhe abgeschnitten |
+| `drone-top-dark` | 1,33 | 25 % der Höhe abgeschnitten |
+| `drone-detail-dark` | 1,00 | 44 % der Höhe abgeschnitten |
+| `knife-detection-*` | 0,99 | 44 % der Höhe abgeschnitten |
+
+Auf dem Desktop fällt das kaum auf, weil die Fläche groß ist. Auf dem Handy wirkt es
+wie ein Zoom-Fehler.
+
+**Behoben:** unter 760 px Breite bestimmt das Bild seine eigene Höhe
+(`object-fit: contain`, kein festes Verhältnis), begrenzt auf 62 vh in den Projektkarten
+und 72 vh beim Titelbild der Fallstudien, damit ein hohes Bild nicht den ganzen Schirm
+einnimmt. Die Karten werden dadurch unterschiedlich hoch — auf dem Handy stehen sie
+ohnehin untereinander, dort stört das nicht.
+
+**Auf dem Desktop bleibt alles wie es war**, weil die festen Verhältnisse dort das Raster
+ruhig halten und der Beschnitt bei großer Fläche nicht auffällt.
+
+### Falls es weiterhin nicht passt
+
+Die Alternative wäre, die Fotos selbst auf 16:9 zu bringen, statt sie im Container zu
+beschneiden. Dann bestimmst du beim Zuschnitt, was wegfällt, statt es dem Browser zu
+überlassen:
+
+```bash
+python3 scripts/optimize-image.py <datei> drone-top-dark
+```
+
+Das ist die sauberere Lösung, wenn du die Bilder ohnehin neu aufnimmst — hellere
+Ausleuchtung würde den dunklen Drohnen auf dem dunklen Hintergrund zusätzlich helfen.

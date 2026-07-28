@@ -1423,3 +1423,38 @@ footer {
     margin: 0 0 24px;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Mobil: Bilder nicht beschneiden.
+   Auf dem Desktop halten feste Seitenverhaeltnisse das Raster ruhig. Auf schmalen
+   Schirmen ist die Bildflaeche aber so klein, dass jeder Beschnitt sofort wie ein
+   Fehler wirkt — die Drohnenfotos (4:3 und quadratisch) verloren im 16:9-Container
+   25 bis 44 Prozent der Hoehe und sahen dadurch herangezoomt aus.
+   Unter 760 px bestimmt deshalb das Bild seine eigene Hoehe. Die Karten werden
+   dadurch unterschiedlich hoch, was auf dem Handy egal ist, weil sie ohnehin
+   untereinander stehen.
+   --------------------------------------------------------------------------- */
+
+@media (max-width: 760px) {
+  .project-media {
+    aspect-ratio: auto;
+  }
+
+  .project-media img {
+    height: auto;
+    max-height: 62vh;
+    object-fit: contain;
+  }
+
+  .case-study-cover img {
+    aspect-ratio: auto;
+    height: auto;
+    max-height: 72vh;
+    object-fit: contain;
+  }
+
+  .case-study-media img {
+    max-height: none;
+    object-fit: contain;
+  }
+}
