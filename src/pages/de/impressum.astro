@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import LegalContent from '../../components/LegalContent.astro';
+import Footer from '../../components/Footer.astro';
+import { owner, lastUpdated } from '../../i18n/site-data';
+
+const nav = {
+  about: 'Über mich',
+  projects: 'Projekte',
+  experience: 'Erfahrung',
+  skills: 'Fähigkeiten',
+  contact: 'Kontakt',
+  menu: 'Navigation öffnen',
+  navigation: 'Hauptnavigation',
+  cv: 'Lebenslauf',
+};
+
+const blocks = [
+  {
+    heading: 'Angaben gemäß § 5 DDG',
+    address: [owner.name, owner.street, `${owner.postalCode} ${owner.city}`, owner.country.de],
+  },
+  {
+    heading: 'Kontakt',
+    paragraphs: [
+      `E-Mail: <a href="mailto:${owner.email}">${owner.email}</a>`,
+      ...(owner.phone ? [`Telefon: ${owner.phone}`] : []),
+    ],
+  },
+  {
+    heading: 'Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV',
+    address: [owner.name, owner.street, `${owner.postalCode} ${owner.city}`],
+  },
+  {
+    heading: 'Art des Angebots',
+    paragraphs: [
+      'Diese Website ist ein privates Portfolio zur Darstellung eigener technischer Projekte und des beruflichen Werdegangs. Es werden keine Waren oder Dienstleistungen angeboten, es findet kein Vertragsschluss über die Website statt und es werden keine Werbeeinnahmen erzielt.',
+    ],
+  },
+  {
+    heading: 'Streitbeilegung',
+    paragraphs: [
+      'Da über diese Website keine Verträge mit Verbrauchern geschlossen werden, besteht keine Pflicht zur Teilnahme an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle. Eine freiwillige Teilnahme findet nicht statt.',
+    ],
+  },
+  {
+    heading: 'Haftung für Inhalte',
+    paragraphs: [
+      'Als Diensteanbieter bin ich gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG bin ich als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.',
+      'Die auf dieser Website dargestellten Projekte sind Forschungs- und Lernprototypen. Sie sind weder zertifiziert noch marktreif und stellen keine Zusicherung technischer Eigenschaften dar.',
+    ],
+  },
+  {
+    heading: 'Haftung für Links',
+    paragraphs: [
+      'Dieses Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe. Für diese fremden Inhalte kann ich keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber verantwortlich. Zum Zeitpunkt der Verlinkung waren keine Rechtsverstöße erkennbar.',
+    ],
+  },
+  {
+    heading: 'Urheberrecht',
+    paragraphs: [
+      'Die auf dieser Website veröffentlichten Texte, Fotografien, CAD-Darstellungen und Videos wurden von mir selbst erstellt und unterliegen dem deutschen Urheberrecht. Eine Vervielfältigung, Bearbeitung oder Verbreitung außerhalb der Grenzen des Urheberrechts bedarf meiner schriftlichen Zustimmung. Für private, nicht-kommerzielle Zwecke ist das Betrachten und Speichern selbstverständlich gestattet.',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  lang="de"
+  title="Impressum | Raphael Erwig"
+  description="Impressum und Anbieterkennzeichnung des privaten Portfolios von Raphael Erwig."
+  canonicalPath="/de/impressum/"
+  enPath="/legal-notice/"
+  dePath="/de/impressum/"
+  noindex
+>
+  <Header lang="de" labels={nav} languageHrefs={{ en: '/legal-notice/', de: '/de/impressum/' }} />
+  <LegalContent
+    title="Impressum"
+    updatedLabel="Stand"
+    updated={lastUpdated}
+    {blocks}
+  />
+  <Footer lang="de" />
+</BaseLayout>

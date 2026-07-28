@@ -10,16 +10,19 @@ const projects = [
     category: 'Hardware · CAD · Systemintegration',
     title: 'Leistungsorientierter Drohnenprototyp',
     description:
-      'Ein selbst konstruierter, flugfähiger 6S-Prototyp mit 3D-gedrucktem tragenden Rahmen. Drei erste Flugtests lieferten die Anforderungen für eine sicherer kontrollierbare, besser gekühlte zweite Version mit FPV.',
+      'Ein selbst konstruierter, flugfähiger 6S-Prototyp mit 3D-gedrucktem tragenden Rahmen. Revision 1 ist abgeschlossen; ihre gemessenen Schwächen – Resonanz, Wärmestau und Schwerpunktlage – ergaben die Spezifikation für eine zweite Revision in höherer Leistungsklasse.',
     highlights: [
-      'Tragender Rahmen und Verkleidung in Onshape entwickelt',
-      'PA-CF-Version aufgebaut, abgestimmt und geflogen',
-      'Version 2 wird kostengünstig mit PLA iteriert',
+      'Tragender Rahmen und Verkleidung in Onshape über 4–5 größere Iterationen entwickelt',
+      'PA-CF-Revision aufgebaut, abgestimmt und geflogen; drei Schwachstellen identifiziert und behoben',
+      'Revision 2 in CAD: neuer Rahmen, Motoren, ESC und Flugcontroller, Wechsel von 6S auf ein 8S/12S-fähiges System',
     ],
     href: '/de/projekte/high-speed-drohne/',
-    duration: '≈ 200 Stunden',
-    status: 'Version 2 · erste CAD-Iteration',
-    image: '/images/drone-hero-dark.jpeg',
+    metric: '3 Flugtests → 4 Konstruktionsänderungen',
+    effort: '≈ 200 h',
+    status: '2026 · Revision 2 in CAD',
+    image: '/images/drone-hero-dark.webp',
+    imageWidth: 1400,
+    imageHeight: 787,
     imageAlt: 'Selbst entwickelter flugfähiger Drohnenprototyp vor dunklem Hintergrund',
   },
   {
@@ -27,16 +30,19 @@ const projects = [
     category: 'Computer Vision · Daten · Edge AI',
     title: 'Live-Prototyp zur Messererkennung',
     description:
-      'Ein funktionsfähiger Forschungsprototyp mit selbst aufgenommenen Daten und YOLOv11-L. Das Projekt umfasst Datenerfassung, Labeling, wiederholtes Training, False-Positive-Analyse und Ausführung auf Laptop und NVIDIA-Jetson-Hardware.',
+      'Ein funktionsfähiger Forschungsprototyp auf Basis eines selbst aufgenommenen Datensatzes mit 4.742 Bildern, trainiert auf einen gemessenen mAP@0,5 von 0,844 und live auf Laptop und NVIDIA-Jetson-Hardware ausgeführt.',
     highlights: [
-      '731 Positivbilder und rund 2.000 Negativbeispiele',
-      'Ungefähr 20–50 Trainingsläufe bei 640 × 640',
-      'Kostenoptimierter lokaler KI-PC für rund 910 €',
+      'Selbst aufgenommener Datensatz: 731 Messerbilder und 4.011 ohne Messer',
+      'Eine Aufteilung in zwei Klassen wurde gegen eine Klasse getestet und am Messergebnis verworfen',
+      'Lokale KI-Workstation gebraucht für rund 910 € statt laufender Cloud-Kosten',
     ],
     href: '/de/projekte/messererkennung/',
-    duration: '≈ 250 Stunden',
+    metric: 'mAP@0,5 = 0,844 in der Validierung',
+    effort: '≈ 250 h',
     status: 'Funktionsfähiger Forschungsprototyp',
-    image: '/images/knife-detection-positive.png',
+    image: '/images/knife-detection-positive.webp',
+    imageWidth: 568,
+    imageHeight: 572,
     imageAlt: 'Live-Kamerabild mit einem erkannten Messer und angezeigten 82 Prozent Konfidenz',
     imageFit: 'contain',
   },
@@ -61,18 +67,22 @@ const skillGroups = [
   {
     title: 'Produkt- und Hardwareentwicklung',
     skills: ['Elektrische Systeme', 'Onshape', 'CAD-Konstruktion', '3D-Druck', 'Löten', 'Hardware-Integration', 'Betaflight'],
+    evidence: { text: 'Eingesetzt im Drohnenprototyp', href: '/de/projekte/high-speed-drohne/' },
   },
   {
     title: 'Angewandte Computer Vision',
     skills: ['Python', 'YOLOv11', 'Datenerfassung', 'Label Studio', 'Modellevaluation', 'Live-Inferenz', 'NVIDIA Jetson'],
+    evidence: { text: 'Eingesetzt im Prototyp zur Messererkennung', href: '/de/projekte/messererkennung/' },
   },
   {
     title: 'Prozesse und Validierung',
     skills: ['SharePoint', 'Power Automate', 'Prozessgestaltung', 'Funktionstests', 'Technische Dokumentation'],
+    evidence: { text: 'Im beruflichen Einsatz bei Renesas Electronics Europe', href: '#experience' },
   },
   {
     title: 'Wirtschaftliches Engineering',
     skills: ['Microsoft Excel', 'Kosten-Nutzen-Analyse', 'Projektbudgetierung', 'Komponentenbeschaffung', 'Restwertbetrachtung'],
+    evidence: { text: 'Angewendet in beiden Projektbudgets und im Controlling', href: '#projects' },
   },
 ];
 
@@ -88,7 +98,7 @@ const experience = [
       'Weniger vermeidbare Rückfragen und bessere Nachverfolgbarkeit durch zentrale Speicherung der Vorgangsdaten',
       'Tests von Produkten, internen Projekten und Demos nach festen Verfahren sowie Vorbereitung von Konfiguration, Zubehör, Dokumentation, Verpackung und Versand',
     ],
-    tools: ['SharePoint', 'Power Automate', 'e² studio · Tests', 'Funktionsvalidierung', 'Technische Logistik'],
+    tools: ['SharePoint', 'Power Automate', 'e² studio', 'Funktionstests', 'Technische Logistik'],
   },
   {
     role: 'B.Eng. Wirtschaftsingenieurwesen – Elektrotechnik',
@@ -106,19 +116,17 @@ const experience = [
   {
     role: 'Praktikum – Finanz- und Konzerncontrolling',
     company: 'Immobilien Management Essen GmbH (IME)',
-    area: 'Finanz- und Konzerncontrolling · Essen',
-    period: '02.–06.09.2024',
-    text: 'Eigeninitiativ organisiertes einwöchiges Praktikum zwischen Abitur und Studium mit praktischer Excel-Arbeit und Einblicken in die Finanzplanung.',
-    highlights: [
-      'Eigenständige Excel-Auswertung des Wohnungsbestands, die anschließend weiterverwendet wurde',
-      'Annuitätenmodell als Übung zum Verständnis von Finanzierungslogik und zur Vertiefung praktischer Excel-Kenntnisse',
-      'Vorbereitung von Daten für Gespräche zur Liquiditätsplanung',
-    ],
+    area: 'Essen',
+    period: '09/2024 · eine Woche',
+    text: 'Eigeninitiativ organisierter einwöchiger Einblick zwischen Abitur und Studium: eigenständige Excel-Auswertung des Wohnungsbestands, die anschließend weiterverwendet wurde, sowie ein Annuitätenmodell zum Verständnis der Finanzierungslogik.',
+    highlights: [],
     tools: ['Microsoft Excel', 'Bestandsanalyse', 'Finanzierungsgrundlagen'],
+    compact: true,
   },
 ];
 
 const content = {
+  lang: 'de',
   nav: {
     about: 'Über mich',
     projects: 'Projekte',
@@ -127,21 +135,25 @@ const content = {
     contact: 'Kontakt',
     menu: 'Navigation öffnen',
     navigation: 'Hauptnavigation',
+    cv: 'Lebenslauf',
   },
   hero: {
     eyebrow: 'Wirtschaftsingenieurwesen · Elektrotechnik · Produktentwicklung',
     title: 'Von der technischen Idee zum getesteten Prototyp.',
     highlight: 'Entwickelt mit wirtschaftlichem Blick.',
+    availability: 'Ab sofort verfügbar für Praktikum oder Werkstudentenstelle · weltweit, für die richtige Stelle unterbreche ich mein Studium',
     intro:
-      'Ich bin Raphael Erwig und studiere Wirtschaftsingenieurwesen mit Schwerpunkt Elektrotechnik. Ich entwickle Hardware- und Computer-Vision-Prototypen eigenständig, erarbeite fehlende Fähigkeiten gezielt und bewerte Entscheidungen anhand von Leistung, Aufwand, Kosten und praktischem Nutzen.',
+      'Ich bin Raphael Erwig und studiere Wirtschaftsingenieurwesen mit Schwerpunkt Elektrotechnik. Ich entwickle Hardware- und Computer-Vision-Prototypen von Anfang bis Ende selbst, erarbeite die Fähigkeiten, die ein Projekt verlangt, und bewerte jede Entscheidung anhand von Leistung, Aufwand, Kosten und praktischem Nutzen.',
     primary: 'Meine Projekte',
-    secondary: 'Berufliche Erfahrung',
+    secondaryFallback: 'Berufliche Erfahrung',
+    secondary: 'Lebenslauf (PDF)',
   },
   projects: {
     kicker: 'Ausgewählte Arbeiten',
     title: 'Engineering-Entscheidungen in der Praxis',
     lead: 'Zwei eigenständige Projekte zeigen, wie ich technische Umsetzung mit Tests, Iteration und wirtschaftlichen Zielkonflikten verbinde.',
     linkLabel: 'Projekt ansehen',
+    effortLabel: 'Aufwand',
   },
   experience: {
     kicker: 'Erfahrung und Studium',
@@ -155,21 +167,23 @@ const content = {
     lead: 'Ich verbinde Elektrotechnik, praktische Produktentwicklung und eine wirtschaftliche Perspektive auf technische Entscheidungen.',
     paragraphs: [
       'Meine Begeisterung für Technik begann, als ich gemeinsam mit meinem Vater Verbrenner-RC-Autos aufgebaut und modifiziert habe. Aus dieser frühen Neugier entwickelte sich der Anspruch, zunehmend komplexe Hard- und Softwaresysteme selbstständig umzusetzen.',
-      'Ich habe Wirtschaftsingenieurwesen gewählt, weil technische Machbarkeit allein noch kein gutes Produkt ergibt. Besonders interessieren mich Aufgaben, bei denen Leistung, Kosten, Fertigbarkeit und realer Nutzen gemeinsam betrachtet werden müssen. Dabei bin ich offen für internationale Kontakte und Möglichkeiten.',
+      'Ich habe Wirtschaftsingenieurwesen gewählt, weil technische Machbarkeit allein noch kein gutes Produkt ergibt. Besonders interessieren mich Aufgaben, bei denen Leistung, Kosten, Fertigbarkeit und realer Nutzen gemeinsam betrachtet werden müssen. Ich möchte gezielt im Ausland arbeiten und ziehe für eine passende Stelle überall hin.',
     ],
     principlesTitle: 'So gehe ich technische Aufgaben an',
   },
   skills: {
     kicker: 'Fähigkeiten',
     title: 'Angewandte Fähigkeiten',
-    lead: 'Werkzeuge und Methoden mit Bezug zu Projekten oder Berufspraxis – keine ungeprüfte Sammlung von Schlagwörtern.',
+    lead: 'Jede Gruppe verweist auf das Projekt oder die Position, in der ich diese Werkzeuge tatsächlich eingesetzt habe.',
   },
   contact: {
     eyebrow: 'Kontakt',
     title: 'Lassen Sie uns ins Gespräch kommen.',
-    text: 'Ich bin offen für internationale Kontakte, anspruchsvolle Projekte und zukünftige Möglichkeiten an der Schnittstelle zwischen Engineering, Produktentwicklung und Wirtschaft.',
+    text: 'Ich suche ein Praktikum oder eine Werkstudentenstelle und kann sofort anfangen – weltweit. Für die richtige Position unterbreche ich mein Studium. Wenn Sie an der Schnittstelle zwischen Engineering, Produktentwicklung und Wirtschaft einstellen, freue ich mich über eine Nachricht.',
     button: 'E-Mail senden',
+    cv: 'Lebenslauf (PDF)',
     linkedin: 'Auf LinkedIn vernetzen',
+    emailLabel: 'Oder direkt schreiben an',
   },
 };
 ---
@@ -184,5 +198,5 @@ const content = {
 >
   <Header lang="de" labels={content.nav} />
   <HomeContent {projects} {strengths} {skillGroups} {experience} {content} />
-  <Footer />
+  <Footer lang="de" />
 </BaseLayout>

@@ -12,117 +12,169 @@ const nav = {
   contact: 'Kontakt',
   menu: 'Navigation öffnen',
   navigation: 'Hauptnavigation',
+  cv: 'Lebenslauf',
 };
 
+/** TODO Raphael: auf true setzen, sobald /media/drone-flight-demo.mp4 existiert. */
+const showFlightVideo = false;
+
 const facts = [
-  { label: 'Aufwand', value: '≈ 200 Stunden' },
-  { label: 'CAD', value: 'Onshape' },
+  { label: 'Zeitraum', value: '2026 · Revision 1 abgeschlossen, Revision 2 in CAD' },
+  { label: 'Konstruktionsiterationen', value: '4–5 größere Onshape-Revisionen' },
   { label: 'Fertigung', value: 'PA-CF · Bambu Lab X1C' },
-  { label: 'Aktueller Stand', value: 'Version 1 flugfähig · Version 2 im CAD' },
+  { label: 'Dokumentierte Ausgaben', value: '≈ 424 € bei 700 € Budget' },
 ];
 
 const sections = [
   {
-    title: 'Ziel und Umfang',
+    title: 'Ziel und Rahmen',
     paragraphs: [
-      'Entwicklungsziel war eine kompakte, leistungsorientierte Drohne mit einem ambitionierten langfristigen Geschwindigkeitsziel von 300 km/h – ohne Verwendung eines fertigen Rahmens. Die Zielgeschwindigkeit beschreibt die Entwicklungsrichtung und wurde noch nicht durch Simulation oder Messung validiert.',
-      'Ich setzte das Projekt vollständig eigenständig um: Komponentenauswahl, mechanische Konstruktion, additive Fertigung, Löten, Montage, Betaflight-Konfiguration, PID-Abstimmung und Flugtests.',
+      'Ziel war eine kompakte, leistungsorientierte Drohne ohne fertigen Rahmen von der Stange. Revision 1 war auf einen 6S-Antriebsstrang mit einer Zielgeschwindigkeit von rund 170 km/h ausgelegt – hergeleitet aus der Pitch Speed dieser Motor-Propeller-Kombination, abzüglich eines realistischen Abschlags für Schlupf und Luftwiderstand. Der Wert war ein Auslegungsziel, nie ein Messergebnis, und Revision 2 wechselt die Leistungsklasse vollständig, sodass er nicht übertragbar ist.',
+      'Ich habe das Projekt in rund 200 Stunden eigenständig umgesetzt: Komponentenauswahl, mechanische Konstruktion, additive Fertigung, Löten, Aufbau, Betaflight-Konfiguration, PID-Abstimmung und Flugtests.',
     ],
   },
   {
-    title: 'Mechanische und elektrische Auslegung',
+    title: 'Mechanische und elektrische Konstruktion',
     paragraphs: [
-      'Tragender Rahmen, Verkleidung und Bauraum für die Komponenten entstanden über vier bis fünf größere Onshape-Iterationen. Die Konstruktion musste Steifigkeit, Aerodynamik, Kühlung, Bauraum, Reparierbarkeit, Fertigbarkeit und Kosten miteinander verbinden.',
+      'Tragender Rahmen, Verkleidung und die Anordnung der Komponenten entstanden in vier bis fünf größeren Onshape-Iterationen. Die Geometrie musste Steifigkeit, Aerodynamik, Kühlung, Bauraum, Reparierbarkeit, Druckbarkeit und Kosten gegeneinander abwägen.',
     ],
     media: [
       {
-        src: '/images/drone-top-dark.jpeg',
-        alt: 'Draufsicht auf die flugfähige erste Drohnenversion mit vier Motoren und gedrucktem Zentralkörper',
-        caption: 'Version 1 · symmetrische Motoranordnung und gedruckter Zentralkörper',
+        src: '/images/drone-top-dark.webp',
+        alt: 'Draufsicht der flugfähigen ersten Drohnenrevision mit Vier-Motoren-Anordnung und gedrucktem Mittelteil',
+        caption: 'Revision 1 · symmetrische Motoranordnung und gedrucktes Mittelteil',
+        width: 1400,
+        height: 1050,
       },
       {
-        src: '/images/drone-cad-revision-1.png',
-        alt: 'Onshape-CAD-Modell der ersten Drohnenversion mit sichtbarem zentralen Bauraum',
-        caption: 'Version 1 · CAD-Modell des selbst konstruierten Rahmens, Körpers und Bauraums',
+        src: '/images/drone-cad-revision-1.webp',
+        alt: 'Onshape-CAD-Modell der ersten Drohnenrevision mit sichtbarem zentralem Komponentenfach',
+        caption: 'Revision 1 · CAD-Modell des selbst konstruierten Rahmens mit Komponentenanordnung',
         variant: 'cad',
+        width: 1400,
+        height: 1025,
       },
     ],
     table: {
-      headers: ['Subsystem', 'Auswahl in Version 1', 'Entscheidungsgrund'],
+      headers: ['Baugruppe', 'Wahl in Revision 1', 'Konstruktive Begründung'],
       rows: [
         ['Motoren', 'T-Motor Velox V2207 V3 · 2050 KV · 6S', 'Leistung bei kontrollierten Komponentenkosten'],
         ['Flugsteuerung', 'SpeedyBee F405 V5 · 55-A-Stack', 'Zuverlässigkeit bei einer zentralen Systemkomponente priorisiert'],
-        ['Funkverbindung', 'RadioMaster RP3 V2 · ELRS', 'Robuste Verbindung mit kompaktem Empfänger'],
-        ['Navigation', 'HGLRC M100 Pro GPS', 'Benötigte Ortung ohne Bezahlung ungenutzter Funktionen'],
-        ['Antrieb', 'T-Motor T5143S · 5,1 Zoll · Dreiblatt', 'Auf den ausgewählten 6S-Antrieb abgestimmt'],
+        ['Funkstrecke', 'RadioMaster RP3 V2 · ELRS', 'Robuste Verbindung mit kompaktem Empfänger'],
+        ['Navigation', 'HGLRC M100 Pro GPS', 'Benötigte Positionsbestimmung ohne Bezahlung ungenutzter Funktionen'],
+        ['Antrieb', 'T-Motor T5143S · 5,1 Zoll · dreiblättrig', 'Auf den gewählten 6S-Antriebsstrang abgestimmt'],
       ],
     },
   },
   {
-    title: 'Flugtests und Lernprozess',
+    title: 'Flugtests und Erkenntnisse',
     paragraphs: [
-      'Version 1 absolvierte einen Schwebetest und zwei kontrollierte Flüge. In einer frühen Testphase stürzte der Prototyp ab, als die PID-Abstimmung und meine eigene Flugerfahrung noch nicht ausreichten. Daraufhin trainierte ich im Simulator und baute zusätzlich eine einfacher zu fliegende Übungsdrohne.',
-      'Die erste Version ist flugfähig. Höchstgeschwindigkeit, Flugzeit und finales Abfluggewicht wurden jedoch noch nicht unter definierten Bedingungen gemessen.',
+      'Revision 1 absolvierte einen Schwebetest und zwei kontrollierte Flüge. Früh in der Testphase stürzte der Prototyp ab, als PID-Abstimmung und meine eigene Flugerfahrung noch nicht ausreichten. Ich habe daraufhin im Simulator geübt und eine zweite, leichter zu fliegende Trainingsdrohne aufgebaut, bevor ich weitergemacht habe – günstiger, als den Prototyp wiederholt zu reparieren.',
     ],
   },
+  ...(showFlightVideo
+    ? [
+        {
+          title: 'Flugaufnahmen',
+          paragraphs: ['Ungeschnittene Aufnahmen aus den Flugtests der Revision 1.'],
+          media: [
+            {
+              src: '/images/drone-hero-dark.webp',
+              video: '/media/drone-flight-demo.mp4',
+              alt: 'Ungeschnittene Aufnahme der ersten Drohnenrevision während eines kontrollierten Flugtests',
+              videoLabel: 'Ungeschnittene Aufnahme der ersten Drohnenrevision während eines kontrollierten Flugtests',
+              caption: 'Revision 1 · ungeschnittene Flugtestaufnahme',
+              width: 1400,
+              height: 787,
+            },
+          ],
+        },
+      ]
+    : []),
   {
-    title: 'Erkenntnisse aus Version 1',
+    title: 'Erkenntnisse aus Revision 1',
     paragraphs: [
-      'Die praktischen Tests zeigten drei miteinander verknüpfte Schwächen. Resonanzen des Rahmens erschwerten die PID-Abstimmung; zugleich wurde die PA-CF-Struktur nach Feuchtigkeitsaufnahme mit der Zeit flexibler. Messungen mit einem Infrarotthermometer zeigten außerdem einen Wärmestau an Flight Controller und 4-in-1-ESC. Der oben montierte Akku verlagerte zudem zu viel Masse nach oben.',
+      'Die praktischen Tests zeigten drei zusammenhängende Schwachstellen. Rahmenresonanzen erschwerten die PID-Abstimmung, und die PA-CF-Struktur wurde mit zunehmender Feuchtigkeitsaufnahme nachgiebiger. Infrarotmessungen zeigten außerdem einen Wärmestau um Flugcontroller und 4-in-1-ESC. Schließlich brachte der oben montierte Akku zu viel Masse in die obere Struktur.',
+      'Jede Erkenntnis führt direkt zu einer Änderung in Revision 2:',
     ],
     bullets: [
-      'Vibrationen: neue Geometrie und Wechsel von PA-CF zu ABS-CF',
-      'Kühlung: Lüftungsschlitze und neue Anordnung von Flight Controller und ESC',
-      'Gewichtsverteilung: Akku tiefer, leichtere Komponenten höher',
-      'Kontrolle: DJI O4 FPV vor den Leistungstests von Version 2',
+      'Vibration: überarbeitete Geometrie und Wechsel von PA-CF zu ABS-CF',
+      'Kühlung: Lüftungsschlitze und neue Anordnung von Flugcontroller und ESC',
+      'Gewichtsverteilung: Akku tiefer positioniert, leichtere Komponenten nach oben',
+      'Steuerung: DJI O4 FPV vor allen Leistungstests ergänzt',
     ],
     media: [
       {
-        src: '/images/drone-detail-dark.jpeg',
-        alt: 'Detailansicht der ersten Drohnenversion mit gedrucktem Körper, Armgeometrie und Antrieb',
-        caption: 'Version 1 im Detail · gedruckter Körper, Armgeometrie und Antrieb',
+        src: '/images/drone-detail-dark.webp',
+        alt: 'Detailansicht der ersten Drohnenrevision mit gedruckter Verkleidung, Armgeometrie und Antriebsanordnung',
+        caption: 'Revision 1 im Detail · gedruckte Verkleidung, Armgeometrie und Antriebsanordnung',
+        width: 1400,
+        height: 1400,
       },
     ],
   },
   {
-    title: 'Entwicklungsprozess von Version 2',
+    title: 'Revision 2 · eine andere Maschine, keine geflickte',
     paragraphs: [
-      'Version 2 befindet sich in der ersten CAD-Iteration. Als Nächstes wird ein kostengünstiger PLA-Prototyp gedruckt, um Bauraum, Montage und konstruktive Schwächen zu prüfen. Danach wird das CAD überarbeitet und erneut in PLA validiert, bevor die finale Version aus ABS-CF entsteht. Die gesamte Elektronik aus Version 1 soll weiterverwendet werden.',
-      'ABS-CF wurde gewählt, weil die höhere Außenbeständigkeit des teureren ASA-CF für diesen Anwendungsfall nicht erforderlich ist. Gleichzeitig soll die Feuchtigkeitsempfindlichkeit von PA-CF vermieden werden, um eine berechenbarere Steifigkeit zu erhalten. Je nach genauer Materialsorte können Steifigkeit, Festigkeit und Wärmebeständigkeit jedoch unter trockenem PA-CF liegen. Deshalb müssen das ausgewählte Material und die neue Geometrie vor hohen Belastungen validiert werden.',
+      'Revision 2 befindet sich in der ersten CAD-Iteration. Die Erkenntnisse aus Revision 1 zeigten auf die Struktur und das Antriebssystem, nicht auf Details der Geometrie. Der zweite Aufbau ist deshalb keine reparierte Fassung des ersten: Rahmen, Motoren, ESC, Flugcontroller und Propeller werden alle ersetzt. Übernommen werden nur das GPS-Modul und der ELRS-Empfänger.',
+      'Das neue Antriebssystem ist für 8S und 12S statt 6S ausgelegt, und eine DJI O4 Lite kommt hinzu, damit Revision 2 vor jedem Leistungstest ordentlich geflogen und beurteilt werden kann. Weil der Antriebsstrang die Klasse wechselt, ist das Geschwindigkeitsziel aus Revision 1 hinfällig – ein neuer Wert wird erst veröffentlicht, wenn die Motor-Propeller-Kombination feststeht und die Rechnung neu gemacht wurde.',
+      'Die Aufbaureihenfolge bleibt: ein günstiger PLA-Druck, um Schwachstellen in Anordnung, Montage und Struktur zu finden, dann eine überarbeitete Geometrie erneut in PLA, dann der finale ABS-CF-Aufbau. ABS-CF wurde gewählt, weil der Vorteil des teureren ASA-CF bei der Außenbeständigkeit hier nicht benötigt wird, während das Vermeiden der Feuchtigkeitsempfindlichkeit von PA-CF entscheidend ist, um die Steifigkeit über die Zeit vorhersagbar zu halten.',
+    ],
+    bullets: [
+      'Ersetzt: Rahmen und Material, Motoren, ESC, Flugcontroller, Propeller',
+      'Übernommen: GPS-Modul und ELRS-Empfänger',
+      'Neu: DJI O4 Lite FPV',
+      'Leistungsklasse: 8S/12S-fähig statt 6S',
     ],
   },
   {
-    title: 'Wirtschaftliche Entwicklung',
+    title: 'Wirtschaftliche Betrachtung',
     paragraphs: [
-      'Das Projekt wurde mit einem Budget von 700 € geplant. Die dokumentierten direkten Ausgaben liegen bei rund 424 €. Darin enthalten sind Fernsteuerung, etwa 1,4 kg Entwicklungsmaterial und 105 € für die bereits für Version 2 vorgesehene DJI-O4-Hardware. Ohne diese spätere FPV-Hardware liegen die dokumentierten Ausgaben bei rund 319 €. Eine anteilige Abschreibung des 3D-Druckers und nicht erfasste Kleinteile sind nicht enthalten.',
+      'Revision 1 war gegen ein Budget von 700 € geplant und kam auf rund 424 € dokumentierte direkte Ausgaben, einschließlich Fernsteuerung, etwa 1,4 kg Entwicklungsmaterial und 105 € DJI-O4-FPV-Hardware. Ohne diese FPV-Hardware kostete Revision 1 rund 319 €.',
+      'Fast das gesamte System in Revision 2 zu ersetzen ist die teure Entscheidung in diesem Projekt, und sie war bewusst. Revision 1 war günstig genug, um sie als Lernplattform zu behandeln: Sie hat beantwortet, wie Struktur, Kühlung und Massenverteilung aussehen müssen – und diese Antworten wiesen über das hinaus, was ein 6S-System und ein geflickter Rahmen leisten können. Die alten Komponenten mitzunehmen hätte rund 300 € Hardware erhalten und das Ergebnis gedeckelt.',
     ],
     table: {
-      headers: ['Entscheidung', 'Wirtschaftlicher Gedanke', 'Technische Folge'],
+      headers: ['Entscheidung', 'Wirtschaftliche Begründung', 'Technische Konsequenz'],
       rows: [
-        ['Motoren, GPS und Material', 'Ausreichende Leistung ohne Bezahlung ungenutzter Reserven', 'Erfüllen die aktuellen Prototypanforderungen; Grenzen am Geschwindigkeitsziel sind noch zu validieren'],
-        ['Flight Controller und ESC', 'Höhere Ausgaben für zentrale, zuverlässigkeitskritische Elektronik', '55-A-Stack statt unbenannter günstigerer Alternative'],
-        ['Eigener gedruckter Rahmen', 'Kein erhältlicher Rahmen entsprach der geplanten Geometrie', 'Schnelle Anpassungen und hoher Lernwert, aber 10–15 Entwicklungsdrucke'],
-        ['PLA vor ABS-CF', 'Günstige Validierung vor dem finalen Material', 'Montage- und Konstruktionsfehler werden vor dem teuren Druck erkannt'],
-        ['Wiederverwendung der Elektronik', 'Großer Teil der Investition bleibt erhalten', 'Version 2 erfordert vor allem mechanische Anpassungen und FPV'],
+        ['Motoren, GPS und Material', 'Ausgewählt für ausreichende Leistung, ohne ungenutzte Reserven zu bezahlen', 'Erfüllen die aktuellen Prototypanforderungen'],
+        ['Flugcontroller und ESC', 'Höhere Ausgabe für die zentrale, zuverlässigkeitskritische Elektronik', '55-A-Stack statt No-Name-Alternative gewählt'],
+        ['Eigener gedruckter Rahmen', 'Kein verfügbarer Rahmen passte zur angestrebten Geometrie', 'Schnelle Konstruktionsänderungen, dafür 10–15 Entwicklungsdrucke'],
+        ['PLA vor ABS-CF', 'Günstige Validierung vor dem finalen Material', 'Montage- und Strukturschwächen vor dem teuren Druck korrigiert'],
+        ['Neuer Antriebsstrang statt Weiterverwendung', 'Nimmt die Abschreibung der Revision-1-Elektronik in Kauf, statt Revision 2 zu deckeln', 'Wechsel von 6S auf ein 8S/12S-fähiges System; nur GPS und Empfänger werden übernommen'],
       ],
     },
   },
   {
-    title: 'Aktuelles Ergebnis und Grenze',
+    title: 'Ergebnis',
     paragraphs: [
-      'Version 1 belegt, dass das selbst konstruierte System fliegen kann, und liefert konkrete Anforderungen für die nächste Konstruktion. Sie belegt noch keinen sicheren Betrieb bei der angestrebten hohen Geschwindigkeit. Geschwindigkeit, Flugzeit und verifiziertes Abfluggewicht werden erst veröffentlicht, wenn Version 2 kontrollierte mechanische, thermische und fliegerische Tests bestanden hat.',
+      'Revision 1 ist abgeschlossen: Sie belegt, dass das selbst konstruierte System fliegt, und lieferte konkrete, gemessene Konstruktionshinweise für den nächsten Aufbau. Der bisherige Wert des Projekts liegt in dieser Beweiskette – aus drei Flügen wurde eine konkrete, begründete Spezifikation für Revision 2 statt einer Neukonstruktion nach Bauchgefühl, einschließlich der Entscheidung, die Leistungsklasse zu wechseln statt zu flicken.',
     ],
   },
 ];
+
+const limitations = {
+  title: 'Offene Punkte und Grenzen',
+  intro:
+    'Revision 1 ist ein Prototyp, und einiges wird bewusst noch nicht behauptet. Das sind die offenen Punkte, bevor Leistungswerte veröffentlicht werden.',
+  items: [
+    'Geschwindigkeit: Die rund 170 km/h waren ein Auslegungsziel für den Antriebsstrang von Revision 1 und wurden nie simulativ oder messtechnisch bestätigt. Für Revision 2 gilt der Wert nicht; das Ziel wird neu berechnet, sobald die neue Motor-Propeller-Kombination feststeht. Für keine der beiden Revisionen wird eine Höchstgeschwindigkeit behauptet.',
+    'Flugdaten: Flugzeit und verifizierte Abflugmasse wurden nicht unter definierten Bedingungen gemessen.',
+    'Komponentenauswahl: Motoren, ESC, Flugcontroller und Propeller für Revision 2 sind gewählt, hier aber noch nicht veröffentlicht, und keines der Teile wurde bisher im Aufbau getestet.',
+    'Material: ABS-CF kann je nach genauer Sorte geringere Steifigkeit, Festigkeit und Wärmebeständigkeit aufweisen als trockenes PA-CF. Material und überarbeitete Geometrie müssen daher vor Tests unter hoher Last validiert werden.',
+    'Kosten: Abschreibung des Druckers und nicht erfasste Kleinverbrauchsmaterialien sind in den 424 € nicht enthalten, und das Komponentenbudget für Revision 2 steht noch nicht fest.',
+    'Sicherheit: Revision 1 belegt keinen sicheren Betrieb bei der angestrebten Geschwindigkeit. Gemessene Geschwindigkeit, Flugzeit und Abflugmasse werden erst veröffentlicht, wenn Revision 2 kontrollierte mechanische, thermische und flugtechnische Tests bestanden hat.',
+  ],
+};
 ---
 
 <BaseLayout
   lang="de"
   title="Leistungsorientierter Drohnenprototyp | Raphael Erwig"
-  description="Projektbericht zu eigener CAD-Konstruktion, additiver Fertigung, Flugtests und kostenbewusster Überarbeitung eines Drohnenprototyps."
+  description="Fallstudie: eigene CAD-Konstruktion, additive Fertigung, Flugtests und kostenbewusste Revision eines selbst entwickelten Drohnenprototyps."
   canonicalPath="/de/projekte/high-speed-drohne/"
   enPath="/projects/high-speed-drone/"
   dePath="/de/projekte/high-speed-drohne/"
+  socialImage="/social-preview-drone-de.png"
 >
   <Header
     lang="de"
@@ -134,18 +186,21 @@ const sections = [
     backLabel="Zurück zu den Projekten"
     eyebrow="Hardware · CAD · Additive Fertigung"
     title="Iterative Entwicklung eines leistungsorientierten Drohnenprototyps"
-    lead="Eine selbst konstruierte 6S-Drohne, bei der Flugtests, Materialverhalten, thermische Messungen und Kostenentscheidungen systematisch in Version 2 einfließen."
-    status="Version 1 flugfähig · Geschwindigkeitsziel noch nicht validiert"
+    lead="Eine selbst konstruierte 6S-Drohne, die praktische Flugtests, Materialverhalten, Wärmemessungen und Kostenabwägungen in eine strukturierte zweite Revision überführt."
+    status="Revision 1 abgeschlossen · Revision 2 in CAD"
     heroMedia={{
-      src: '/images/drone-hero-dark.jpeg',
-      alt: 'Dreiviertelansicht der selbst entwickelten flugfähigen ersten Drohnenversion vor dunklem Hintergrund',
-      caption: 'Version 1 · selbst entwickelte PA-CF-Struktur',
+      src: '/images/drone-hero-dark.webp',
+      alt: 'Dreiviertelansicht des selbst entwickelten flugfähigen Drohnenprototyps vor dunklem Hintergrund',
+      caption: 'Revision 1 · selbst konstruierte PA-CF-Struktur',
+      width: 1400,
+      height: 787,
     }}
     {facts}
     {sections}
-    nextLabel="Nächstes Projekt"
+    {limitations}
+    nextLabel="Nächste Fallstudie"
     nextHref="/de/projekte/messererkennung/"
     nextTitle="Live-Prototyp zur Messererkennung"
   />
-  <Footer />
+  <Footer lang="de" />
 </BaseLayout>

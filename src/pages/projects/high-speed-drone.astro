@@ -12,21 +12,25 @@ const nav = {
   contact: 'Contact',
   menu: 'Open navigation',
   navigation: 'Main navigation',
+  cv: 'CV',
 };
 
+/** TODO Raphael: flip to true once /media/drone-flight-demo.mp4 exists. */
+const showFlightVideo = false;
+
 const facts = [
-  { label: 'Effort', value: '≈ 200 hours' },
-  { label: 'CAD', value: 'Onshape' },
+  { label: 'Timeframe', value: '2026 · revision 1 complete, revision 2 in CAD' },
+  { label: 'Design iterations', value: '4–5 major Onshape revisions' },
   { label: 'Build', value: 'PA-CF · Bambu Lab X1C' },
-  { label: 'Current state', value: 'Revision 1 flight-capable · Revision 2 in CAD' },
+  { label: 'Documented spend', value: '≈ €424 of a €700 budget' },
 ];
 
 const sections = [
   {
     title: 'Objective and scope',
     paragraphs: [
-      'The development target was a compact, performance-oriented drone with an aspirational long-term speed target of 300 km/h, built without an off-the-shelf frame. The target describes the design direction; it has not yet been validated through simulation or measurement.',
-      'I completed the project independently: component selection, mechanical design, additive manufacturing, soldering, assembly, Betaflight configuration, PID work and flight testing.',
+      'The goal was a compact, performance-oriented drone built without an off-the-shelf frame. Revision 1 was designed around a 6S powertrain with a target top speed of roughly 170 km/h — derived from the pitch speed of that motor and propeller combination with a realistic derate for slip and drag. It was a design target, never a measured result, and revision 2 changes the power class entirely, so it does not carry over.',
+      'I completed the project independently over roughly 200 hours: component selection, mechanical design, additive manufacturing, soldering, assembly, Betaflight configuration, PID work and flight testing.',
     ],
   },
   {
@@ -36,15 +40,19 @@ const sections = [
     ],
     media: [
       {
-        src: '/images/drone-top-dark.jpeg',
+        src: '/images/drone-top-dark.webp',
         alt: 'Top view of the flight-capable first drone revision showing its four-motor layout and printed central body',
         caption: 'Revision 1 · symmetrical motor layout and printed central body',
+        width: 1400,
+        height: 1050,
       },
       {
-        src: '/images/drone-cad-revision-1.png',
+        src: '/images/drone-cad-revision-1.webp',
         alt: 'Onshape CAD model of the first drone revision with the central component compartment visible',
         caption: 'Revision 1 · CAD model of the self-designed frame, body and component packaging',
         variant: 'cad',
+        width: 1400,
+        height: 1025,
       },
     ],
     table: {
@@ -61,59 +69,102 @@ const sections = [
   {
     title: 'Flight testing and learning',
     paragraphs: [
-      'Revision 1 completed one hover test and two controlled flights. Early in testing, the prototype crashed while PID tuning and my own flight experience were still insufficient. I responded by practicing in a simulator and building a second, easier-to-fly training drone before continuing.',
-      'The first revision is flight-capable, but top speed, flight time and final mass have not yet been measured under defined conditions.',
+      'Revision 1 completed one hover test and two controlled flights. Early in testing the prototype crashed, while PID tuning and my own flight experience were still insufficient. I responded by practicing in a simulator and building a second, easier-to-fly training drone before continuing — cheaper than repeatedly repairing the prototype.',
     ],
   },
+  ...(showFlightVideo
+    ? [
+        {
+          title: 'Flight footage',
+          paragraphs: ['Uncut footage from the revision 1 flight tests.'],
+          media: [
+            {
+              src: '/images/drone-hero-dark.webp',
+              video: '/media/drone-flight-demo.mp4',
+              alt: 'Uncut footage of the first drone revision during a controlled flight test',
+              videoLabel: 'Uncut footage of the first drone revision during a controlled flight test',
+              caption: 'Revision 1 · uncut flight test footage',
+              width: 1400,
+              height: 787,
+            },
+          ],
+        },
+      ]
+    : []),
   {
     title: 'Evidence from revision 1',
     paragraphs: [
-      'Practical tests revealed three linked weaknesses. Frame resonance complicated PID tuning, while the PA-CF structure became more flexible after absorbing moisture over time. Infrared measurements also showed heat build-up around the flight controller and 4-in-1 ESC. Finally, the top-mounted battery placed too much mass high in the structure.',
+      'Practical tests revealed three linked weaknesses. Frame resonance complicated PID tuning, and the PA-CF structure became more flexible as it absorbed moisture over time. Infrared measurements showed heat build-up around the flight controller and the 4-in-1 ESC. Finally, the top-mounted battery placed too much mass high in the structure.',
+      'Each finding maps directly to a change in revision 2:',
     ],
     bullets: [
       'Vibration: revised geometry and a switch from PA-CF to ABS-CF',
       'Cooling: ventilation slots and a new layout for flight controller and ESC',
       'Weight distribution: battery positioned lower, lighter components higher',
-      'Control: DJI O4 FPV planned for revision 2 before performance testing',
+      'Control: DJI O4 FPV added before any performance testing',
     ],
     media: [
       {
-        src: '/images/drone-detail-dark.jpeg',
+        src: '/images/drone-detail-dark.webp',
         alt: 'Three-quarter detail view of the first drone revision highlighting the printed body, arm geometry and propulsion layout',
         caption: 'Revision 1 detail · printed body, arm geometry and propulsion layout',
+        width: 1400,
+        height: 1400,
       },
     ],
   },
   {
-    title: 'Revision 2 development process',
+    title: 'Revision 2 · a different machine, not a patched one',
     paragraphs: [
-      'Revision 2 is currently in its first CAD iteration. The next step is a low-cost PLA print used to identify packaging, assembly and structural weaknesses. The geometry will then be revised and printed again in PLA before the final ABS-CF build. All electronics from revision 1 are planned for reuse.',
-      'ABS-CF was selected because the outdoor durability advantage of the more expensive ASA-CF is not required for this use case, while avoiding PA-CF’s moisture sensitivity is central to maintaining predictable stiffness. The trade-off is that stiffness, strength and heat resistance can be lower than with dry PA-CF depending on the exact grade, so the selected material and revised geometry must be validated before high-load testing.',
+      'Revision 2 is in its first CAD iteration. The evidence from revision 1 pointed at the structure and the power system rather than at details of the geometry, so the second build is not a repaired version of the first: the frame, motors, ESC, flight controller and propellers are all replaced. Only the GPS module and the ELRS receiver carry over.',
+      'The new power system is rated for 8S and 12S rather than 6S, and a DJI O4 Lite is added so revision 2 can be flown and assessed properly before any performance testing. Because the powertrain changes class, the revision 1 speed target is void — a new figure will only be published once the motor and propeller combination is fixed and the calculation has been redone.',
+      'The build sequence stays the same as before: a low-cost PLA print to find packaging, assembly and structural weaknesses, then a revised geometry printed again in PLA, then the final ABS-CF build. ABS-CF was chosen because the outdoor durability advantage of the more expensive ASA-CF is not needed here, while avoiding PA-CF’s moisture sensitivity is central to keeping stiffness predictable over time.',
+    ],
+    bullets: [
+      'Replaced: frame and material, motors, ESC, flight controller, propellers',
+      'Carried over: GPS module and ELRS receiver',
+      'Added: DJI O4 Lite FPV',
+      'Power class: 8S / 12S capable instead of 6S',
     ],
   },
   {
     title: 'Commercial engineering',
     paragraphs: [
-      'The project was planned against a €700 budget. Documented direct expenditure is approximately €424, including the transmitter, around 1.4 kg of development material and €105 of DJI O4 hardware reserved for revision 2. Excluding that future FPV hardware, documented expenditure is approximately €319. Printer depreciation and unrecorded small consumables are not included.',
+      'Revision 1 was planned against a €700 budget and came in at approximately €424 of documented direct expenditure, including the transmitter, around 1.4 kg of development material and €105 of DJI O4 FPV hardware. Excluding that FPV hardware, revision 1 cost approximately €319.',
+      'Replacing almost the entire system in revision 2 is the expensive decision on this project, and it was a deliberate one. Revision 1 was cheap enough to treat as a learning platform: it answered what the structure, cooling and mass distribution needed to look like, and those answers pointed past what a 6S system and a patched frame could deliver. Carrying the old components forward would have preserved roughly €300 of hardware while capping the result.',
     ],
     table: {
       headers: ['Decision', 'Economic reasoning', 'Technical consequence'],
       rows: [
-        ['Motors, GPS and material', 'Selected for sufficient performance without paying for unused capability', 'Meet current prototype requirements; limits at the speed target remain to be validated'],
+        ['Motors, GPS and material', 'Selected for sufficient performance without paying for unused capability', 'Meet current prototype requirements'],
         ['Flight controller and ESC', 'Higher spend on the central, reliability-critical electronics', '55 A stack selected instead of an unbranded alternative'],
-        ['Custom printed frame', 'No available frame matched the intended geometry', 'Fast design changes and learning, but 10–15 development prints'],
-        ['PLA before ABS-CF', 'Low-cost validation before final material', 'Assembly and structural weaknesses can be corrected before the expensive print'],
-        ['Reuse of electronics', 'Preserves most of the project investment', 'Revision 2 focuses spending on mechanics and FPV rather than replacing the system'],
+        ['Custom printed frame', 'No available frame matched the intended geometry', 'Fast design changes and learning, at the cost of 10–15 development prints'],
+        ['PLA before ABS-CF', 'Low-cost validation before the final material', 'Assembly and structural weaknesses corrected before the expensive print'],
+        ['New powertrain instead of reuse', 'Accepts writing off revision 1 electronics rather than capping revision 2', 'Moves from 6S to an 8S/12S-capable system; GPS and receiver are the only parts carried over'],
       ],
     },
   },
   {
-    title: 'Current result and boundary',
+    title: 'Result',
     paragraphs: [
-      'Revision 1 proves that the self-designed system can fly and provides concrete design evidence for the next build. It does not yet prove safe operation at the intended high-speed target. A measured speed, flight time and verified take-off mass will be published only after revision 2 has passed controlled mechanical, thermal and flight testing.',
+      'Revision 1 is complete: it proved that the self-designed system flies, and it produced concrete, measured design evidence for the next build. The project’s value so far is that evidence chain — three flights turned into a specific, justified specification for revision 2 rather than a redesign by intuition, including the decision to change power class instead of patching.',
     ],
   },
 ];
+
+const limitations = {
+  title: 'Open points and limitations',
+  intro:
+    'Revision 1 is a prototype, and several things are deliberately not yet claimed. These are the open points before any performance figures get published.',
+  items: [
+    'Speed: the ~170 km/h figure was a design target for the revision 1 powertrain and was never validated by simulation or measurement. It does not apply to revision 2, whose target will be recalculated once the new motor and propeller combination is fixed. No top-speed figure is claimed for either revision.',
+    'Flight data: flight time and verified take-off mass have not been measured under defined conditions.',
+    'Component selection: the revision 2 motors, ESC, flight controller and propellers are chosen but not yet published here, and none of them have been tested in the airframe.',
+    'Material: ABS-CF can be lower in stiffness, strength and heat resistance than dry PA-CF depending on the exact grade, so the chosen material and revised geometry must be validated before high-load testing.',
+    'Costs: printer depreciation and unrecorded small consumables are not included in the €424 figure, and the revision 2 component budget is not yet fixed.',
+    'Safety: revision 1 does not demonstrate safe operation at the intended speed. Measured speed, flight time and take-off mass will be published only after revision 2 has passed controlled mechanical, thermal and flight testing.',
+  ],
+};
 ---
 
 <BaseLayout
@@ -123,6 +174,7 @@ const sections = [
   canonicalPath="/projects/high-speed-drone/"
   enPath="/projects/high-speed-drone/"
   dePath="/de/projekte/high-speed-drohne/"
+  socialImage="/social-preview-drone.png"
 >
   <Header
     lang="en"
@@ -135,17 +187,20 @@ const sections = [
     eyebrow="Hardware · CAD · Additive Manufacturing"
     title="Iterative development of a performance-oriented drone prototype"
     lead="A self-designed 6S drone that turns practical flight tests, material behavior, thermal measurements and cost trade-offs into a structured second revision."
-    status="Revision 1 flight-capable · speed target not yet validated"
+    status="Revision 1 complete · Revision 2 in CAD"
     heroMedia={{
-      src: '/images/drone-hero-dark.jpeg',
+      src: '/images/drone-hero-dark.webp',
       alt: 'Three-quarter view of the self-developed flight-capable first drone revision on a dark background',
       caption: 'Revision 1 · self-designed PA-CF structure',
+      width: 1400,
+      height: 787,
     }}
     {facts}
     {sections}
+    {limitations}
     nextLabel="Next case study"
     nextHref="/projects/knife-detection/"
     nextTitle="Live Knife Detection Prototype"
   />
-  <Footer />
+  <Footer lang="en" />
 </BaseLayout>

@@ -1,0 +1,133 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import LegalContent from '../components/LegalContent.astro';
+import Footer from '../components/Footer.astro';
+import { owner, hosting, lastUpdated } from '../i18n/site-data';
+
+const nav = {
+  about: 'About',
+  projects: 'Projects',
+  experience: 'Experience',
+  skills: 'Skills',
+  contact: 'Contact',
+  menu: 'Open navigation',
+  navigation: 'Main navigation',
+  cv: 'CV',
+};
+
+const blocks = [
+  {
+    heading: '1. Controller',
+    paragraphs: [
+      'The controller responsible for data processing on this website within the meaning of Art. 4 (7) GDPR is:',
+    ],
+    address: [owner.name, owner.street, `${owner.postalCode} ${owner.city}`, owner.country.en],
+  },
+  {
+    heading: '2. Principle',
+    paragraphs: [
+      'This is a static website without user accounts, comments, contact forms or any analytics and marketing tools. No analytics or advertising cookies are set, no tracking takes place, and no third-party fonts or videos are loaded. All images and videos are served directly from this domain.',
+      'Personal data is therefore essentially only processed when the page is technically retrieved and when you voluntarily contact me by email.',
+    ],
+  },
+  {
+    heading: '3. Hosting and server log files',
+    paragraphs: [
+      `This website is hosted on ${hosting.provider}. The provider is ${hosting.company}.`,
+      'When the website is accessed, the host automatically processes information transmitted by your browser, in particular:',
+    ],
+    bullets: [
+      'IP address of the requesting device (truncated or in full)',
+      'date and time of access',
+      'name and URL of the requested file',
+      'volume of data transferred and notification of successful retrieval',
+      'browser type and operating system used',
+      'referrer URL, where transmitted by the browser',
+    ],
+  },
+  {
+    heading: '4. Legal basis and purpose',
+    paragraphs: [
+      'The legal basis for processing this access data is Art. 6 (1) (f) GDPR. My legitimate interest lies in the technically error-free delivery of the website, its security and the prevention of attacks. This data is not merged with other data sources and is not evaluated for marketing purposes.',
+      'Log data is stored by the host within its own security and retention periods and deleted afterwards. I do not access personal raw log data myself.',
+    ],
+  },
+  {
+    heading: '5. Processing on my behalf and international transfers',
+    paragraphs: [
+      `A data processing agreement pursuant to Art. 28 GDPR is in place with ${hosting.provider} (<a href="${hosting.dpaUrl}" rel="noopener noreferrer" target="_blank">Data Processing Addendum</a>).`,
+      `As the provider is based in the United States, processing outside the EU cannot be excluded. The transfer is based on the European Commission's Standard Contractual Clauses; the provider is additionally certified under the EU-U.S. Data Privacy Framework. Further information is available in the <a href="${hosting.privacyUrl}" rel="noopener noreferrer" target="_blank">provider's privacy policy</a>.`,
+    ],
+  },
+  {
+    heading: '6. Cookies',
+    paragraphs: [
+      'This website does not set any cookies of its own. The host may set technically necessary cookies for security reasons, for example for bot detection. These cookies serve solely the secure operation of the website, do not create usage profiles and are exempt from consent under § 25 (2) no. 2 TDDDG. A consent banner is therefore not required.',
+    ],
+  },
+  {
+    heading: '7. Contact by email',
+    paragraphs: [
+      'If you contact me by email, your details will be stored in order to process the enquiry and for possible follow-up questions. The legal basis is Art. 6 (1) (f) GDPR (interest in responding) or Art. 6 (1) (b) GDPR where the enquiry is aimed at initiating a contractual or employment relationship.',
+      'Your message will be deleted as soon as it is no longer required for that purpose and no statutory retention obligations apply. You can request erasure at any time using the contact details above.',
+    ],
+  },
+  {
+    heading: '8. External links',
+    paragraphs: [
+      'This website links to external services, in particular to my LinkedIn profile. These are plain text links without embedded content, buttons or tracking pixels. Data is only transferred to the respective provider once you actively click the link. The privacy policy of the target site then applies.',
+    ],
+  },
+  {
+    heading: '9. CV download',
+    paragraphs: [
+      'The CV provided as a PDF is served directly from this domain. No registration is required for the download, no additional data is collected, and access is only recorded within the server log files described above.',
+    ],
+  },
+  {
+    heading: '10. Your rights',
+    paragraphs: ['Subject to the statutory requirements, you have the following rights at any time:'],
+    bullets: [
+      'access to the data stored about you (Art. 15 GDPR)',
+      'rectification of inaccurate data (Art. 16 GDPR)',
+      'erasure (Art. 17 GDPR)',
+      'restriction of processing (Art. 18 GDPR)',
+      'data portability (Art. 20 GDPR)',
+      'objection to processing based on legitimate interests (Art. 21 GDPR)',
+    ],
+  },
+  {
+    heading: '11. Right to lodge a complaint',
+    paragraphs: [
+      'You have the right to lodge a complaint with a data protection supervisory authority (Art. 77 GDPR). The competent authority is the State Commissioner for Data Protection and Freedom of Information of North Rhine-Westphalia, Kavalleriestraße 2–4, 40213 Düsseldorf, Germany.',
+    ],
+  },
+  {
+    heading: '12. Encryption and automated decision-making',
+    paragraphs: [
+      'This website is delivered exclusively over a TLS-encrypted connection (HTTPS). Automated decision-making including profiling pursuant to Art. 22 GDPR does not take place.',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  lang="en"
+  title="Privacy policy | Raphael Erwig"
+  description="Information pursuant to Art. 13 GDPR on data processing at raphaelerwig.com."
+  canonicalPath="/privacy/"
+  enPath="/privacy/"
+  dePath="/de/datenschutz/"
+  noindex
+>
+  <Header lang="en" labels={nav} languageHrefs={{ en: '/privacy/', de: '/de/datenschutz/' }} />
+  <LegalContent
+    title="Privacy policy"
+    intro="This site processes as little personal data as technically possible. The following statement describes in full what happens when you visit it. The legally binding version is the German one."
+    updatedLabel="Last updated"
+    updated={lastUpdated}
+    {blocks}
+  />
+  <Footer lang="en" />
+</BaseLayout>

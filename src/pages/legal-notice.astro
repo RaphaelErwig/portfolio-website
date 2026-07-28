@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import LegalContent from '../components/LegalContent.astro';
+import Footer from '../components/Footer.astro';
+import { owner, lastUpdated } from '../i18n/site-data';
+
+const nav = {
+  about: 'About',
+  projects: 'Projects',
+  experience: 'Experience',
+  skills: 'Skills',
+  contact: 'Contact',
+  menu: 'Open navigation',
+  navigation: 'Main navigation',
+  cv: 'CV',
+};
+
+const blocks = [
+  {
+    heading: 'Information pursuant to § 5 DDG (German Digital Services Act)',
+    address: [owner.name, owner.street, `${owner.postalCode} ${owner.city}`, owner.country.en],
+  },
+  {
+    heading: 'Contact',
+    paragraphs: [
+      `Email: <a href="mailto:${owner.email}">${owner.email}</a>`,
+      ...(owner.phone ? [`Phone: ${owner.phone}`] : []),
+    ],
+  },
+  {
+    heading: 'Responsible for editorial content pursuant to § 18 (2) MStV',
+    address: [owner.name, owner.street, `${owner.postalCode} ${owner.city}`],
+  },
+  {
+    heading: 'Nature of this website',
+    paragraphs: [
+      'This website is a private portfolio presenting my own technical projects and professional background. No goods or services are offered, no contracts are concluded through this website and no advertising revenue is generated.',
+    ],
+  },
+  {
+    heading: 'Dispute resolution',
+    paragraphs: [
+      'As no consumer contracts are concluded through this website, there is no obligation to participate in dispute resolution proceedings before a consumer arbitration board, and I do not participate voluntarily.',
+    ],
+  },
+  {
+    heading: 'Liability for content',
+    paragraphs: [
+      'As a service provider I am responsible for my own content on these pages under the general laws pursuant to § 7 (1) DDG. Pursuant to §§ 8 to 10 DDG, however, I am not obliged to monitor transmitted or stored third-party information or to investigate circumstances that indicate unlawful activity.',
+      'The projects presented on this website are research and learning prototypes. They are neither certified nor market-ready and do not constitute any warranty of technical properties.',
+    ],
+  },
+  {
+    heading: 'Liability for links',
+    paragraphs: [
+      'This website contains links to external third-party websites over whose content I have no influence. I therefore cannot accept any liability for this third-party content. The respective provider or operator of the linked pages is always responsible for their content. No legal violations were apparent at the time of linking.',
+    ],
+  },
+  {
+    heading: 'Copyright',
+    paragraphs: [
+      'The texts, photographs, CAD renderings and videos published on this website were created by me and are subject to German copyright law. Reproduction, adaptation or distribution beyond the limits of copyright law requires my written consent. Viewing and saving for private, non-commercial purposes is of course permitted.',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  lang="en"
+  title="Legal notice | Raphael Erwig"
+  description="Legal notice and provider identification for the private portfolio of Raphael Erwig."
+  canonicalPath="/legal-notice/"
+  enPath="/legal-notice/"
+  dePath="/de/impressum/"
+  noindex
+>
+  <Header lang="en" labels={nav} languageHrefs={{ en: '/legal-notice/', de: '/de/impressum/' }} />
+  <LegalContent
+    title="Legal notice"
+    intro="This portfolio is operated from Germany. The legally binding version of this notice is the German one."
+    updatedLabel="Last updated"
+    updated={lastUpdated}
+    {blocks}
+  />
+  <Footer lang="en" />
+</BaseLayout>

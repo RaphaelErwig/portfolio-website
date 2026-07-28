@@ -1,0 +1,43 @@
+---
+interface Block {
+  heading: string;
+  paragraphs?: string[];
+  bullets?: string[];
+  address?: string[];
+}
+
+interface Props {
+  title: string;
+  intro?: string;
+  updatedLabel: string;
+  updated: string;
+  blocks: Block[];
+}
+
+const { title, intro, updatedLabel, updated, blocks } = Astro.props;
+---
+
+<main id="main-content" class="legal container">
+  <article class="legal-body">
+    <h1>{title}</h1>
+    {intro && <p class="legal-intro">{intro}</p>}
+    <p class="legal-updated">{updatedLabel}: <time datetime={updated}>{updated}</time></p>
+
+    {blocks.map((block) => (
+      <section class="legal-section">
+        <h2>{block.heading}</h2>
+        {block.address && (
+          <address>
+            {block.address.map((line) => <span>{line}</span>)}
+          </address>
+        )}
+        {block.paragraphs?.map((paragraph) => <p set:html={paragraph} />)}
+        {block.bullets && (
+          <ul>
+            {block.bullets.map((bullet) => <li set:html={bullet} />)}
+          </ul>
+        )}
+      </section>
+    ))}
+  </article>
+</main>

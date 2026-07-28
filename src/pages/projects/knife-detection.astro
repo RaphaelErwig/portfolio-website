@@ -12,91 +12,224 @@ const nav = {
   contact: 'Contact',
   menu: 'Open navigation',
   navigation: 'Main navigation',
+  cv: 'CV',
 };
 
+/** TODO Raphael: flip to true once /media/knife-detection-demo.mp4 exists. */
+const showDemoVideo = false;
+
 const facts = [
-  { label: 'Effort', value: '≈ 250 hours' },
-  { label: 'Dataset', value: '731 positive · ≈ 2,000 negative images' },
-  { label: 'Model', value: 'YOLOv11-L · 640 × 640 · 160 epochs' },
-  { label: 'Deployment', value: 'Laptop · NVIDIA Jetson platforms' },
+  { label: 'Dataset', value: '731 knife images · 4,011 without a knife' },
+  { label: 'Model', value: 'YOLOv11-S · 640 × 640 · 150 epochs' },
+  { label: 'Validation', value: 'mAP@0.5 = 0.844 · mAP@0.5:0.95 = 0.554' },
+  { label: 'Live performance', value: '6–10 FPS observed on the laptop' },
 ];
 
 const sections = [
   {
     title: 'Objective and ownership',
     paragraphs: [
-      'The project explored early visual knife detection in live camera streams as a research prototype. I completed it independently and started with very little prior computer-vision experience, learning Python, data labeling, YOLO training and edge deployment as the project progressed.',
-      'The result is a functional prototype for experimentation, not a certified or market-ready safety system.',
+      'The project explored early visual knife detection in live camera streams. I completed it independently over roughly 250 hours and started with very little prior computer-vision experience, learning Python, data labeling, YOLO training and edge deployment as the project progressed.',
     ],
   },
   {
     title: 'Self-recorded dataset',
     paragraphs: [
-      'All images were recorded specifically for the project, including frames extracted from my own videos. The final working dataset contains 731 images with knives and approximately 2,000 negative examples without a knife. I manually reviewed the labels and later used auto-labeling to accelerate the process; total labeling effort was approximately 40–60 hours.',
-      'An 80/20 training-validation split and a separate small test set were used. Because frames from the same video scenes may have been randomly distributed between training and validation, benchmark metrics are not published yet. Before publishing them, the data should be re-split by scene or source video and evaluated again on an independent holdout set.',
-    ],
-  },
-  {
-    title: 'Training and iteration',
-    paragraphs: [
-      'The selected configuration used YOLOv11-L at 640 × 640 pixels for 160 epochs. Across approximately 20–50 training runs, I iterated on the dataset and training setup rather than treating the first output as final.',
-      'Early versions recognized many hand-held objects as knives because the dataset did not contain enough representative negative scenes. Adding approximately 2,000 negative examples reduced these false detections substantially.',
-    ],
-    bullets: [
-      'One labeled class: knife',
-      'Self-recorded positive and negative scenes across different lighting and backgrounds',
-      'Repeated review of weak bounding boxes and false-positive examples',
-      'Final Precision, Recall and mAP pending a leakage-resistant re-evaluation',
+      'All images were recorded specifically for the project, including frames extracted from my own videos. The dataset contains 731 images with knives and 4,011 images without a knife, split into 3,781 training and 961 validation images — with 327 labeled boxes in the validation set. I reviewed the labels manually and later used auto-labeling to accelerate the process; total labeling effort was roughly 40–60 hours.',
+      'Early versions classified many hand-held objects as knives because the dataset did not contain enough representative negative scenes. Expanding the negative set to over 4,000 images removed the bulk of these false detections — the single most effective change in the project, and one that cost recording time rather than compute.',
     ],
     media: [
       {
-        src: '/images/knife-detection-false-negative.png',
+        src: '/images/knife-detection-true-negative.webp',
         alt: 'Live camera frame showing scissors correctly not classified as a knife',
-        caption: 'Negative test example · the scissors were correctly not classified as a knife',
+        caption: 'True negative · the scissors were correctly not classified as a knife',
         variant: 'contain',
+        width: 796,
+        height: 802,
       },
     ],
   },
   {
+    title: 'The class-structure experiment',
+    paragraphs: [
+      'An intermediate version split the label set into two classes: a knife lying in a scene, and a knife held in a hand. The reasoning was that the distinction carries the meaning for an alerting use case — an object on a counter is not the same event as an object in someone’s grip.',
+      'Measured against the merged single-class version on the same images and the same validation split, the split did not pay off. Every aggregate metric improved after collapsing the two classes back into one, and the standalone-knife class had been the weak half all along, with a small fraction of the instances of the held-knife class. Splitting a small dataset gave the model two under-supported problems instead of one well-supported one.',
+      'The comparison is not perfectly controlled — the merged run also trained for 150 instead of 110 epochs. But the direction is consistent across precision, recall and both mAP measures, and the single-class model is the one that ships.',
+    ],
+    table: {
+      headers: ['Metric', 'Two classes · 110 epochs', 'One class · 150 epochs'],
+      rows: [
+        ['mAP@0.5', '0.802', '0.844'],
+        ['mAP@0.5:0.95', '0.516', '0.554'],
+        ['Precision', '0.812', '0.841'],
+        ['Recall', '0.739', '0.768'],
+        ['Best F1', '0.77 at conf. 0.502', '0.80 at conf. 0.554'],
+      ],
+    },
+  },
+  {
+    title: 'Training configuration',
+    paragraphs: [
+      'Rather than reporting a vague number of experiments, here is the exact configuration behind the shipping model. It ran in 2 hours 23 minutes on the Tesla T4 described further down.',
+    ],
+    table: {
+      headers: ['Parameter', 'Value'],
+      rows: [
+        ['Base weights', 'yolo11s.pt (pretrained)'],
+        ['Classes', '1 — Messer'],
+        ['Input resolution', '640 × 640'],
+        ['Epochs', '150 · best checkpoint at epoch 148'],
+        ['Batch size', '16'],
+        ['Optimizer', 'auto (SGD selected) · lr0 0.01 · lrf 0.01 · momentum 0.937'],
+        ['Augmentation', 'mosaic 1.0 (closed for last 10 epochs) · fliplr 0.5 · HSV · scale 0.5 · erasing 0.4'],
+        ['Seed', '0 · deterministic'],
+        ['Training time', '2 h 23 min on a single Tesla T4'],
+      ],
+    },
+  },
+  {
+    title: 'Measured results',
+    paragraphs: [
+      'The following figures come from the validation set at the best checkpoint. They describe this dataset and this split — see the open points at the end of the page for what they do not yet prove.',
+    ],
+    table: {
+      headers: ['Metric', 'Value'],
+      rows: [
+        ['mAP@0.5', '0.844'],
+        ['mAP@0.5:0.95', '0.554'],
+        ['Precision (best epoch)', '0.841'],
+        ['Recall (best epoch)', '0.768'],
+        ['Best F1', '0.80 at confidence 0.554'],
+        ['Precision reaches 1.00', 'at confidence 0.862'],
+        ['Maximum recall', '0.92'],
+      ],
+    },
+    media: [
+      {
+        src: '/images/knife-metrics-pr-curve.webp',
+        alt: 'Precision-recall curve for the single knife class showing mAP at 0.5 of 0.844',
+        caption: 'Precision–recall curve · precision holds above 0.9 until roughly 0.8 recall, then falls off sharply',
+        variant: 'cad',
+        width: 1400,
+        height: 933,
+      },
+      {
+        src: '/images/knife-metrics-f1.webp',
+        alt: 'F1 confidence curve peaking at 0.80 at a confidence threshold of 0.554',
+        caption: 'F1 over confidence · the curve is flat between roughly 0.3 and 0.6, so the operating point is not sensitive to small threshold changes',
+        variant: 'cad',
+        width: 1400,
+        height: 933,
+      },
+      {
+        src: '/images/knife-metrics-training.webp',
+        alt: 'Training curves over 150 epochs showing losses falling while precision, recall, mAP50 and mAP50-95 rise and flatten',
+        caption: 'Training over 150 epochs · mAP@0.5 flattens from roughly epoch 120, mAP@0.5:0.95 was still creeping up',
+        variant: 'cad',
+        width: 1400,
+        height: 700,
+      },
+    ],
+  },
+  {
+    title: 'Where the model actually fails',
+    paragraphs: [
+      'The aggregate numbers hide the more useful information, so here is the error structure from the confusion matrix at the default confidence threshold. Of 327 labeled instances in the validation set, 275 were detected and 52 were missed.',
+      'The bigger problem is the other direction: 120 detections landed on background regions containing no labeled object. That is roughly one false alarm for every 2.3 correct detections. The model over-triggers rather than under-triggers, and for an alerting application that is the more expensive failure mode. It is also the one number that barely moved between the two training runs, which tells me it is a property of the data rather than of the label structure — the next round has to target it with harder negative scenes.',
+    ],
+    bullets: [
+      'Detected: 275 of 327 labeled instances (84%)',
+      'Missed: 52 instances (16%)',
+      'False positives on background: 120',
+      'Reliability drops with occlusion and unusual knife shapes',
+    ],
+    media: [
+      {
+        src: '/images/knife-metrics-confusion.webp',
+        alt: 'Confusion matrix showing 275 correct knife detections, 52 missed and 120 false positives on background',
+        caption: 'Confusion matrix · the 120 in the background column is the actual problem',
+        variant: 'cad',
+        width: 1400,
+        height: 1050,
+      },
+    ],
+  },
+  ...(showDemoVideo
+    ? [
+        {
+          title: 'Live demonstration',
+          paragraphs: [
+            'The clip below is an uncut recording of the live webcam stream, showing both correct detections and the cases where the model is uncertain.',
+          ],
+          media: [
+            {
+              src: '/images/knife-detection-positive.webp',
+              video: '/media/knife-detection-demo.mp4',
+              alt: 'Uncut recording of the live knife detection running on a webcam stream',
+              videoLabel: 'Uncut recording of the live knife detection running on a webcam stream',
+              caption: 'Uncut live demonstration · laptop webcam, no post-processing',
+              variant: 'contain',
+              width: 568,
+              height: 572,
+            },
+          ],
+        },
+      ]
+    : []),
+  {
     title: 'Live deployment',
     paragraphs: [
-      'The model was executed from a live webcam on a Lenovo Yoga Slim 6 and on NVIDIA Jetson platforms, including an Orin Nano Super. The laptop produced an observed 6–10 FPS, but device-specific figures will only be presented as benchmarks after model, input resolution and measurement method have been standardized.',
-      'The prototype was demonstrated in unfamiliar scenes and across different lighting conditions and backgrounds, but reliability drops with occlusion and unusual knife shapes.',
+      'The model runs from a live webcam on a Lenovo Yoga Slim 6 at an observed 6–10 FPS, and on NVIDIA Jetson platforms including an Orin Nano Super. It was demonstrated in unfamiliar scenes across different lighting conditions and backgrounds.',
     ],
   },
   {
     title: 'Cost-aware training infrastructure',
     paragraphs: [
-      'Repeated cloud GPU usage would have created a continuing operating expense, so I considered that approach against owning a reusable workstation. In March 2025, I sourced almost all components second-hand and built a local AI workstation for approximately €910. A provider-specific break-even calculation is not presented because the original cloud quotations and total training hours were not retained.',
+      'Repeated cloud GPU usage would have created a continuing operating expense, so I weighed it against owning a reusable workstation. In March 2025 I sourced almost all components second-hand and built a local AI workstation for approximately €910. The two runs compared above took under five hours combined on it, at no marginal cost — which is exactly what made the class-structure experiment worth running instead of guessing.',
     ],
     table: {
       headers: ['Decision factor', 'Local workstation'],
       rows: [
         ['Core hardware', 'NVIDIA Tesla T4 · Ryzen 7 5800X · 64 GB RAM · 1 TB Samsung 990 Pro'],
         ['Acquisition', 'Almost entirely second-hand, including a negotiated CPU/mainboard/RAM bundle'],
-        ['Iteration', 'Available for repeated training without a new usage fee for each run'],
-        ['Residual value', 'Second-hand listings suggest substantial residual value, but no resale price has been confirmed'],
-        ['Energy use', 'Training intentionally scheduled during local PV generation after the 2 kWh battery was full; the exact solar share was not measured'],
+        ['Iteration', 'Repeated training without a new usage fee for each run'],
+        ['Residual value', 'Components hold value on the second-hand market and can be resold or reused'],
+        ['Energy use', 'Training scheduled during local PV generation, after the 2 kWh battery was full'],
       ],
     },
   },
   {
-    title: 'Result and limitations',
+    title: 'Result',
     paragraphs: [
-      'The project produced a working live demonstration and reusable training hardware. It also showed that data composition can matter more than simply increasing model size. The current model is an experimental prototype: it is not certified, not market-ready and should not be interpreted as a reliable public-safety product.',
-      'A new uncut demonstration video, standardized device benchmarks and a grouped dataset split are the next evidence steps. Only then will Precision, Recall, mAP and comparable FPS values be published.',
+      'The project produced a working live demonstration, a measured baseline of mAP@0.5 = 0.844, and reusable training hardware that still serves later projects. Its most transferable lesson was that data composition mattered more than model size or label sophistication: the decisive improvements came from recording thousands of the right negative scenes, and from simplifying the label structure rather than refining it. The model is YOLOv11-S — the small variant — and it is not the limiting factor.',
     ],
   },
 ];
+
+const limitations = {
+  title: 'Open points and limitations',
+  intro:
+    'This is a research prototype. It is not certified, not market-ready and must not be treated as a reliable public-safety product. The metrics above are real, but here is precisely what they do and do not establish.',
+  items: [
+    'Split methodology: training and validation were split randomly across images. Because many frames were extracted from the same source videos, near-duplicate frames can appear on both sides. The reported mAP is therefore an optimistic estimate of performance on genuinely new scenes. A split grouped by source video is the next step, and the numbers should be expected to drop.',
+    'False positives: 120 background detections on the validation set is too many for an alerting application. This is the primary target of the next iteration.',
+    'The class comparison is not fully controlled: the single-class run also trained for 150 instead of 110 epochs, so the improvement cannot be attributed to the label structure alone.',
+    'Throughput: the 6–10 FPS figure is an observation on one laptop, not a standardized benchmark. Comparable device figures require a fixed model format, input resolution and measurement method.',
+    'Robustness: detection reliability drops with occlusion and with unusual knife shapes.',
+    'Infrastructure economics: no provider-specific break-even against cloud GPU rental is presented, because the original quotations and total training hours across all runs were not retained.',
+    'Energy: the exact solar share of the training energy was not measured.',
+  ],
+};
 ---
 
 <BaseLayout
   lang="en"
   title="Live Knife Detection Prototype | Raphael Erwig"
-  description="Case study: self-recorded data, YOLOv11-L training, false-positive analysis, edge deployment and cost-aware local AI infrastructure."
+  description="Case study: a self-recorded dataset of 4,742 images, YOLOv11-S trained to mAP@0.5 = 0.844, a measured class-structure experiment, error analysis and cost-aware local AI infrastructure."
   canonicalPath="/projects/knife-detection/"
   enPath="/projects/knife-detection/"
   dePath="/de/projekte/messererkennung/"
+  socialImage="/social-preview-knife.png"
 >
   <Header
     lang="en"
@@ -107,20 +240,23 @@ const sections = [
     backHref="/#projects"
     backLabel="Back to projects"
     eyebrow="AI · Computer Vision · Python"
-    title="Live knife detection with a self-trained YOLOv11-L model"
-    lead="An independent research prototype covering self-recorded data, approximately 20–50 training runs, false-positive analysis, edge deployment and the economics of local AI infrastructure."
+    title="Live knife detection with a self-trained YOLOv11 model"
+    lead="An independent research prototype: 4,742 self-recorded images, a measured validation baseline of mAP@0.5 = 0.844, a label-structure experiment that was decided by numbers rather than intuition, and an honest error analysis."
     status="Functional research prototype · not a safety product"
     {facts}
     {sections}
+    {limitations}
     heroMedia={{
-      src: '/images/knife-detection-positive.png',
+      src: '/images/knife-detection-positive.webp',
       alt: 'Live camera frame showing one knife detected with an 82 percent displayed confidence score',
       caption: 'Current demonstration · one knife detected with 82% displayed confidence',
       variant: 'contain',
+      width: 568,
+      height: 572,
     }}
     nextLabel="Next case study"
     nextHref="/projects/high-speed-drone/"
     nextTitle="Performance-Oriented Drone Prototype"
   />
-  <Footer />
+  <Footer lang="en" />
 </BaseLayout>

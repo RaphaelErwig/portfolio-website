@@ -10,16 +10,19 @@ const projects = [
     category: 'Hardware · CAD · System Integration',
     title: 'Performance-Oriented Drone Prototype',
     description:
-      'A self-designed, flight-capable 6S prototype with a 3D-printed load-bearing frame. Three initial flight tests produced the requirements for a more controllable, better-cooled second revision with FPV.',
+      'A self-designed, flight-capable 6S prototype with a 3D-printed load-bearing frame. Revision 1 is complete; its measured weaknesses — resonance, heat build-up and weight distribution — specified a second revision in a higher power class.',
     highlights: [
-      'Load-bearing frame and body designed in Onshape',
-      'PA-CF revision built, tuned and flight-tested',
-      'Revision 2 developed through low-cost PLA iterations',
+      'Load-bearing frame and body designed in Onshape across 4–5 major iterations',
+      'PA-CF revision built, tuned and flight-tested; three weaknesses identified and addressed',
+      'Revision 2 in CAD: new frame, motors, ESC and flight controller, moving from 6S to an 8S/12S-capable system',
     ],
     href: '/projects/high-speed-drone/',
-    duration: '≈ 200 hours',
-    status: 'Revision 2 · first CAD iteration',
-    image: '/images/drone-hero-dark.jpeg',
+    metric: '3 flight tests → 4 design changes',
+    effort: '≈ 200 h',
+    status: '2026 · Revision 2 in CAD',
+    image: '/images/drone-hero-dark.webp',
+    imageWidth: 1400,
+    imageHeight: 787,
     imageAlt: 'Self-developed flight-capable drone prototype on a dark background',
   },
   {
@@ -27,16 +30,19 @@ const projects = [
     category: 'Computer Vision · Data · Edge AI',
     title: 'Live Knife Detection Prototype',
     description:
-      'A functional research prototype using self-recorded data and YOLOv11-L. The project covers data collection, labeling, repeated training, false-positive analysis and deployment on laptop and NVIDIA Jetson hardware.',
+      'A functional research prototype built on a self-recorded dataset of 4,742 images, trained to a measured mAP@0.5 of 0.844 and deployed live on laptop and NVIDIA Jetson hardware.',
     highlights: [
-      '731 positive and approximately 2,000 negative images',
-      'Approximately 20–50 training runs at 640 × 640',
-      'Cost-optimized local AI workstation built for about €910',
+      'Self-recorded dataset: 731 knife images and 4,011 without a knife',
+      'A two-class label split was tested against one class and rejected on the measured result',
+      'Local AI workstation sourced second-hand for about €910 instead of recurring cloud cost',
     ],
     href: '/projects/knife-detection/',
-    duration: '≈ 250 hours',
+    metric: 'mAP@0.5 = 0.844 on validation',
+    effort: '≈ 250 h',
     status: 'Functional research prototype',
-    image: '/images/knife-detection-positive.png',
+    image: '/images/knife-detection-positive.webp',
+    imageWidth: 568,
+    imageHeight: 572,
     imageAlt: 'Live camera frame with one knife detected and an 82 percent displayed confidence score',
     imageFit: 'contain',
   },
@@ -61,18 +67,22 @@ const skillGroups = [
   {
     title: 'Product & hardware development',
     skills: ['Electrical Systems', 'Onshape', 'CAD Design', '3D Printing', 'Soldering', 'Hardware Integration', 'Betaflight'],
+    evidence: { text: 'Applied in the drone prototype', href: '/projects/high-speed-drone/' },
   },
   {
     title: 'Applied computer vision',
     skills: ['Python', 'YOLOv11', 'Dataset Collection', 'Label Studio', 'Model Evaluation', 'Live Inference', 'NVIDIA Jetson'],
+    evidence: { text: 'Applied in the knife detection prototype', href: '/projects/knife-detection/' },
   },
   {
     title: 'Workflow & validation',
     skills: ['SharePoint', 'Power Automate', 'Process Design', 'Functional Testing', 'Technical Documentation'],
+    evidence: { text: 'In professional use at Renesas Electronics Europe', href: '#experience' },
   },
   {
     title: 'Commercial engineering',
     skills: ['Microsoft Excel', 'Cost–Benefit Analysis', 'Project Budgeting', 'Component Sourcing', 'Residual-Value Thinking'],
+    evidence: { text: 'Applied in both project budgets and in controlling', href: '#projects' },
   },
 ];
 
@@ -88,11 +98,11 @@ const experience = [
       'Reduced avoidable follow-up questions and improved traceability by storing request data in a central list',
       'Test products, internal projects and demos using defined procedures; prepare configuration, accessories, documentation, packaging and shipment to partners and other offices',
     ],
-    tools: ['SharePoint', 'Power Automate', 'e² studio · testing', 'Functional Validation', 'Technical Logistics'],
+    tools: ['SharePoint', 'Power Automate', 'e² studio', 'Functional Testing', 'Technical Logistics'],
   },
   {
     role: 'B.Eng. Industrial Engineering – Electrical Engineering',
-    company: 'Hochschule Düsseldorf University of Applied Sciences',
+    company: 'Düsseldorf University of Applied Sciences',
     area: 'Düsseldorf · 4th semester',
     period: 'Since winter semester 2024',
     text: 'Interdisciplinary degree combining electrical engineering and information technology with business fundamentals.',
@@ -106,19 +116,17 @@ const experience = [
   {
     role: 'Intern – Finance & Group Controlling',
     company: 'Immobilien Management Essen GmbH (IME)',
-    area: 'Finance & Group Controlling · Essen',
-    period: '02–06 Sep 2024',
-    text: 'A self-initiated one-week internship between secondary school and university, focused on practical Excel work and financial planning.',
-    highlights: [
-      'Independently built an Excel analysis of the residential property portfolio that was subsequently used',
-      'Used an annuity-model exercise to understand financing logic and strengthen practical Excel skills',
-      'Prepared data for liquidity-planning discussions',
-    ],
+    area: 'Essen',
+    period: 'Sep 2024 · one week',
+    text: 'Self-initiated one-week insight between secondary school and university: built an Excel analysis of the residential property portfolio that was subsequently used, and worked through an annuity model to understand financing logic.',
+    highlights: [],
     tools: ['Microsoft Excel', 'Portfolio Analysis', 'Financing Fundamentals'],
+    compact: true,
   },
 ];
 
 const content = {
+  lang: 'en',
   nav: {
     about: 'About',
     projects: 'Projects',
@@ -127,21 +135,25 @@ const content = {
     contact: 'Contact',
     menu: 'Open navigation',
     navigation: 'Main navigation',
+    cv: 'CV',
   },
   hero: {
     eyebrow: 'Industrial Engineering · Electrical Engineering · Product Development',
     title: 'From technical idea to tested prototype.',
     highlight: 'Built with commercial judgment.',
+    availability: 'Available immediately for an internship or part-time student role · relocating internationally, willing to pause my studies for the right position',
     intro:
-      'I am Raphael Erwig, an Industrial Engineering student focused on Electrical Engineering. I independently develop hardware and computer-vision prototypes, learn missing skills as needed and evaluate decisions through performance, effort, cost and practical value.',
+      'I am Raphael Erwig, an Industrial Engineering student focused on Electrical Engineering. I build hardware and computer-vision prototypes end to end, learn the skills a project demands, and judge every decision by performance, effort, cost and practical value.',
     primary: 'Explore my projects',
-    secondary: 'View experience',
+    secondaryFallback: 'View experience',
+    secondary: 'Download CV (PDF)',
   },
   projects: {
     kicker: 'Selected work',
     title: 'Engineering decisions in practice',
     lead: 'Two independent projects show how I combine technical implementation with testing, iteration and commercial trade-offs.',
     linkLabel: 'View case study',
+    effortLabel: 'Effort',
   },
   experience: {
     kicker: 'Experience and education',
@@ -155,21 +167,23 @@ const content = {
     lead: 'I combine electrical engineering, hands-on product development and an economic perspective on technical decisions.',
     paragraphs: [
       'My fascination for engineering began when I built and modified nitro-powered RC cars with my father. That early curiosity developed into the ambition to design increasingly complex hardware and software systems independently.',
-      'I chose Industrial Engineering because technical feasibility alone is not enough for a good product. I am most interested in work where performance, cost, manufacturability and real-world value have to be considered together – and I am open to international opportunities and collaborations.',
+      'I chose Industrial Engineering because technical feasibility alone is not enough for a good product. I am most interested in work where performance, cost, manufacturability and real-world value have to be considered together. I am actively looking to work abroad and will relocate anywhere for a position that lets me build things at that intersection.',
     ],
     principlesTitle: 'How I approach technical work',
   },
   skills: {
     kicker: 'Capabilities',
     title: 'Applied capabilities',
-    lead: 'Tools and methods tied to projects or professional practice, rather than an unqualified list of keywords.',
+    lead: 'Every group below links to the project or role where I actually used these tools.',
   },
   contact: {
     eyebrow: 'Contact',
     title: 'Let’s start a conversation.',
-    text: 'I am open to international connections, challenging projects and future opportunities at the intersection of engineering, product development and business.',
+    text: 'I am looking for an internship or part-time student role and can start immediately, anywhere in the world. For the right position I will pause my studies to take it. If you are hiring at the intersection of engineering, product development and business, I would like to hear from you.',
     button: 'Send me an email',
+    cv: 'Download CV (PDF)',
     linkedin: 'Connect on LinkedIn',
+    emailLabel: 'Or write directly to',
   },
 };
 ---
@@ -184,5 +198,5 @@ const content = {
 >
   <Header lang="en" labels={content.nav} />
   <HomeContent {projects} {strengths} {skillGroups} {experience} {content} />
-  <Footer />
+  <Footer lang="en" />
 </BaseLayout>

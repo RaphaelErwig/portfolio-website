@@ -9,6 +9,11 @@ interface Media {
   alt: string;
   caption?: string;
   variant?: 'photo' | 'cad' | 'contain';
+  width?: number;
+  height?: number;
+  /** When set, the media is rendered as a self-hosted video with `src` used as the poster image. */
+  video?: string;
+  videoLabel?: string;
 }
 
 interface Section {
@@ -22,6 +27,12 @@ interface Section {
   media?: Media[];
 }
 
+interface Limitations {
+  title: string;
+  intro?: string;
+  items: string[];
+}
+
 interface Props {
   backHref: string;
   backLabel: string;
@@ -32,6 +43,7 @@ interface Props {
   facts: Fact[];
   sections: Section[];
   heroMedia?: Media;
+  limitations?: Limitations;
   nextLabel: string;
   nextHref: string;
   nextTitle: string;
@@ -47,6 +59,7 @@ const {
   facts,
   sections,
   heroMedia,
+  limitations,
   nextLabel,
   nextHref,
   nextTitle,
@@ -66,7 +79,28 @@ const {
 
     {heroMedia && (
       <figure class:list={['case-study-cover', { 'case-study-cover-contain': heroMedia.variant === 'contain' }]}>
-        <img src={heroMedia.src} alt={heroMedia.alt} />
+        {heroMedia.video ? (
+          <video
+            controls
+            preload="none"
+            playsinline
+            poster={heroMedia.src}
+            width={heroMedia.width}
+            height={heroMedia.height}
+            aria-label={heroMedia.videoLabel ?? heroMedia.alt}
+          >
+            <source src={heroMedia.video} type="video/mp4" />
+          </video>
+        ) : (
+          <img
+            src={heroMedia.src}
+            alt={heroMedia.alt}
+            width={heroMedia.width}
+            height={heroMedia.height}
+            fetchpriority="high"
+            decoding="async"
+          />
+        )}
         {heroMedia.caption && <figcaption>{heroMedia.caption}</figcaption>}
       </figure>
     )}
@@ -113,7 +147,28 @@ const {
             )}
             {section.media?.map((media) => (
               <figure class:list={['case-study-media', { 'case-study-media-cad': media.variant === 'cad' || media.variant === 'contain' }]}>
-                <img src={media.src} alt={media.alt} loading="lazy" />
+                {media.video ? (
+                  <video
+                    controls
+                    preload="none"
+                    playsinline
+                    poster={media.src}
+                    width={media.width}
+                    height={media.height}
+                    aria-label={media.videoLabel ?? media.alt}
+                  >
+                    <source src={media.video} type="video/mp4" />
+                  </video>
+                ) : (
+                  <img
+                    src={media.src}
+                    alt={media.alt}
+                    width={media.width}
+                    height={media.height}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
                 {media.caption && <figcaption>{media.caption}</figcaption>}
               </figure>
             ))}
@@ -121,6 +176,16 @@ const {
         </section>
       ))}
     </div>
+
+    {limitations && (
+      <aside class="limitations" aria-labelledby="limitations-title">
+        <h2 id="limitations-title">{limitations.title}</h2>
+        {limitations.intro && <p>{limitations.intro}</p>}
+        <ul>
+          {limitations.items.map((item) => <li>{item}</li>)}
+        </ul>
+      </aside>
+    )}
 
     <aside class="next-project">
       <p>{nextLabel}</p>

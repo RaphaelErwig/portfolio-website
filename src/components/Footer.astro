@@ -1,3 +1,78 @@
-<footer>
-  <div class="container">© {new Date().getFullYear()} Raphael Erwig</div>
+---
+import { cv } from '../i18n/site-data';
+
+interface Props {
+  lang?: 'en' | 'de';
+}
+
+const { lang = 'en' } = Astro.props;
+
+const copy = {
+  en: {
+    tagline: 'Hardware, computer vision and commercially grounded engineering decisions.',
+    contactTitle: 'Contact',
+    emailLabel: 'Email',
+    linksTitle: 'Site',
+    legalNotice: 'Legal notice',
+    privacy: 'Privacy policy',
+    home: 'Home',
+    cv: 'Download CV (PDF)',
+    linkedin: 'LinkedIn',
+  },
+  de: {
+    tagline: 'Hardware, Computer Vision und wirtschaftlich fundierte Engineering-Entscheidungen.',
+    contactTitle: 'Kontakt',
+    emailLabel: 'E-Mail',
+    linksTitle: 'Seite',
+    legalNotice: 'Impressum',
+    privacy: 'Datenschutz',
+    home: 'Startseite',
+    cv: 'Lebenslauf (PDF)',
+    linkedin: 'LinkedIn',
+  },
+}[lang];
+
+const homeHref = lang === 'de' ? '/de/' : '/';
+const legalHref = lang === 'de' ? '/de/impressum/' : '/legal-notice/';
+const privacyHref = lang === 'de' ? '/de/datenschutz/' : '/privacy/';
+const email = 'raphael.erwig@icloud.com';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <p class="footer-name">Raphael Erwig</p>
+      <p class="footer-tagline">{copy.tagline}</p>
+    </div>
+
+    <div class="footer-col">
+      <p class="footer-col-title">{copy.contactTitle}</p>
+      <ul>
+        <li>
+          <a href={`mailto:${email}`} class="footer-email">
+            <span class="cf-safe">{email}</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com/in/raphael-erwig-4557b8263/" rel="noopener noreferrer" target="_blank">{copy.linkedin}</a>
+        </li>
+        {cv.enabled && <li><a href={lang === 'de' ? cv.de : cv.en} download>{copy.cv}</a></li>}
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <p class="footer-col-title">{copy.linksTitle}</p>
+      <ul>
+        <li><a href={homeHref}>{copy.home}</a></li>
+        <li><a href={legalHref}>{copy.legalNotice}</a></li>
+        <li><a href={privacyHref}>{copy.privacy}</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <span>© {year} Raphael Erwig</span>
+    <span class="footer-built">Built with Astro · hosted on Cloudflare Pages</span>
+  </div>
 </footer>

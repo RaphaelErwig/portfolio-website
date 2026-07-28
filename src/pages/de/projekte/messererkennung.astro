@@ -12,91 +12,224 @@ const nav = {
   contact: 'Kontakt',
   menu: 'Navigation öffnen',
   navigation: 'Hauptnavigation',
+  cv: 'Lebenslauf',
 };
 
+/** TODO Raphael: auf true setzen, sobald /media/knife-detection-demo.mp4 existiert. */
+const showDemoVideo = false;
+
 const facts = [
-  { label: 'Aufwand', value: '≈ 250 Stunden' },
-  { label: 'Datensatz', value: '731 Positivbilder · ≈ 2.000 Negativbilder' },
-  { label: 'Modell', value: 'YOLOv11-L · 640 × 640 · 160 Epochen' },
-  { label: 'Ausführung', value: 'Laptop · NVIDIA-Jetson-Plattformen' },
+  { label: 'Datensatz', value: '731 Messerbilder · 4.011 ohne Messer' },
+  { label: 'Modell', value: 'YOLOv11-S · 640 × 640 · 150 Epochen' },
+  { label: 'Validierung', value: 'mAP@0,5 = 0,844 · mAP@0,5:0,95 = 0,554' },
+  { label: 'Live-Leistung', value: '6–10 FPS auf dem Laptop beobachtet' },
 ];
 
 const sections = [
   {
     title: 'Ziel und Eigenanteil',
     paragraphs: [
-      'Das Projekt untersuchte die frühzeitige visuelle Erkennung von Messern in Live-Kamerabildern als Forschungsprototyp. Ich führte es vollständig eigenständig durch und startete mit kaum Computer-Vision-Vorerfahrung. Python, Datenlabeling, YOLO-Training und Edge-Ausführung erarbeitete ich mir im Projektverlauf.',
-      'Das Ergebnis ist ein funktionsfähiger Prototyp für Experimente, kein zertifiziertes oder marktreifes Sicherheitssystem.',
+      'Das Projekt untersuchte die frühzeitige visuelle Erkennung von Messern in Live-Kamerabildern. Ich habe es in rund 250 Stunden eigenständig umgesetzt und mit sehr wenig Vorerfahrung in Computer Vision begonnen: Python, Datenlabeling, YOLO-Training und Edge-Deployment habe ich mir im Projektverlauf erarbeitet.',
     ],
   },
   {
     title: 'Selbst aufgenommener Datensatz',
     paragraphs: [
-      'Alle Bilder wurden gezielt für das Projekt selbst aufgenommen; ein Teil entstand als Einzelbilder aus eigenen Videos. Der finale Arbeitsdatensatz enthält 731 Bilder mit Messern und rund 2.000 Negativbeispiele ohne Messer. Die Labels kontrollierte ich selbst, später beschleunigte Auto-Labeling den Prozess. Der gesamte Labelingaufwand lag bei etwa 40–60 Stunden.',
-      'Verwendet wurden ein 80/20-Split für Training und Validierung sowie ein kleiner separater Testsatz. Da ähnliche Frames derselben Videoszene zufällig auf Training und Validierung verteilt worden sein können, werden noch keine Benchmarkmetriken veröffentlicht. Dafür muss der Datensatz zuerst nach Szene beziehungsweise Quellvideo getrennt und erneut auf einem unabhängigen Holdout-Satz geprüft werden.',
-    ],
-  },
-  {
-    title: 'Training und Iteration',
-    paragraphs: [
-      'Die gewählte Konfiguration nutzte YOLOv11-L mit 640 × 640 Pixeln über 160 Epochen. In ungefähr 20–50 Trainingsläufen überarbeitete ich Datensatz und Trainingsaufbau iterativ.',
-      'Frühe Versionen erkannten viele Gegenstände in Händen fälschlich als Messer, weil repräsentative Negativszenen fehlten. Durch die Ergänzung von rund 2.000 Negativbeispielen gingen diese Fehlklassifikationen deutlich zurück.',
-    ],
-    bullets: [
-      'Eine gelabelte Klasse: Messer',
-      'Eigene Positiv- und Negativszenen mit verschiedenen Lichtbedingungen und Hintergründen',
-      'Wiederholte Kontrolle schwacher Bounding Boxes und falsch positiver Beispiele',
-      'Precision, Recall und mAP erst nach einer gegen Datenleckage robusten Neuauswertung',
+      'Alle Bilder wurden eigens für das Projekt aufgenommen, einschließlich Einzelbildern aus eigenen Videos. Der Datensatz enthält 731 Bilder mit Messern und 4.011 Bilder ohne Messer, aufgeteilt in 3.781 Trainings- und 961 Validierungsbilder – mit 327 gelabelten Boxen im Validierungsdatensatz. Die Labels habe ich manuell geprüft und später Auto-Labeling zur Beschleunigung eingesetzt; der Labeling-Aufwand lag bei etwa 40–60 Stunden.',
+      'Frühe Versionen stuften viele in der Hand gehaltene Gegenstände als Messer ein, weil der Datensatz zu wenige repräsentative Negativszenen enthielt. Die Erweiterung auf über 4.000 Negativbilder beseitigte den Großteil dieser Fehlerkennungen – die wirksamste Einzelmaßnahme im Projekt, und eine, die Aufnahmezeit statt Rechenleistung gekostet hat.',
     ],
     media: [
       {
-        src: '/images/knife-detection-false-negative.png',
-        alt: 'Live-Kamerabild mit einer Schere, die korrekt nicht als Messer klassifiziert wurde',
-        caption: 'Negatives Testbeispiel · die Schere wurde korrekt nicht als Messer klassifiziert',
+        src: '/images/knife-detection-true-negative.webp',
+        alt: 'Live-Kamerabild, in dem eine Schere korrekt nicht als Messer klassifiziert wird',
+        caption: 'True Negative · die Schere wurde korrekt nicht als Messer klassifiziert',
         variant: 'contain',
+        width: 796,
+        height: 802,
       },
     ],
   },
   {
-    title: 'Live-Ausführung',
+    title: 'Das Experiment zur Klassenstruktur',
     paragraphs: [
-      'Das Modell wurde mit einer Live-Webcam auf einem Lenovo Yoga Slim 6 und auf NVIDIA-Jetson-Plattformen einschließlich eines Orin Nano Super ausgeführt. Auf dem Laptop wurden ungefähr 6–10 FPS beobachtet. Gerätespezifische Werte werden jedoch erst als Benchmark veröffentlicht, wenn Modell, Eingabeauflösung und Messmethode vereinheitlicht sind.',
-      'Der Prototyp wurde auch in unbekannten Szenen sowie bei unterschiedlichen Lichtbedingungen und Hintergründen demonstriert. Bei Verdeckung und ungewöhnlichen Messerformen sinkt die Zuverlässigkeit.',
+      'Eine Zwischenversion teilte die Labels in zwei Klassen auf: ein Messer, das in einer Szene liegt, und ein Messer, das in der Hand gehalten wird. Die Überlegung dahinter: Für eine Alarmierungsanwendung steckt genau in dieser Unterscheidung die Bedeutung – ein Gegenstand auf der Arbeitsplatte ist nicht dasselbe Ereignis wie ein Gegenstand in jemandes Griff.',
+      'Gemessen gegen die zusammengeführte Ein-Klassen-Version auf denselben Bildern und derselben Validierungsaufteilung hat sich die Trennung nicht ausgezahlt. Alle aggregierten Metriken verbesserten sich, nachdem die beiden Klassen wieder zu einer zusammengelegt wurden, und die Klasse ohne Hand war durchgehend die schwächere Hälfte – mit einem Bruchteil der Instanzen der Klasse mit Hand. Die Aufteilung eines kleinen Datensatzes bescherte dem Modell zwei schlecht gestützte Probleme statt eines gut gestützten.',
+      'Der Vergleich ist nicht perfekt kontrolliert: Der zusammengeführte Lauf trainierte auch 150 statt 110 Epochen. Die Richtung ist aber über Precision, Recall und beide mAP-Maße hinweg einheitlich – und das Ein-Klassen-Modell ist das, was eingesetzt wird.',
+    ],
+    table: {
+      headers: ['Metrik', 'Zwei Klassen · 110 Epochen', 'Eine Klasse · 150 Epochen'],
+      rows: [
+        ['mAP@0,5', '0,802', '0,844'],
+        ['mAP@0,5:0,95', '0,516', '0,554'],
+        ['Precision', '0,812', '0,841'],
+        ['Recall', '0,739', '0,768'],
+        ['Bester F1-Wert', '0,77 bei Konf. 0,502', '0,80 bei Konf. 0,554'],
+      ],
+    },
+  },
+  {
+    title: 'Trainingskonfiguration',
+    paragraphs: [
+      'Statt einer vagen Anzahl von Experimenten hier die exakte Konfiguration hinter dem eingesetzten Modell. Der Lauf dauerte 2 Stunden 23 Minuten auf der weiter unten beschriebenen Tesla T4.',
+    ],
+    table: {
+      headers: ['Parameter', 'Wert'],
+      rows: [
+        ['Basisgewichte', 'yolo11s.pt (vortrainiert)'],
+        ['Klassen', '1 – Messer'],
+        ['Eingangsauflösung', '640 × 640'],
+        ['Epochen', '150 · bester Checkpoint bei Epoche 148'],
+        ['Batchgröße', '16'],
+        ['Optimierer', 'auto (SGD gewählt) · lr0 0,01 · lrf 0,01 · Momentum 0,937'],
+        ['Augmentierung', 'Mosaic 1,0 (letzte 10 Epochen deaktiviert) · fliplr 0,5 · HSV · Scale 0,5 · Erasing 0,4'],
+        ['Seed', '0 · deterministisch'],
+        ['Trainingsdauer', '2 h 23 min auf einer einzelnen Tesla T4'],
+      ],
+    },
+  },
+  {
+    title: 'Gemessene Ergebnisse',
+    paragraphs: [
+      'Die folgenden Werte stammen aus dem Validierungsdatensatz beim besten Checkpoint. Sie beschreiben diesen Datensatz und diese Aufteilung – was sie noch nicht belegen, steht in den offenen Punkten am Seitenende.',
+    ],
+    table: {
+      headers: ['Metrik', 'Wert'],
+      rows: [
+        ['mAP@0,5', '0,844'],
+        ['mAP@0,5:0,95', '0,554'],
+        ['Precision (bestes Epoch)', '0,841'],
+        ['Recall (bestes Epoch)', '0,768'],
+        ['Bester F1-Wert', '0,80 bei Konfidenz 0,554'],
+        ['Precision erreicht 1,00', 'bei Konfidenz 0,862'],
+        ['Maximaler Recall', '0,92'],
+      ],
+    },
+    media: [
+      {
+        src: '/images/knife-metrics-pr-curve.webp',
+        alt: 'Precision-Recall-Kurve der einzelnen Messerklasse mit mAP bei 0,5 von 0,844',
+        caption: 'Precision-Recall-Kurve · die Precision hält bis etwa 0,8 Recall über 0,9 und fällt dann steil ab',
+        variant: 'cad',
+        width: 1400,
+        height: 933,
+      },
+      {
+        src: '/images/knife-metrics-f1.webp',
+        alt: 'F1-Konfidenz-Kurve mit Maximum von 0,80 bei einer Konfidenzschwelle von 0,554',
+        caption: 'F1 über Konfidenz · die Kurve ist zwischen etwa 0,3 und 0,6 flach, der Arbeitspunkt reagiert also unempfindlich auf kleine Schwellenänderungen',
+        variant: 'cad',
+        width: 1400,
+        height: 933,
+      },
+      {
+        src: '/images/knife-metrics-training.webp',
+        alt: 'Trainingskurven über 150 Epochen: die Losses fallen, während Precision, Recall, mAP50 und mAP50-95 steigen und abflachen',
+        caption: 'Training über 150 Epochen · mAP@0,5 flacht ab etwa Epoche 120 ab, mAP@0,5:0,95 stieg noch leicht weiter',
+        variant: 'cad',
+        width: 1400,
+        height: 700,
+      },
+    ],
+  },
+  {
+    title: 'Wo das Modell tatsächlich versagt',
+    paragraphs: [
+      'Die aggregierten Zahlen verdecken die nützlichere Information, deshalb hier die Fehlerstruktur aus der Confusion Matrix bei der Standard-Konfidenzschwelle. Von 327 gelabelten Instanzen im Validierungsdatensatz wurden 275 erkannt und 52 übersehen.',
+      'Das größere Problem liegt in der anderen Richtung: 120 Erkennungen entfielen auf Hintergrundbereiche ohne gelabeltes Objekt. Das ist rund ein Fehlalarm auf 2,3 korrekte Erkennungen. Das Modell löst eher zu oft als zu selten aus, und für eine Alarmierungsanwendung ist das die teurere Fehlerart. Es ist außerdem der einzige Wert, der sich zwischen den beiden Trainingsläufen kaum bewegt hat – ein Hinweis darauf, dass er an den Daten liegt und nicht an der Labelstruktur. Die nächste Runde muss ihn mit schwierigeren Negativszenen angehen.',
+    ],
+    bullets: [
+      'Erkannt: 275 von 327 gelabelten Instanzen (84 %)',
+      'Übersehen: 52 Instanzen (16 %)',
+      'Fehlalarme auf Hintergrund: 120',
+      'Die Zuverlässigkeit sinkt bei Verdeckung und ungewöhnlichen Messerformen',
+    ],
+    media: [
+      {
+        src: '/images/knife-metrics-confusion.webp',
+        alt: 'Confusion Matrix mit 275 korrekten Messererkennungen, 52 übersehenen und 120 Fehlalarmen auf Hintergrund',
+        caption: 'Confusion Matrix · die 120 in der Hintergrundspalte sind das eigentliche Problem',
+        variant: 'cad',
+        width: 1400,
+        height: 1050,
+      },
+    ],
+  },
+  ...(showDemoVideo
+    ? [
+        {
+          title: 'Live-Demonstration',
+          paragraphs: [
+            'Der folgende Clip ist eine ungeschnittene Aufnahme des Live-Kamerabilds und zeigt sowohl korrekte Erkennungen als auch die Fälle, in denen das Modell unsicher ist.',
+          ],
+          media: [
+            {
+              src: '/images/knife-detection-positive.webp',
+              video: '/media/knife-detection-demo.mp4',
+              alt: 'Ungeschnittene Aufnahme der Live-Messererkennung auf einem Webcam-Stream',
+              videoLabel: 'Ungeschnittene Aufnahme der Live-Messererkennung auf einem Webcam-Stream',
+              caption: 'Ungeschnittene Live-Demonstration · Laptop-Webcam, ohne Nachbearbeitung',
+              variant: 'contain',
+              width: 568,
+              height: 572,
+            },
+          ],
+        },
+      ]
+    : []),
+  {
+    title: 'Live-Betrieb',
+    paragraphs: [
+      'Das Modell läuft von einer Live-Webcam auf einem Lenovo Yoga Slim 6 mit beobachteten 6–10 FPS sowie auf NVIDIA-Jetson-Plattformen, unter anderem einem Orin Nano Super. Demonstriert wurde es in unbekannten Szenen bei unterschiedlichen Lichtverhältnissen und Hintergründen.',
     ],
   },
   {
     title: 'Kostenbewusste Trainingsinfrastruktur',
     paragraphs: [
-      'Wiederholte Cloud-GPU-Nutzung hätte bei jedem Trainingslauf neue Kosten verursacht. Deshalb betrachtete ich diesen Ansatz im Vergleich zu einer wiederverwendbaren eigenen Workstation. Im März 2025 beschaffte ich fast alle Komponenten gebraucht und baute für rund 910 € einen lokalen KI-PC. Eine anbieterspezifische Break-even-Rechnung wird nicht ausgewiesen, weil die damaligen Cloud-Angebote und gesamten Trainingsstunden nicht mehr vorliegen.',
+      'Wiederholte Cloud-GPU-Nutzung hätte laufende Betriebskosten verursacht, deshalb habe ich sie gegen eine eigene, wiederverwendbare Workstation abgewogen. Im März 2025 habe ich nahezu alle Komponenten gebraucht beschafft und für rund 910 € einen lokalen KI-Rechner aufgebaut. Die beiden oben verglichenen Läufe brauchten darauf zusammen unter fünf Stunden, ohne zusätzliche Kosten – genau das hat es sinnvoll gemacht, das Klassenexperiment zu messen statt zu raten.',
     ],
     table: {
       headers: ['Entscheidungsfaktor', 'Lokale Workstation'],
       rows: [
         ['Kernhardware', 'NVIDIA Tesla T4 · Ryzen 7 5800X · 64 GB RAM · 1 TB Samsung 990 Pro'],
-        ['Beschaffung', 'Fast vollständig gebraucht, einschließlich eines verhandelten CPU-/Mainboard-/RAM-Pakets'],
-        ['Iteration', 'Für wiederholte Trainings verfügbar, ohne neue Nutzungsgebühr je Lauf'],
-        ['Restwert', 'Gebrauchtangebote sprechen für einen erheblichen Restwert; ein tatsächlicher Verkaufspreis ist nicht bestätigt'],
-        ['Energie', 'Training bewusst während lokaler PV-Erzeugung bei bereits vollem 2-kWh-Speicher; der genaue Solaranteil wurde nicht gemessen'],
+        ['Beschaffung', 'Nahezu vollständig gebraucht, inklusive verhandeltem CPU-/Mainboard-/RAM-Bundle'],
+        ['Iteration', 'Wiederholtes Training ohne erneute Nutzungsgebühr je Lauf'],
+        ['Restwert', 'Komponenten sind am Gebrauchtmarkt werthaltig und lassen sich weiterverwenden oder verkaufen'],
+        ['Energieeinsatz', 'Training zeitlich in die eigene PV-Erzeugung gelegt, nachdem der 2-kWh-Speicher voll war'],
       ],
     },
   },
   {
-    title: 'Ergebnis und Grenzen',
+    title: 'Ergebnis',
     paragraphs: [
-      'Das Projekt führte zu einer funktionierenden Live-Demonstration und einer weiter nutzbaren Trainingsinfrastruktur. Es zeigte außerdem, dass die Zusammensetzung des Datensatzes wichtiger sein kann als eine bloße Vergrößerung des Modells. Das aktuelle Modell bleibt ein experimenteller Prototyp: Es ist nicht zertifiziert, nicht marktreif und nicht als zuverlässiges System für den öffentlichen Sicherheitseinsatz zu verstehen.',
-      'Als nächste Nachweise folgen ein neues ungeschnittenes Demonstrationsvideo, einheitliche Gerätebenchmarks und eine gruppierte Datensatzaufteilung. Erst danach werden Precision, Recall, mAP und vergleichbare FPS veröffentlicht.',
+      'Das Projekt hat eine funktionierende Live-Demonstration, eine gemessene Ausgangsbasis von mAP@0,5 = 0,844 und wiederverwendbare Trainingshardware hervorgebracht. Die übertragbarste Erkenntnis: Die Zusammensetzung der Daten war wichtiger als Modellgröße oder ausgefeilte Labels. Die entscheidenden Fortschritte kamen durch tausende passender Negativszenen und durch das Vereinfachen der Labelstruktur, nicht durch ihr Verfeinern. Das Modell ist YOLOv11-S – die kleine Variante – und sie ist nicht der begrenzende Faktor.',
     ],
   },
 ];
+
+const limitations = {
+  title: 'Offene Punkte und Grenzen',
+  intro:
+    'Dies ist ein Forschungsprototyp. Er ist weder zertifiziert noch marktreif und darf nicht als verlässliches Sicherheitsprodukt verstanden werden. Die Metriken oben sind echt – hier steht genau, was sie belegen und was nicht.',
+  items: [
+    'Aufteilungsmethodik: Training und Validierung wurden zufällig über die Bilder aufgeteilt. Da viele Einzelbilder aus denselben Quellvideos stammen, können nahezu identische Frames auf beiden Seiten liegen. Der angegebene mAP ist deshalb eine optimistische Schätzung für wirklich neue Szenen. Eine nach Quellvideo gruppierte Aufteilung ist der nächste Schritt, und die Werte werden dabei voraussichtlich sinken.',
+    'Fehlalarme: 120 Hintergrunderkennungen im Validierungsdatensatz sind für eine Alarmierungsanwendung zu viele. Das ist das primäre Ziel der nächsten Iteration.',
+    'Der Klassenvergleich ist nicht vollständig kontrolliert: Der Ein-Klassen-Lauf trainierte auch 150 statt 110 Epochen, die Verbesserung lässt sich also nicht allein der Labelstruktur zuschreiben.',
+    'Durchsatz: Die 6–10 FPS sind eine Beobachtung auf einem Laptop, kein standardisierter Benchmark. Vergleichbare Gerätewerte setzen ein festgelegtes Modellformat, eine feste Eingangsauflösung und eine definierte Messmethode voraus.',
+    'Robustheit: Die Erkennungszuverlässigkeit sinkt bei Verdeckung und bei ungewöhnlichen Messerformen.',
+    'Wirtschaftlichkeit: Eine anbieterbezogene Break-even-Rechnung gegenüber Cloud-GPU-Miete zeige ich nicht, weil die ursprünglichen Angebote und die Gesamttrainingsstunden über alle Läufe nicht aufbewahrt wurden.',
+    'Energie: Der genaue Solaranteil der Trainingsenergie wurde nicht gemessen.',
+  ],
+};
 ---
 
 <BaseLayout
   lang="de"
   title="Live-Prototyp zur Messererkennung | Raphael Erwig"
-  description="Projektbericht zu selbst aufgenommenen Daten, YOLOv11-L-Training, False-Positive-Analyse, Edge-Ausführung und kostenbewusster KI-Infrastruktur."
+  description="Fallstudie: eigener Datensatz mit 4.742 Bildern, YOLOv11-S trainiert auf mAP@0,5 = 0,844, gemessenes Klassenstruktur-Experiment, Fehleranalyse und kostenbewusste lokale KI-Infrastruktur."
   canonicalPath="/de/projekte/messererkennung/"
   enPath="/projects/knife-detection/"
   dePath="/de/projekte/messererkennung/"
+  socialImage="/social-preview-knife-de.png"
 >
   <Header
     lang="de"
@@ -107,20 +240,23 @@ const sections = [
     backHref="/de/#projects"
     backLabel="Zurück zu den Projekten"
     eyebrow="KI · Computer Vision · Python"
-    title="Live-Messererkennung mit einem selbst trainierten YOLOv11-L-Modell"
-    lead="Ein eigenständiger Forschungsprototyp mit selbst aufgenommenen Daten, ungefähr 20–50 Trainingsläufen, False-Positive-Analyse, Edge-Ausführung und wirtschaftlich geplanter KI-Infrastruktur."
-    status="Funktionsfähiger Forschungsprototyp · kein Sicherheitssystem"
+    title="Live-Messererkennung mit selbst trainiertem YOLOv11-Modell"
+    lead="Ein eigenständiger Forschungsprototyp: 4.742 selbst aufgenommene Bilder, eine gemessene Validierungsbasis von mAP@0,5 = 0,844, ein Experiment zur Labelstruktur, das über Zahlen statt Bauchgefühl entschieden wurde, und eine ehrliche Fehleranalyse."
+    status="Funktionsfähiger Forschungsprototyp · kein Sicherheitsprodukt"
     {facts}
     {sections}
+    {limitations}
     heroMedia={{
-      src: '/images/knife-detection-positive.png',
+      src: '/images/knife-detection-positive.webp',
       alt: 'Live-Kamerabild mit einem erkannten Messer und angezeigten 82 Prozent Konfidenz',
-      caption: 'Aktuelle Demonstration · ein Messer mit angezeigten 82 % Konfidenz erkannt',
+      caption: 'Aktuelle Demonstration · ein Messer mit 82 % angezeigter Konfidenz erkannt',
       variant: 'contain',
+      width: 568,
+      height: 572,
     }}
-    nextLabel="Nächstes Projekt"
+    nextLabel="Nächste Fallstudie"
     nextHref="/de/projekte/high-speed-drohne/"
     nextTitle="Leistungsorientierter Drohnenprototyp"
   />
-  <Footer />
+  <Footer lang="de" />
 </BaseLayout>

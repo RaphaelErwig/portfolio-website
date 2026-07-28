@@ -1,4 +1,6 @@
 ---
+import { cv } from '../i18n/site-data';
+
 interface Props {
   lang: 'en' | 'de';
   labels: {
@@ -9,6 +11,7 @@ interface Props {
     contact: string;
     menu: string;
     navigation: string;
+    cv?: string;
   };
   languageHrefs?: {
     en: string;
@@ -19,6 +22,7 @@ interface Props {
 const { lang, labels, languageHrefs = { en: '/', de: '/de/' } } = Astro.props;
 const homeHref = lang === 'de' ? '/de/' : '/';
 const sectionHref = (id: string) => `${homeHref}#${id}`;
+const cvLabel = labels.cv ?? (lang === 'de' ? 'Lebenslauf' : 'CV');
 ---
 
 <header data-site-header>
@@ -44,6 +48,13 @@ const sectionHref = (id: string) => `${homeHref}#${id}`;
       <a href={sectionHref('about')}>{labels.about}</a>
       <a href={sectionHref('skills')}>{labels.skills}</a>
       <a href={sectionHref('contact')}>{labels.contact}</a>
+
+      {cv.enabled && (
+        <a class="nav-cv" href={lang === 'de' ? cv.de : cv.en} download>
+          {cvLabel}
+          <span aria-hidden="true"> ↓</span>
+        </a>
+      )}
 
       <div class="language-switch" aria-label="Language">
         <a class:list={[lang === 'en' && 'active']} aria-current={lang === 'en' ? 'page' : undefined} href={languageHrefs.en}>EN</a>
