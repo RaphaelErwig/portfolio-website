@@ -95,7 +95,18 @@ const structuredData = {
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body>
+    <!--
+      Cloudflare "Email Address Obfuscation" (Scrape Shield) ersetzt alles, was wie
+      eine E-Mail-Adresse aussieht, durch einen JavaScript-Link. Das traf nicht nur
+      die Kontaktadresse, sondern auch "mAP@0.5" — die wichtigste Kennzahl der
+      KI-Fallstudie wurde live als "[E-Mail-Adresse]" ausgeliefert.
+      Die folgenden email_off-Kommentare schalten die Ersetzung fuer den gesamten
+      Seiteninhalt ab. Sie muessen als echte HTML-Kommentare im Quelltext landen,
+      deshalb set:html statt eines Astro-Kommentars.
+    -->
+    <Fragment set:html="<!--email_off-->" />
     <a class="skip-link" href="#main-content">{skipLabel}</a>
     <slot />
+    <Fragment set:html="<!--/email_off-->" />
   </body>
 </html>

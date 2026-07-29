@@ -327,3 +327,105 @@ python3 scripts/optimize-image.py <datei> drone-top-dark
 
 Das ist die sauberere Lösung, wenn du die Bilder ohnehin neu aufnimmst — hellere
 Ausleuchtung würde den dunklen Drohnen auf dem dunklen Hintergrund zusätzlich helfen.
+
+---
+
+## 8. Live-Audit vom 29.07.2026
+
+Geprüft wurden alle zehn Seiten in beiden Sprachen, jeweils mit Cache-Busting.
+
+### Fehler 1 — Cloudflare zerstörte die wichtigste Kennzahl (behoben im Code)
+
+Auf allen **englischen** Seiten wurde `mAP@0.5` von Cloudflares Email Address
+Obfuscation als E-Mail-Adresse erkannt und durch einen JavaScript-Link mit dem Text
+`[email protected]` ersetzt. Betroffen waren rund zehn Stellen allein auf der
+KI-Fallstudie: Einleitung, Fakten-Grid, beide Ergebnistabellen, Bildunterschrift und
+Ergebnisabsatz. Ein Besucher las dort statt `mAP@0.5 = 0.844` einen Mailto-Link.
+
+Die **deutsche** Fassung war nicht betroffen, weil dort `mAP@0,5` mit Komma steht und
+das Muster damit nicht auf eine E-Mail-Adresse passt. Derselbe Inhalt, eine Sprache
+kaputt, wegen eines Dezimaltrennzeichens.
+
+Behoben durch `<!--email_off-->`-Kommentare um den Seiteninhalt in `BaseLayout.astro`.
+Damit ist die Seite unabhängig von der Dashboard-Einstellung geschützt.
+
+### Fehler 2 — Kontaktadresse weiterhin nur mit JavaScript
+
+Alle `mailto:`-Links werden weiterhin als `/cdn-cgi/l/email-protection#...` ausgeliefert.
+Das betrifft auch die **Adresse im Impressum**, die nach § 5 DDG unmittelbar erreichbar
+sein muss — eine JavaScript-Abhängigkeit ist dort nicht nur unpraktisch, sondern
+rechtlich angreifbar. Der `email_off`-Fix behebt das mit.
+
+### Fehler 3 — Cache liefert die alte Seite aus
+
+`/projects/high-speed-drone/` gab die alte Fassung zurück (300 km/h, `.jpeg`-Bilder,
+„All electronics reused"), dieselbe URL mit angehängtem `?cachebust=…` die neue.
+→ Cloudflare Dashboard → Caching → Configuration → **Purge Everything**.
+
+### Ohne Befund
+
+Deployment v5 korrekt, Portraitfoto live, Verfügbarkeitstext korrekt, Hero-Umbruch mit
+Leerzeichen, alle Bilder als WebP erreichbar, Rechtsseiten mit vollständiger Anschrift
+und `noindex`, Footer-Links in beiden Sprachen, canonical und hreflang sauber, eigene
+OG-Bilder pro Projekt, Hochschulname korrigiert, Praktikum kompakt, EN/DE inhaltlich
+deckungsgleich.
+
+---
+
+## 9. Design-Durchgang im Browser, 29.07.2026
+
+Erste Prüfung mit echten Augen: Desktop 1440 px und Handy 400 px, Startseite und
+Fallstudie, Menü geöffnet und geschlossen, Konsole mitgelesen. Keine JavaScript-Fehler.
+
+### Behoben in dieser Version
+
+**Bilder in den Fallstudien standen in viel zu hohen Rahmen.** Die `width`/`height`-
+Attribute, die ich gegen Layout-Sprünge eingebaut hatte, setzen eine feste CSS-Höhe.
+Ein 1400 × 1050-Foto bekam dadurch ein Element von 468 × **1050** px statt 468 × 352 px
+und stand mit großen Leerflächen darin. Auf dem Desktop kaschierte `max-height: 760px`
+das nur teilweise und schnitt dafür zu. Gemessen und nach dem Fix erneut gemessen:
+468 × 1050 → 468 × 352. Das war mein Fehler aus v5, den v7 sichtbar gemacht hat.
+
+**Das mobile Menü war durchsichtig.** Der Hintergrund stand auf `rgba(12,15,21,0.98)`,
+wirkte im Zusammenspiel mit dem `backdrop-filter` des Headers aber halbtransparent: Die
+Hero-Überschrift war quer durch die Menüpunkte lesbar. Mit einer deckenden Farbe im
+Browser gegengetestet — sofort sauber.
+
+**Die Links in den Projektkarten standen auf unterschiedlicher Höhe.** Beide Karten sind
+956 px hoch, aber „View case study" saß in der einen 30 px, in der anderen 116 px über
+der Unterkante. Jetzt beide bei 30 px.
+
+**253 px Leere zwischen Kontaktblock und Footer** (125 px Innenabstand plus 128 px
+Außenabstand). Auf 40 px reduziert.
+
+### Zwei Punkte, die eine Geschmacksentscheidung sind
+
+Beide nicht angefasst, weil sie deine Entscheidung sind:
+
+1. **Der LinkedIn-Button ist LinkedIn-Blau** (`#0A66C2`). Neben dem mintgrünen
+   E-Mail-Button auf dunklem Grund ist das der einzige Fremdkörper im Farbklima.
+2. **Das Messerbild in der Projektkarte hat schwarze Balken links und rechts.** Es ist
+   quadratisch und wird in einen 16:9-Rahmen eingepasst, während das Drohnenfoto den
+   Rahmen randlos füllt. Nebeneinander sieht das nach Fehler aus, obwohl beides so
+   gewollt ist.
+
+### Nachtrag: Messerbild in der Projektkarte auf 16:9
+
+Die schwarzen Balken sind weg. Vermessen wurde zuerst, was im Bild wo liegt: die blaue
+Bounding Box mit „Messer: 82 %" bei y 257–372, die gelbe Zeile „Number of objects: 1"
+bei y 21–40. Beides zusammen braucht 351 px Höhe — ein 16:9-Fenster bei 568 px Breite
+hat nur 320. Es passte also nur eines von beidem.
+
+Behalten wurde die Bounding Box, weil die Bildunterschrift genau auf sie verweist
+(„one knife detected with 82% displayed confidence"). Der Zuschnitt liegt bei y 154–474,
+die Box sitzt darin mittig.
+
+**Das Titelbild der Fallstudie bleibt das vollständige Bild.** Dort ist die Karte kein
+Vorschaubild, sondern der Beleg — inklusive Objektzähler. Zwei Dateien:
+
+| Datei | Verwendung |
+|---|---|
+| `knife-detection-card.webp` (568 × 320) | Projektkarte auf der Startseite, randlos |
+| `knife-detection-positive.webp` (568 × 572) | Titelbild der Fallstudie, vollständig |
+
+Der LinkedIn-Button bleibt auf Wunsch in LinkedIn-Blau.

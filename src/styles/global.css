@@ -1458,3 +1458,64 @@ footer {
     object-fit: contain;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Korrekturen aus dem Live-Durchgang im Browser am 29.07.2026
+   --------------------------------------------------------------------------- */
+
+/* 1. Bildhoehe.
+   Die width/height-Attribute im HTML (gegen Layout-Spruenge) setzten eine feste
+   CSS-Hoehe. Bei einem 1400x1050-Foto wurde das Element 468 x 1050 px statt
+   468 x 352 px: das Bild stand mit object-fit contain in einem dreimal zu hohen
+   Rahmen, mit grossen Leerflaechen darueber und darunter. Auf dem Desktop
+   kaschierte max-height 760px das nur teilweise und schnitt stattdessen zu.
+   height: auto laesst die Attribute weiterhin das Seitenverhaeltnis reservieren,
+   ohne die Hoehe festzunageln. */
+.case-study-cover img,
+.case-study-media img {
+  height: auto;
+}
+
+/* 2. Mobiles Menue.
+   Der Panelhintergrund war rgba(12,15,21,0.98) und wirkte trotzdem
+   halbtransparent — die Hero-Ueberschrift war durch die Menuepunkte hindurch
+   lesbar. Ursache ist das Zusammenspiel mit dem backdrop-filter des Headers.
+   Eine deckende Farbe loest es. */
+@media (max-width: 760px) {
+  .nav-links {
+    background: #0c0f15;
+  }
+}
+
+/* 3. Projektkarten: Position des Links.
+   Beide Karten sind gleich hoch, aber unterschiedlich lang beschrieben. Dadurch
+   stand "View case study" in der einen Karte 30 px, in der anderen 116 px ueber
+   der Unterkante. Der Link wird jetzt nach unten gedrueckt und sitzt in beiden
+   Karten auf derselben Linie. */
+.project-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.project-link {
+  margin-top: auto;
+  padding-top: 26px;
+}
+
+.project-content > p,
+.project-content .highlight-list {
+  flex: none;
+}
+
+/* 4. Abstand zwischen Kontaktblock und Footer.
+   125 px Innenabstand unten plus 128 px Aussenabstand des Footers ergaben
+   253 px Leere unter der letzten Zeile. */
+.contact {
+  padding-bottom: 40px;
+}
