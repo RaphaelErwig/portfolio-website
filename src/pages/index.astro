@@ -14,7 +14,7 @@ const projects = [
     highlights: [
       'Load-bearing frame and body designed in Onshape across 4–5 major iterations',
       'PA-CF revision built, tuned and flight-tested; three weaknesses identified and addressed',
-      'Revision 2 in CAD: new frame, motors, ESC and flight controller, moving from 6S to an 8S/12S-capable system',
+      'Revision 2 in CAD: new powertrain for 8S/12S, accepting a €300 write-off rather than capping the result',
     ],
     href: '/projects/high-speed-drone/',
     metric: '3 flight tests → 4 design changes',
@@ -34,7 +34,7 @@ const projects = [
     highlights: [
       'Self-recorded dataset: 731 knife images and 4,011 without a knife',
       'A two-class label split was tested against one class and rejected on the measured result',
-      'Local AI workstation sourced second-hand for about €910 instead of recurring cloud cost',
+      'Operating cost modelled: review labour dominates, and halving false positives returns a factor of eight',
     ],
     href: '/projects/knife-detection/',
     metric: 'mAP@0.5 = 0.844 on validation',
@@ -80,8 +80,8 @@ const skillGroups = [
   },
   {
     title: 'Commercial engineering',
-    skills: ['Microsoft Excel', 'Cost–Benefit Analysis', 'Project Budgeting', 'Component Sourcing', 'Residual-Value Thinking'],
-    evidence: { text: 'Applied in both project budgets and in controlling', href: '#projects' },
+    skills: ['Microsoft Excel', 'Cost–Benefit Analysis', 'Project Budgeting', 'Component Sourcing', 'Break-Even Analysis'],
+    evidence: { text: 'Break-even and operating cost modelled in the knife detection case study', href: '/projects/knife-detection/' },
   },
 ];
 
@@ -178,7 +178,7 @@ const content = {
   contact: {
     eyebrow: 'Contact',
     title: 'Let’s start a conversation.',
-    text: 'I am looking for an internship or part-time student role and can start immediately, anywhere in the world. For the right position I will pause my studies to take it. If you are hiring at the intersection of engineering, product development and business, I would like to hear from you.',
+    text: 'I am looking for an internship or student engineering role, can start immediately and will relocate anywhere — for the right position I will pause my studies. If you are hiring at the intersection of engineering, product development and business, I would like to hear from you.',
     button: 'Send me an email',
     cv: 'Download CV (PDF)',
     linkedin: 'Connect on LinkedIn',

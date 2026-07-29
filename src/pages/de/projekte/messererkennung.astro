@@ -183,20 +183,48 @@ const sections = [
     ],
   },
   {
-    title: 'Kostenbewusste Trainingsinfrastruktur',
+    title: 'Infrastruktur: was die Workstation wirklich gekostet hat',
     paragraphs: [
-      'Wiederholte Cloud-GPU-Nutzung hätte laufende Betriebskosten verursacht, deshalb habe ich sie gegen eine eigene, wiederverwendbare Workstation abgewogen. Im März 2025 habe ich nahezu alle Komponenten gebraucht beschafft und für rund 910 € einen lokalen KI-Rechner aufgebaut. Die beiden oben verglichenen Läufe brauchten darauf zusammen unter fünf Stunden, ohne zusätzliche Kosten – genau das hat es sinnvoll gemacht, das Klassenexperiment zu messen statt zu raten.',
+      'Im März 2025 habe ich nahezu alle Komponenten gebraucht beschafft und für rund 910 € einen lokalen KI-Rechner aufgebaut, statt GPU-Zeit zu mieten. Rein auf die Rechenleistung gerechnet trägt sich diese Entscheidung nicht, und das gehört klar gesagt.',
+      'Eine T4-vergleichbare Cloud-Instanz kostet derzeit etwa 0,20 bis 0,76 $ pro Stunde On-Demand. In der Mitte dieser Spanne liegt der Break-even der 910 € bei rund 3.300 GPU-Stunden – 137 Tage Dauerlast. Über alle Läufe dieses Projekts habe ich in der Größenordnung von 100 Stunden gerechnet. Diese Rechenzeit zu mieten hätte etwa 30 € gekostet. Pro tatsächlich genutzter Stunde war die Workstation damit rund dreißigmal teurer als Miete.',
+      'Drei Punkte rechtfertigen sie trotzdem, und keiner davon ist der Stundenpreis. Erstens besteht der Datensatz aus Videoaufnahmen in meiner eigenen Wohnung und zeigt mich und mein Umfeld; diese Daten einem fremden Anbieter zu übergeben wollte ich nicht. Zweitens hat ein Grenzkostensatz von null meine Arbeitsweise verändert – das Klassenexperiment weiter oben, das nützlichste Ergebnis dieses Projekts, ist nur entstanden, weil ein zusätzlicher Trainingslauf nichts kostete. Bei abgerechneter Rechenzeit hätte ich weniger ausprobiert und weniger gelernt. Drittens sind 910 € der Preis für einen vollständigen Rechner, nicht für GPU-Stunden: Ryzen 7 5800X, 64 GB RAM und die 1-TB-SSD tragen auch CAD-Arbeit und Slicing, den vollen Betrag diesem Projekt zuzurechnen überzeichnet die Kosten. Die Cloudpreise lagen zum Entscheidungszeitpunkt außerdem deutlich höher als heute.',
+      'Die ehrliche Schlussfolgerung ist eine Regel, kein Urteil: Für ein Projekt dieser Größe ohne Datenschutzauflage ist Mieten bei den heutigen Preisen die richtige Wahl, und ich würde mieten. Der Kauf war durch diese Auflage und durch den Wert unbegrenzter Iteration begründet – nicht durch die Rechnung.',
     ],
     table: {
-      headers: ['Entscheidungsfaktor', 'Lokale Workstation'],
+      headers: ['Position', 'Wert'],
       rows: [
+        ['Kaufpreis', '≈ 910 €, nahezu vollständig gebraucht, inkl. verhandeltem CPU-/Mainboard-/RAM-Bundle'],
         ['Kernhardware', 'NVIDIA Tesla T4 · Ryzen 7 5800X · 64 GB RAM · 1 TB Samsung 990 Pro'],
-        ['Beschaffung', 'Nahezu vollständig gebraucht, inklusive verhandeltem CPU-/Mainboard-/RAM-Bundle'],
-        ['Iteration', 'Wiederholtes Training ohne erneute Nutzungsgebühr je Lauf'],
-        ['Restwert', 'Komponenten sind am Gebrauchtmarkt werthaltig und lassen sich weiterverwenden oder verkaufen'],
-        ['Energieeinsatz', 'Training zeitlich in die eigene PV-Erzeugung gelegt, nachdem der 2-kWh-Speicher voll war'],
+        ['Tatsächlich genutzte Rechenzeit', 'In der Größenordnung von 100 GPU-Stunden über alle Läufe'],
+        ['Dieselbe Rechenzeit gemietet', '≈ 30 € bei 0,30 $ pro Stunde'],
+        ['Break-even gegen Miete', '≈ 3.300 GPU-Stunden, rund 30-mal meine tatsächliche Nutzung'],
+        ['Energie', 'Training zeitlich in die eigene PV-Erzeugung gelegt, nachdem der 2-kWh-Speicher voll war'],
       ],
     },
+  },
+  {
+    title: 'Was ein realer Betrieb kosten würde',
+    paragraphs: [
+      'Ein Prototyp beantwortet die Frage „erkennt er es?". Ein Betreiber fragt „was kostet der Betrieb?" – und meine eigene Fehlalarmrate beantwortet das, denn in einem Alarmierungssystem verbraucht jeder Fehlalarm die Aufmerksamkeit eines Menschen. Die folgende Rechnung arbeitet mit offengelegten Annahmen, nicht mit echten Kundenzahlen, und sie hat verändert, welche Entwicklungsarbeit ich als Nächstes für sinnvoll halte.',
+      'Angenommenes Szenario: ein überwachter Eingangsbereich eines Gewerbegebäudes, vier Kameras, rund 312 Betriebsstunden im Monat. Ein bewertetes Bild pro Sekunde und Kamera, 30 Sekunden Sichtprüfung je Alarm, 20 € pro Stunde Personalkosten inklusive Nebenkosten. Hardware zu den Preisen, die ich tatsächlich bezahlt habe: 250 € je Jetson Orin Nano Super, dazu geschätzt 50 € je Kameramodul. Montage, Netzwerk und Gehäuse sind nicht enthalten.',
+      'Die Hardware ist nicht das Problem. Vier Knoten kosten einmalig 1.200 €. Ohne jede Filterung erzeugt eine Fehlalarmrate von 12,5 % pro Bild etwa 1.800 Alarme pro Stunde über vier Kameras – das sind fünfzehn dauerhaft gebundene Personen, womit die Frage geklärt ist, ob das unbearbeitete Modell betriebsfähig ist. Verlangt man drei Erkennungen in Folge, bevor ein Alarm ausgelöst wird, kostet das keine zusätzliche Hardware und senkt den Wert auf 28 Alarme pro Stunde, also rund 1.460 € Prüfaufwand im Monat. Die einmaligen Hardwarekosten sind damit in weniger als einem Monat von den Personalkosten überholt.',
+      'Die interessante Folge ist nichtlinear. Weil ein Drei-Bild-Filter die Rate pro Einzelbild in die dritte Potenz erhebt, halbiert eine Halbierung der Fehlalarmrate nicht die Prüfkosten – sie senkt sie um den Faktor acht, von rund 1.460 € auf etwa 180 € im Monat. Damit wird aus „das Modell etwas verbessern" eine bezifferte Rendite, und die günstige Maßnahme rückt vor die naheliegende: erst filtern zum Preis von null, dann etwa 40 bis 60 Stunden zusätzliche Aufnahmen von Negativszenen, und erst danach überhaupt die Frage nach einem größeren Modell.',
+    ],
+    table: {
+      headers: ['Erkennungen in Folge nötig', 'Alarme pro Stunde, 4 Kameras', 'Prüfzeit', 'Prüfkosten pro Monat'],
+      rows: [
+        ['1 (ohne Filter)', '≈ 1.800', '15 Personen dauerhaft', 'nicht betreibbar'],
+        ['2', '≈ 225', '112 min pro Stunde', '≈ 11.700 €'],
+        ['3', '≈ 28', '14 min pro Stunde', '≈ 1.460 €'],
+        ['4', '≈ 3,5', '2 min pro Stunde', '≈ 180 €'],
+      ],
+    },
+    bullets: [
+      'Investition: einmalig 1.200 € für vier Knoten, zu den von mir bezahlten Preisen',
+      'Die Betriebskosten werden von menschlicher Aufmerksamkeit bestimmt, nicht von Hardware oder Energie',
+      'Eine Halbierung der Fehlalarmrate bringt beim Prüfaufwand etwa Faktor acht',
+      'Die wirksamste günstige Maßnahme ist zeitliche Filterung und kostet nichts in der Umsetzung',
+    ],
   },
   {
     title: 'Ergebnis',
@@ -213,10 +241,11 @@ const limitations = {
   items: [
     'Aufteilungsmethodik: Training und Validierung wurden zufällig über die Bilder aufgeteilt. Da viele Einzelbilder aus denselben Quellvideos stammen, können nahezu identische Frames auf beiden Seiten liegen. Der angegebene mAP ist deshalb eine optimistische Schätzung für wirklich neue Szenen. Eine nach Quellvideo gruppierte Aufteilung ist der nächste Schritt, und die Werte werden dabei voraussichtlich sinken.',
     'Fehlalarme: 120 Hintergrunderkennungen im Validierungsdatensatz sind für eine Alarmierungsanwendung zu viele. Das ist das primäre Ziel der nächsten Iteration.',
+    'Das Kostenmodell für den Betrieb nimmt an, dass Fehlalarme auf aufeinanderfolgenden Videobildern statistisch unabhängig sind. Das sind sie nicht – benachbarte Frames sind stark korreliert, eine Fehlerkennung wiederholt sich tendenziell. Der Faktor 64 durch einen Drei-Bild-Filter ist deshalb optimistisch und muss am Video gemessen werden, statt hergeleitet zu werden. Alle weiteren Werte dieses Abschnitts sind offengelegte Annahmen, keine Messungen aus einer realen Installation.',
     'Der Klassenvergleich ist nicht vollständig kontrolliert: Der Ein-Klassen-Lauf trainierte auch 150 statt 110 Epochen, die Verbesserung lässt sich also nicht allein der Labelstruktur zuschreiben.',
     'Durchsatz: Die 6–10 FPS sind eine Beobachtung auf einem Laptop, kein standardisierter Benchmark. Vergleichbare Gerätewerte setzen ein festgelegtes Modellformat, eine feste Eingangsauflösung und eine definierte Messmethode voraus.',
     'Robustheit: Die Erkennungszuverlässigkeit sinkt bei Verdeckung und bei ungewöhnlichen Messerformen.',
-    'Wirtschaftlichkeit: Eine anbieterbezogene Break-even-Rechnung gegenüber Cloud-GPU-Miete zeige ich nicht, weil die ursprünglichen Angebote und die Gesamttrainingsstunden über alle Läufe nicht aufbewahrt wurden.',
+    'Wirtschaftlichkeit: Die Break-even-Rechnung oben nutzt heutige Cloudpreise und eine Schätzung der Gesamttrainingsstunden, weil die ursprünglichen Angebote und eine genaue Stundenzählung nicht aufbewahrt wurden. Der Wiederverkaufswert der Komponenten würde einen Teil der 910 € ausgleichen, ist aber nicht durch einen tatsächlichen Verkauf belegt.',
     'Energie: Der genaue Solaranteil der Trainingsenergie wurde nicht gemessen.',
   ],
 };

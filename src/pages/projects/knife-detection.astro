@@ -183,20 +183,48 @@ const sections = [
     ],
   },
   {
-    title: 'Cost-aware training infrastructure',
+    title: 'Infrastructure: what the workstation really cost',
     paragraphs: [
-      'Repeated cloud GPU usage would have created a continuing operating expense, so I weighed it against owning a reusable workstation. In March 2025 I sourced almost all components second-hand and built a local AI workstation for approximately €910. The two runs compared above took under five hours combined on it, at no marginal cost — which is exactly what made the class-structure experiment worth running instead of guessing.',
+      'In March 2025 I sourced almost all components second-hand and built a local AI workstation for approximately €910 instead of renting GPU time. Measured purely in compute, that decision does not pay off, and it is worth saying so plainly.',
+      'A T4-class cloud instance currently costs roughly $0.20 to $0.76 per hour on demand. At the middle of that range the €910 machine breaks even at about 3,300 GPU-hours — 137 days of continuous training. Across every run in this project I have used on the order of 100 hours. Renting that compute would have cost around €30. Per hour actually used, the workstation was roughly thirty times more expensive than renting.',
+      'Three things justified it anyway, and none of them is the hourly rate. First, the dataset is video recorded in my own home and shows me and my surroundings; uploading it to a third-party provider was not something I was willing to do. Second, a marginal cost of zero changed how I worked — the class-structure experiment above, the most useful result in this project, happened because one more training run cost nothing. Under metered billing I would have run fewer experiments and learned less. Third, €910 bought a complete workstation rather than GPU hours: the Ryzen 7 5800X, 64 GB of RAM and the 1 TB drive also carry CAD work and slicing, so charging the full amount to this project overstates it. Cloud GPU pricing was also considerably higher when I made the decision than it is today.',
+      'The honest conclusion is a rule rather than a verdict: for a project of this size without a data-protection constraint, renting is the correct choice at current prices, and I would rent. The purchase was justified by that constraint and by the value of unmetered iteration — not by the arithmetic.',
     ],
     table: {
-      headers: ['Decision factor', 'Local workstation'],
+      headers: ['Position', 'Figure'],
       rows: [
+        ['Purchase price', '≈ €910, almost entirely second-hand, incl. a negotiated CPU/mainboard/RAM bundle'],
         ['Core hardware', 'NVIDIA Tesla T4 · Ryzen 7 5800X · 64 GB RAM · 1 TB Samsung 990 Pro'],
-        ['Acquisition', 'Almost entirely second-hand, including a negotiated CPU/mainboard/RAM bundle'],
-        ['Iteration', 'Repeated training without a new usage fee for each run'],
-        ['Residual value', 'Components hold value on the second-hand market and can be resold or reused'],
-        ['Energy use', 'Training scheduled during local PV generation, after the 2 kWh battery was full'],
+        ['Compute actually used', 'On the order of 100 GPU-hours across all runs'],
+        ['Same compute rented', '≈ €30 at $0.30 per hour'],
+        ['Break-even vs. renting', '≈ 3,300 GPU-hours, roughly 30× my actual usage'],
+        ['Energy', 'Training scheduled during local PV generation, after the 2 kWh battery was full'],
       ],
     },
+  },
+  {
+    title: 'What a real deployment would cost',
+    paragraphs: [
+      'A prototype answers "does it detect?". An operator asks "what does it cost to run?" — and my own false-positive rate answers that, because in an alerting system every false alarm consumes a person’s attention. The arithmetic below uses stated assumptions rather than a customer’s real figures, and it changed which engineering work I consider worth doing next.',
+      'Assumed scenario: one monitored entrance of a commercial building, four cameras, roughly 312 operating hours per month. One frame evaluated per second per camera, 30 seconds of human review per alarm, €20 per hour of fully loaded labour. Hardware at the prices I actually paid: €250 per Jetson Orin Nano Super plus an estimated €50 per camera module. Mounting, network and enclosures are not included.',
+      'Hardware is not the problem. Four nodes cost €1,200 once. Without any filtering, a 12.5 % false-positive rate per frame produces about 1,800 alarms per hour across four cameras — that is fifteen people occupied full time, which settles the question of whether the raw model is deployable. Requiring three consecutive detections before raising an alarm costs nothing in hardware and brings that to 28 alarms per hour, or roughly €1,460 per month in review time. The one-off hardware cost is overtaken by review labour in under a month.',
+      'The interesting consequence is non-linear. Because a three-frame filter raises the per-frame rate to the third power, halving the false-positive rate does not halve the review cost — it cuts it by a factor of eight, from about €1,460 to about €180 per month. That converts "improve the model somewhat" into a quantified return, and it puts the cheap lever ahead of the obvious one: filtering first at zero cost, then roughly 40 to 60 hours of additional negative-scene recording, and only then any question of a larger model.',
+    ],
+    table: {
+      headers: ['Consecutive detections required', 'Alarms per hour, 4 cameras', 'Review time', 'Review cost per month'],
+      rows: [
+        ['1 (no filter)', '≈ 1,800', '15 people full time', 'not operable'],
+        ['2', '≈ 225', '112 min per hour', '≈ €11,700'],
+        ['3', '≈ 28', '14 min per hour', '≈ €1,460'],
+        ['4', '≈ 3.5', '2 min per hour', '≈ €180'],
+      ],
+    },
+    bullets: [
+      'Capex: €1,200 once for four nodes, at the prices I paid',
+      'Opex is dominated by human attention, not by hardware or energy',
+      'Halving the false-positive rate returns roughly a factor of eight on review cost',
+      'Cheapest effective lever is temporal filtering, which costs nothing to implement',
+    ],
   },
   {
     title: 'Result',
@@ -213,10 +241,11 @@ const limitations = {
   items: [
     'Split methodology: training and validation were split randomly across images. Because many frames were extracted from the same source videos, near-duplicate frames can appear on both sides. The reported mAP is therefore an optimistic estimate of performance on genuinely new scenes. A split grouped by source video is the next step, and the numbers should be expected to drop.',
     'False positives: 120 background detections on the validation set is too many for an alerting application. This is the primary target of the next iteration.',
+    'The deployment cost model assumes that false positives on consecutive video frames are statistically independent. They are not — neighbouring frames are highly correlated, so a false detection tends to repeat. The factor-of-64 improvement from a three-frame filter is therefore optimistic and has to be measured on video rather than derived. All other figures in that section are assumptions, clearly stated, not measurements from a real installation.',
     'The class comparison is not fully controlled: the single-class run also trained for 150 instead of 110 epochs, so the improvement cannot be attributed to the label structure alone.',
     'Throughput: the 6–10 FPS figure is an observation on one laptop, not a standardized benchmark. Comparable device figures require a fixed model format, input resolution and measurement method.',
     'Robustness: detection reliability drops with occlusion and with unusual knife shapes.',
-    'Infrastructure economics: no provider-specific break-even against cloud GPU rental is presented, because the original quotations and total training hours across all runs were not retained.',
+    'Infrastructure economics: the break-even above uses current cloud prices and an estimate of total training hours, because the original quotations and a precise hour count were not retained. The resale value of the components would offset part of the €910 but has not been confirmed against an actual sale.',
     'Energy: the exact solar share of the training energy was not measured.',
   ],
 };
