@@ -15,6 +15,9 @@ const nav = {
   cv: 'Lebenslauf',
 };
 
+/** TODO Raphael: auf true setzen, sobald /images/drone-thermal.webp existiert. */
+const showThermalImage = false;
+
 /** TODO Raphael: auf true setzen, sobald /media/drone-flight-demo.mp4 existiert. */
 const showFlightVideo = false;
 
@@ -104,6 +107,16 @@ const sections = [
       'Steuerung: DJI O4 FPV vor allen Leistungstests ergänzt',
     ],
     media: [
+      ...(showThermalImage
+        ? [{
+            src: '/images/drone-thermal.webp',
+            alt: 'Infrarotaufnahme der ersten Drohnenrevision mit Wärmestau um Flugcontroller und 4-in-1-ESC',
+            caption: 'Infrarotmessung · Wärmestau um Flugcontroller und ESC',
+            variant: 'cad',
+            width: 1400,
+            height: 1050,
+          }]
+        : []),
       {
         src: '/images/drone-detail-dark.webp',
         alt: 'Detailansicht der ersten Drohnenrevision mit gedruckter Verkleidung, Armgeometrie und Antriebsanordnung',

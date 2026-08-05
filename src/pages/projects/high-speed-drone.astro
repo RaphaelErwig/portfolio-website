@@ -15,6 +15,9 @@ const nav = {
   cv: 'CV',
 };
 
+/** TODO Raphael: auf true setzen, sobald /images/drone-thermal.webp existiert. */
+const showThermalImage = false;
+
 /** TODO Raphael: flip to true once /media/drone-flight-demo.mp4 exists. */
 const showFlightVideo = false;
 
@@ -104,6 +107,16 @@ const sections = [
       'Control: DJI O4 FPV added before any performance testing',
     ],
     media: [
+      ...(showThermalImage
+        ? [{
+            src: '/images/drone-thermal.webp',
+            alt: 'Infrared image of the first drone revision showing heat build-up around the flight controller and the 4-in-1 ESC',
+            caption: 'Infrared measurement · heat build-up around flight controller and ESC',
+            variant: 'cad',
+            width: 1400,
+            height: 1050,
+          }]
+        : []),
       {
         src: '/images/drone-detail-dark.webp',
         alt: 'Three-quarter detail view of the first drone revision highlighting the printed body, arm geometry and propulsion layout',
