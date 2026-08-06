@@ -37,13 +37,35 @@ export const cv = {
 /**
  * Portraitfoto.
  *
- * Zum Austauschen: python3 scripts/optimize-image.py <datei> raphael-erwig
+ * Zum Austauschen: python3 scripts/optimize-image.py <datei> raphael-erwig-portrait-2
+ * und src hier auf den NEUEN Namen setzen. Immer einen neuen Dateinamen verwenden —
+ * bei gleichem Namen liefert der Cloudflare-Cache noch tagelang das alte Bild aus.
  * und die width/height aus der Skriptausgabe hier eintragen.
  */
 export const portrait = {
   enabled: true,
-  src: '/images/raphael-erwig.webp',
+  src: '/images/raphael-erwig-portrait.webp',
   width: 900,
   height: 1125,
   alt: { en: 'Portrait of Raphael Erwig', de: 'Portraitfoto von Raphael Erwig' },
+};
+
+/**
+ * Bild im Hero, rechts neben dem Text. Nur ab 900 px Breite sichtbar —
+ * auf dem Handy wuerde es den Text nach unten druecken, und dort sorgt
+ * schon der niedrigere Hero dafuer, dass die Projekte hineinlugen.
+ *
+ * Auf `true` stellen, sobald das gewuenschte Bild unter src liegt.
+ * Empfehlung: ein Projektbild, kein Portrait — das Portrait steht bereits
+ * im Ueber-mich-Abschnitt und wirkt doppelt.
+ */
+export const heroImage = {
+  enabled: false,
+  src: '/images/drone-hero-dark.webp',
+  width: 1400,
+  height: 787,
+  alt: {
+    en: 'Self-developed flight-capable drone prototype',
+    de: 'Selbst entwickelter flugfähiger Drohnenprototyp',
+  },
 };

@@ -174,10 +174,13 @@ section[id] {
 }
 
 .hero {
-  min-height: calc(100svh - 72px);
+  /* Bewusst KEIN volles Viewport mehr. Bei 100svh war ueber der Falz kein
+     einziges Projekt zu sehen; angeschnittener Inhalt ist der wirksamste
+     Anreiz zum Weiterscrollen. */
+  min-height: min(66svh, 620px);
   display: grid;
   align-items: center;
-  padding: 90px 0 80px;
+  padding: 64px 0 56px;
 }
 
 .hero-content {
@@ -197,7 +200,7 @@ section[id] {
 h1 {
   max-width: 1000px;
   margin: 0;
-  font-size: clamp(2.9rem, 6.6vw, 6rem);
+  font-size: clamp(2.15rem, 4.6vw, 3.9rem);
   line-height: 0.98;
   letter-spacing: -0.06em;
 }
@@ -209,8 +212,8 @@ h1 {
 }
 
 .intro {
-  max-width: 780px;
-  margin: 28px 0 0;
+  max-width: 720px;
+  margin: 22px 0 0;
   color: #b8c0cc;
   font-size: clamp(1.05rem, 1.8vw, 1.24rem);
 }
@@ -1099,8 +1102,8 @@ footer {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  margin: 22px 0 0;
-  padding: 9px 18px;
+  margin: 18px 0 0;
+  padding: 8px 16px;
   border: 1px solid rgba(var(--accent-rgb), 0.32);
   border-radius: 999px;
   background: rgba(var(--accent-rgb), 0.07);
@@ -1505,4 +1508,36 @@ footer {
    253 px Leere unter der letzten Zeile. */
 .contact {
   padding-bottom: 40px;
+}
+
+/* Zweispaltiger Hero, wenn ein Hero-Bild aktiv ist.
+   Unter 900 px wird das Bild ausgeblendet: dort wuerde es den Text nach unten
+   schieben, und der niedrigere Hero laesst die Projektkarten ohnehin hineinlugen. */
+@media (min-width: 900px) {
+  .hero-with-image {
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    gap: clamp(36px, 5vw, 72px);
+  }
+}
+
+.hero-figure {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 22px;
+  background: #11151d;
+}
+
+.hero-figure img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+@media (max-width: 899px) {
+  .hero-figure {
+    display: none;
+  }
 }

@@ -46,7 +46,7 @@ interface Props {
   content: any;
 }
 
-import { cv, portrait } from '../i18n/site-data';
+import { cv, portrait, heroImage } from '../i18n/site-data';
 
 const { projects, strengths, skillGroups, experience, content } = Astro.props;
 const lang = content.lang ?? 'en';
@@ -55,7 +55,7 @@ const email = 'raphael.erwig@icloud.com';
 ---
 
 <main id="main-content">
-  <section class="hero container">
+  <section class:list={['hero', 'container', { 'hero-with-image': heroImage.enabled }]}>
     <div class="hero-content">
       <p class="eyebrow">{content.hero.eyebrow}</p>
       <h1>
@@ -75,6 +75,18 @@ const email = 'raphael.erwig@icloud.com';
         )}
       </div>
     </div>
+    {heroImage.enabled && (
+      <figure class="hero-figure">
+        <img
+          src={heroImage.src}
+          alt={lang === 'de' ? heroImage.alt.de : heroImage.alt.en}
+          width={heroImage.width}
+          height={heroImage.height}
+          fetchpriority="high"
+          decoding="async"
+        />
+      </figure>
+    )}
   </section>
 
   <section id="projects" class="container">
