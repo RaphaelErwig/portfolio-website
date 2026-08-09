@@ -22,9 +22,9 @@ const showThermalImage = false;
 const showFlightVideo = false;
 
 const facts = [
-  { label: 'Timeframe', value: '2026 · revision 1 complete, revision 2 in CAD' },
+  { label: 'Timeframe', value: '2026 · revision 1 flight-capable, revision 2 in development' },
   { label: 'Design iterations', value: '4–5 major Onshape revisions' },
-  { label: 'Build', value: 'PA-CF · Bambu Lab X1C' },
+  { label: 'Revision 2', value: '7-inch carbon frame · components rated up to 12S' },
   { label: 'Documented spend', value: '≈ €424 of a €700 budget' },
 ];
 
@@ -32,7 +32,7 @@ const sections = [
   {
     title: 'Objective and scope',
     paragraphs: [
-      'The goal was a compact, performance-oriented drone built without an off-the-shelf frame. Revision 1 was designed around a 6S powertrain with a target top speed of roughly 170 km/h — derived from the pitch speed of that motor and propeller combination with a realistic derate for slip and drag. It was a design target, never a measured result, and revision 2 changes the power class entirely, so it does not carry over.',
+      'The goal was a compact, performance-oriented drone built without an off-the-shelf frame. Revision 1 was designed around a 6S powertrain with a target speed of roughly 170 km/h — derived from the pitch speed of that motor and propeller combination and never presented as a measured result. With revision 2 redesigned from the ground up, the new development target is 400 km/h. That figure has likewise not been achieved or verified by measurement.',
       'I completed the project independently over roughly 200 hours: component selection, mechanical design, additive manufacturing, soldering, assembly, Betaflight configuration, PID work and flight testing.',
     ],
   },
@@ -101,8 +101,8 @@ const sections = [
       'Each finding maps directly to a change in revision 2:',
     ],
     bullets: [
-      'Vibration: revised geometry and a switch from PA-CF to ABS-CF',
-      'Cooling: ventilation slots and a new layout for flight controller and ESC',
+      'Vibration: switch from the printed PA-CF load-bearing frame to a symmetrical 7-inch carbon frame',
+      'Cooling: more deliberate airflow and a new layout for the flight controller and ESC',
       'Weight distribution: battery positioned lower, lighter components higher',
       'Control: DJI O4 FPV added before any performance testing',
     ],
@@ -127,24 +127,26 @@ const sections = [
     ],
   },
   {
-    title: 'Revision 2 · a different machine, not a patched one',
+    title: 'Revision 2 · redesigned from the ground up',
     paragraphs: [
-      'Revision 2 is in its first CAD iteration. The evidence from revision 1 pointed at the structure and the power system rather than at details of the geometry, so the second build is not a repaired version of the first: the frame, motors, ESC, flight controller and propellers are all replaced. Only the GPS module and the ELRS receiver carry over.',
-      'The new power system is rated for 8S and 12S rather than 6S, and a DJI O4 Lite is added so revision 2 can be flown and assessed properly before any performance testing. Because the powertrain changes class, the revision 1 speed target is void — a new figure will only be published once the motor and propeller combination is fixed and the calculation has been redone.',
-      'The build sequence stays the same as before: a low-cost PLA print to find packaging, assembly and structural weaknesses, then a revised geometry printed again in PLA, then the final ABS-CF build. ABS-CF was chosen because the outdoor durability advantage of the more expensive ASA-CF is not needed here, while avoiding PA-CF’s moisture sensitivity is central to keeping stiffness predictable over time.',
+      'All components for revision 2 have been ordered, an initial CAD state exists and the design is being developed further. The new build replaces the frame, motors, ESC, flight controller and propellers. The GPS module and ELRS receiver carry over from revision 1, while the existing ELRS transmitter also remains in use.',
+      'A symmetrical 7-inch carbon frame forms the load-bearing structure. A custom CAD-designed, 3D-printed body is built around it to improve aerodynamics. This separates the functions clearly: the carbon frame provides stiffness, while the body defines shape, airflow and component packaging.',
+      'The new powertrain combines T-Hobby 2816SE motors rated at 800 KV with 7×13-inch two-blade propellers. The components are rated up to 12S, corresponding to 44.4 volts nominal and 50.4 volts fully charged. A JIJIEFPV F722 12S/120 A FC/ESC stack handles flight control and power regulation, while DJI O4 provides the FPV view.',
+      'The development target is 400 km/h. This figure describes the objective for the second revision only: an achieved top speed will be published only after the new build has passed controlled mechanical, thermal and flight testing and the result has been measured reliably.',
     ],
     bullets: [
-      'Replaced: frame and material, motors, ESC, flight controller, propellers',
-      'Carried over: GPS module and ELRS receiver',
-      'Added: DJI O4 Lite FPV',
-      'Power class: 8S / 12S capable instead of 6S',
+      'Load-bearing structure: symmetrical 7-inch carbon frame',
+      'Aerodynamics: custom CAD-designed, 3D-printed body',
+      'Powertrain: T-Hobby 2816SE · 800 KV · 7×13 inch · two-blade',
+      'Electronics: JIJIEFPV F722 · up to 12S · 120 A · DJI O4 FPV',
+      'Carried over: GPS module, ELRS receiver and ELRS transmitter',
     ],
   },
   {
     title: 'Commercial engineering',
     paragraphs: [
       'Revision 1 was planned against a €700 budget and came in at approximately €424 of documented direct expenditure, including the transmitter, around 1.4 kg of development material and €105 of DJI O4 FPV hardware. Excluding that FPV hardware, revision 1 cost approximately €319.',
-      'Replacing almost the entire system in revision 2 is the expensive decision on this project, and it was a deliberate one. Revision 1 was cheap enough to treat as a learning platform: it answered what the structure, cooling and mass distribution needed to look like, and those answers pointed past what a 6S system and a patched frame could deliver. Carrying the old components forward would have preserved roughly €300 of hardware while capping the result.',
+      'Replacing most components in revision 2 is a deliberate technical and commercial decision. Revision 1 served as a learning platform and showed how structure, cooling and mass distribution need to change. Reusing most of the 6S hardware would have reduced short-term cost, but it would also have constrained the new power class and the structural improvements.',
     ],
     table: {
       headers: ['Decision', 'Economic reasoning', 'Technical consequence'],
@@ -152,8 +154,8 @@ const sections = [
         ['Motors, GPS and material', 'Selected for sufficient performance without paying for unused capability', 'Meet current prototype requirements'],
         ['Flight controller and ESC', 'Higher spend on the central, reliability-critical electronics', '55 A stack selected instead of an unbranded alternative'],
         ['Custom printed frame', 'No available frame matched the intended geometry', 'Fast design changes and learning, at the cost of 10–15 development prints'],
-        ['PLA before ABS-CF', 'Low-cost validation before the final material', 'Assembly and structural weaknesses corrected before the expensive print'],
-        ['New powertrain instead of reuse', 'Accepts writing off revision 1 electronics rather than capping revision 2', 'Moves from 6S to an 8S/12S-capable system; GPS and receiver are the only parts carried over'],
+        ['Carbon frame plus custom body', 'Load-bearing stiffness and adaptable aerodynamics are solved separately', 'Proven structural format combined with a custom outer shape'],
+        ['New powertrain instead of reuse', 'Additional cost is accepted in favour of the new power class', 'System rated up to 12S; only GPS, ELRS receiver and transmitter carry over'],
       ],
     },
   },
@@ -170,10 +172,10 @@ const limitations = {
   intro:
     'Revision 1 is a prototype, and several things are deliberately not yet claimed. These are the open points before any performance figures get published.',
   items: [
-    'Speed: the ~170 km/h figure was a design target for the revision 1 powertrain and was never validated by simulation or measurement. It does not apply to revision 2, whose target will be recalculated once the new motor and propeller combination is fixed. No top-speed figure is claimed for either revision.',
+    'Speed: the ~170 km/h figure for revision 1 was an unverified design target. The new 400 km/h development target for revision 2 has likewise not been achieved or confirmed by measurement. No top speed is claimed for either revision.',
     'Flight data: flight time and verified take-off mass have not been measured under defined conditions.',
-    'Component selection: the revision 2 motors, ESC, flight controller and propellers are chosen but not yet published here, and none of them have been tested in the airframe.',
-    'Material: ABS-CF can be lower in stiffness, strength and heat resistance than dry PA-CF depending on the exact grade, so the chosen material and revised geometry must be validated before high-load testing.',
+    'Component selection: the primary components for revision 2 have been ordered but have not yet been tested together in the new airframe.',
+    'Structure and aerodynamics: the carbon frame and 3D-printed body still need to be validated together for stiffness, resonance, thermal management and load capacity.',
     'Costs: printer depreciation and unrecorded small consumables are not included in the €424 figure, and the revision 2 component budget is not yet fixed.',
     'Safety: revision 1 does not demonstrate safe operation at the intended speed. Measured speed, flight time and take-off mass will be published only after revision 2 has passed controlled mechanical, thermal and flight testing.',
   ],
@@ -183,7 +185,7 @@ const limitations = {
 <BaseLayout
   lang="en"
   title="Performance-Oriented Drone Prototype | Raphael Erwig"
-  description="Case study: custom CAD, additive manufacturing, flight testing and cost-aware revision of a self-developed drone prototype."
+  description="Case study on the iterative development of a flight-capable drone: custom CAD, flight testing and a new 7-inch revision with a carbon frame and components rated up to 12S."
   canonicalPath="/projects/high-speed-drone/"
   enPath="/projects/high-speed-drone/"
   dePath="/de/projekte/high-speed-drohne/"
@@ -199,8 +201,8 @@ const limitations = {
     backLabel="Back to projects"
     eyebrow="Hardware · CAD · Additive Manufacturing"
     title="Iterative development of a performance-oriented drone prototype"
-    lead="A self-designed 6S drone that turns practical flight tests, material behavior, thermal measurements and cost trade-offs into a structured second revision."
-    status="Revision 1 complete · Revision 2 in CAD"
+    lead="A flight-capable first revision whose flight tests, material behaviour and thermal measurements define a new 7-inch revision with components rated up to 12S."
+    status="Revision 1 flight-capable · Revision 2: components ordered, CAD in development"
     heroMedia={{
       src: '/images/drone-hero-dark.webp',
       alt: 'Three-quarter view of the self-developed flight-capable first drone revision on a dark background',

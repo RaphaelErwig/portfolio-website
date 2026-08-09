@@ -22,9 +22,9 @@ const showThermalImage = false;
 const showFlightVideo = false;
 
 const facts = [
-  { label: 'Zeitraum', value: '2026 · Revision 1 abgeschlossen, Revision 2 in CAD' },
+  { label: 'Zeitraum', value: '2026 · Revision 1 flugfähig, Revision 2 in Entwicklung' },
   { label: 'Konstruktionsiterationen', value: '4–5 größere Onshape-Revisionen' },
-  { label: 'Fertigung', value: 'PA-CF · Bambu Lab X1C' },
+  { label: 'Revision 2', value: '7-Zoll-Carbonrahmen · Komponenten bis 12S' },
   { label: 'Dokumentierte Ausgaben', value: '≈ 424 € bei 700 € Budget' },
 ];
 
@@ -32,7 +32,7 @@ const sections = [
   {
     title: 'Ziel und Rahmen',
     paragraphs: [
-      'Ziel war eine kompakte, leistungsorientierte Drohne ohne fertigen Rahmen von der Stange. Revision 1 war auf einen 6S-Antriebsstrang mit einer Zielgeschwindigkeit von rund 170 km/h ausgelegt – hergeleitet aus der Pitch Speed dieser Motor-Propeller-Kombination, abzüglich eines realistischen Abschlags für Schlupf und Luftwiderstand. Der Wert war ein Auslegungsziel, nie ein Messergebnis, und Revision 2 wechselt die Leistungsklasse vollständig, sodass er nicht übertragbar ist.',
+      'Ziel war eine kompakte, leistungsorientierte Drohne ohne fertigen Rahmen von der Stange. Revision 1 war auf einen 6S-Antriebsstrang mit einer Zielgeschwindigkeit von rund 170 km/h ausgelegt – hergeleitet aus der Pitch Speed dieser Motor-Propeller-Kombination und nie als Messergebnis behauptet. Mit der vollständig neuen Auslegung von Revision 2 liegt das Entwicklungsziel bei 400 km/h. Auch dieser Wert ist bislang weder erreicht noch messtechnisch nachgewiesen.',
       'Ich habe das Projekt in rund 200 Stunden eigenständig umgesetzt: Komponentenauswahl, mechanische Konstruktion, additive Fertigung, Löten, Aufbau, Betaflight-Konfiguration, PID-Abstimmung und Flugtests.',
     ],
   },
@@ -101,8 +101,8 @@ const sections = [
       'Jede Erkenntnis führt direkt zu einer Änderung in Revision 2:',
     ],
     bullets: [
-      'Vibration: überarbeitete Geometrie und Wechsel von PA-CF zu ABS-CF',
-      'Kühlung: Lüftungsschlitze und neue Anordnung von Flugcontroller und ESC',
+      'Vibration: Wechsel vom gedruckten PA-CF-Tragrahmen zu einem symmetrischen 7-Zoll-Carbonrahmen',
+      'Kühlung: gezieltere Luftführung und neue Anordnung von Flugcontroller und ESC',
       'Gewichtsverteilung: Akku tiefer positioniert, leichtere Komponenten nach oben',
       'Steuerung: DJI O4 FPV vor allen Leistungstests ergänzt',
     ],
@@ -127,24 +127,26 @@ const sections = [
     ],
   },
   {
-    title: 'Revision 2 · eine andere Maschine, keine geflickte',
+    title: 'Revision 2 · grundlegend neu ausgelegt',
     paragraphs: [
-      'Revision 2 befindet sich in der ersten CAD-Iteration. Die Erkenntnisse aus Revision 1 zeigten auf die Struktur und das Antriebssystem, nicht auf Details der Geometrie. Der zweite Aufbau ist deshalb keine reparierte Fassung des ersten: Rahmen, Motoren, ESC, Flugcontroller und Propeller werden alle ersetzt. Übernommen werden nur das GPS-Modul und der ELRS-Empfänger.',
-      'Das neue Antriebssystem ist für 8S und 12S statt 6S ausgelegt, und eine DJI O4 Lite kommt hinzu, damit Revision 2 vor jedem Leistungstest ordentlich geflogen und beurteilt werden kann. Weil der Antriebsstrang die Klasse wechselt, ist das Geschwindigkeitsziel aus Revision 1 hinfällig – ein neuer Wert wird erst veröffentlicht, wenn die Motor-Propeller-Kombination feststeht und die Rechnung neu gemacht wurde.',
-      'Die Aufbaureihenfolge bleibt: ein günstiger PLA-Druck, um Schwachstellen in Anordnung, Montage und Struktur zu finden, dann eine überarbeitete Geometrie erneut in PLA, dann der finale ABS-CF-Aufbau. ABS-CF wurde gewählt, weil der Vorteil des teureren ASA-CF bei der Außenbeständigkeit hier nicht benötigt wird, während das Vermeiden der Feuchtigkeitsempfindlichkeit von PA-CF entscheidend ist, um die Steifigkeit über die Zeit vorhersagbar zu halten.',
+      'Für Revision 2 sind alle Komponenten bestellt, ein erster CAD-Stand liegt vor und die Konstruktion wird weiterentwickelt. Der neue Aufbau ersetzt Rahmen, Motoren, ESC, Flugcontroller und Propeller. Aus Revision 1 werden das GPS-Modul und der ELRS-Empfänger übernommen; auch die vorhandene ELRS-Fernsteuerung bleibt im Einsatz.',
+      'Die tragende Struktur bildet ein symmetrischer 7-Zoll-Carbonrahmen. Darauf wird eine selbst in CAD konstruierte, 3D-gedruckte Verkleidung aufgebaut, um die Aerodynamik zu verbessern. Damit werden die Aufgaben klar getrennt: Der Carbonrahmen liefert Steifigkeit, während die Verkleidung Form, Luftführung und Bauraum bestimmt.',
+      'Der neue Antriebsstrang kombiniert T-Hobby-2816SE-Motoren mit 800 KV und 7×13-Zoll-Zweiblattpropeller. Die Komponenten sind bis 12S ausgelegt, entsprechend 44,4 Volt Nennspannung und 50,4 Volt bei voll geladenem Akku. Ein JIJIEFPV-F722-12S/120A-FC/ESC-Stack übernimmt Flugsteuerung und Leistungsregelung; DJI O4 ergänzt die FPV-Sicht.',
+      'Das Entwicklungsziel liegt bei 400 km/h. Dieser Wert beschreibt ausschließlich die Zielsetzung der zweiten Revision: Eine erreichte Höchstgeschwindigkeit wird erst veröffentlicht, wenn der neue Aufbau kontrollierte mechanische, thermische und flugtechnische Tests sowie eine belastbare Messung bestanden hat.',
     ],
     bullets: [
-      'Ersetzt: Rahmen und Material, Motoren, ESC, Flugcontroller, Propeller',
-      'Übernommen: GPS-Modul und ELRS-Empfänger',
-      'Neu: DJI O4 Lite FPV',
-      'Leistungsklasse: 8S/12S-fähig statt 6S',
+      'Tragstruktur: symmetrischer 7-Zoll-Carbonrahmen',
+      'Aerodynamik: selbst konstruierte, 3D-gedruckte Verkleidung',
+      'Antrieb: T-Hobby 2816SE · 800 KV · 7×13 Zoll · zweiblättrig',
+      'Elektronik: JIJIEFPV F722 · bis 12S · 120 A · DJI O4 FPV',
+      'Übernommen: GPS-Modul, ELRS-Empfänger und ELRS-Fernsteuerung',
     ],
   },
   {
     title: 'Wirtschaftliche Betrachtung',
     paragraphs: [
       'Revision 1 war gegen ein Budget von 700 € geplant und kam auf rund 424 € dokumentierte direkte Ausgaben, einschließlich Fernsteuerung, etwa 1,4 kg Entwicklungsmaterial und 105 € DJI-O4-FPV-Hardware. Ohne diese FPV-Hardware kostete Revision 1 rund 319 €.',
-      'Fast das gesamte System in Revision 2 zu ersetzen ist die teure Entscheidung in diesem Projekt, und sie war bewusst. Revision 1 war günstig genug, um sie als Lernplattform zu behandeln: Sie hat beantwortet, wie Struktur, Kühlung und Massenverteilung aussehen müssen – und diese Antworten wiesen über das hinaus, was ein 6S-System und ein geflickter Rahmen leisten können. Die alten Komponenten mitzunehmen hätte rund 300 € Hardware erhalten und das Ergebnis gedeckelt.',
+      'Die meisten Komponenten in Revision 2 zu ersetzen, ist eine bewusste technische und wirtschaftliche Entscheidung. Revision 1 diente als Lernplattform und zeigte, wie Struktur, Kühlung und Massenverteilung verändert werden müssen. Eine weitgehende Weiterverwendung der 6S-Hardware hätte zwar kurzfristig Kosten gespart, zugleich aber die neue Leistungsklasse und die konstruktiven Verbesserungen begrenzt.',
     ],
     table: {
       headers: ['Entscheidung', 'Wirtschaftliche Begründung', 'Technische Konsequenz'],
@@ -152,8 +154,8 @@ const sections = [
         ['Motoren, GPS und Material', 'Ausgewählt für ausreichende Leistung, ohne ungenutzte Reserven zu bezahlen', 'Erfüllen die aktuellen Prototypanforderungen'],
         ['Flugcontroller und ESC', 'Höhere Ausgabe für die zentrale, zuverlässigkeitskritische Elektronik', '55-A-Stack statt No-Name-Alternative gewählt'],
         ['Eigener gedruckter Rahmen', 'Kein verfügbarer Rahmen passte zur angestrebten Geometrie', 'Schnelle Konstruktionsänderungen, dafür 10–15 Entwicklungsdrucke'],
-        ['PLA vor ABS-CF', 'Günstige Validierung vor dem finalen Material', 'Montage- und Strukturschwächen vor dem teuren Druck korrigiert'],
-        ['Neuer Antriebsstrang statt Weiterverwendung', 'Nimmt die Abschreibung der Revision-1-Elektronik in Kauf, statt Revision 2 zu deckeln', 'Wechsel von 6S auf ein 8S/12S-fähiges System; nur GPS und Empfänger werden übernommen'],
+        ['Carbonrahmen plus eigene Verkleidung', 'Steifigkeit und frei anpassbare Aerodynamik werden getrennt gelöst', 'Tragfähige Standardstruktur mit selbst konstruierter Außenform'],
+        ['Neuer Antriebsstrang statt Weiterverwendung', 'Mehrkosten werden zugunsten der neuen Leistungsklasse akzeptiert', 'Bis 12S ausgelegtes System; nur GPS, ELRS-Empfänger und Fernsteuerung werden übernommen'],
       ],
     },
   },
@@ -170,10 +172,10 @@ const limitations = {
   intro:
     'Revision 1 ist ein Prototyp, und einiges wird bewusst noch nicht behauptet. Das sind die offenen Punkte, bevor Leistungswerte veröffentlicht werden.',
   items: [
-    'Geschwindigkeit: Die rund 170 km/h waren ein Auslegungsziel für den Antriebsstrang von Revision 1 und wurden nie simulativ oder messtechnisch bestätigt. Für Revision 2 gilt der Wert nicht; das Ziel wird neu berechnet, sobald die neue Motor-Propeller-Kombination feststeht. Für keine der beiden Revisionen wird eine Höchstgeschwindigkeit behauptet.',
+    'Geschwindigkeit: Die rund 170 km/h von Revision 1 waren ein unbestätigtes Auslegungsziel. Das neue Entwicklungsziel von 400 km/h für Revision 2 wurde bislang ebenfalls weder erreicht noch messtechnisch bestätigt. Für keine Revision wird eine Höchstgeschwindigkeit behauptet.',
     'Flugdaten: Flugzeit und verifizierte Abflugmasse wurden nicht unter definierten Bedingungen gemessen.',
-    'Komponentenauswahl: Motoren, ESC, Flugcontroller und Propeller für Revision 2 sind gewählt, hier aber noch nicht veröffentlicht, und keines der Teile wurde bisher im Aufbau getestet.',
-    'Material: ABS-CF kann je nach genauer Sorte geringere Steifigkeit, Festigkeit und Wärmebeständigkeit aufweisen als trockenes PA-CF. Material und überarbeitete Geometrie müssen daher vor Tests unter hoher Last validiert werden.',
+    'Komponentenauswahl: Die Hauptkomponenten für Revision 2 sind bestellt, wurden aber noch nicht als Gesamtsystem im neuen Aufbau getestet.',
+    'Struktur und Aerodynamik: Carbonrahmen und 3D-gedruckte Verkleidung müssen als Gesamtsystem noch auf Steifigkeit, Resonanzen, Wärmeabfuhr und Belastbarkeit geprüft werden.',
     'Kosten: Abschreibung des Druckers und nicht erfasste Kleinverbrauchsmaterialien sind in den 424 € nicht enthalten, und das Komponentenbudget für Revision 2 steht noch nicht fest.',
     'Sicherheit: Revision 1 belegt keinen sicheren Betrieb bei der angestrebten Geschwindigkeit. Gemessene Geschwindigkeit, Flugzeit und Abflugmasse werden erst veröffentlicht, wenn Revision 2 kontrollierte mechanische, thermische und flugtechnische Tests bestanden hat.',
   ],
@@ -183,7 +185,7 @@ const limitations = {
 <BaseLayout
   lang="de"
   title="Leistungsorientierter Drohnenprototyp | Raphael Erwig"
-  description="Fallstudie: eigene CAD-Konstruktion, additive Fertigung, Flugtests und kostenbewusste Revision eines selbst entwickelten Drohnenprototyps."
+  description="Fallstudie zur iterativen Entwicklung einer flugfähigen Drohne: eigene CAD-Konstruktion, Flugtests und eine neue 7-Zoll-Revision mit Carbonrahmen und bis 12S ausgelegten Komponenten."
   canonicalPath="/de/projekte/high-speed-drohne/"
   enPath="/projects/high-speed-drone/"
   dePath="/de/projekte/high-speed-drohne/"
@@ -199,8 +201,8 @@ const limitations = {
     backLabel="Zurück zu den Projekten"
     eyebrow="Hardware · CAD · Additive Fertigung"
     title="Iterative Entwicklung eines leistungsorientierten Drohnenprototyps"
-    lead="Eine selbst konstruierte 6S-Drohne, die praktische Flugtests, Materialverhalten, Wärmemessungen und Kostenabwägungen in eine strukturierte zweite Revision überführt."
-    status="Revision 1 abgeschlossen · Revision 2 in CAD"
+    lead="Eine flugfähige, selbst konstruierte erste Revision, deren Flugtests, Materialverhalten und Wärmemessungen die Auslegung einer neuen 7-Zoll-Revision mit bis 12S geeigneten Komponenten bestimmen."
+    status="Revision 1 flugfähig · Revision 2: Komponenten bestellt, CAD in Entwicklung"
     heroMedia={{
       src: '/images/drone-hero-dark.webp',
       alt: 'Dreiviertelansicht des selbst entwickelten flugfähigen Drohnenprototyps vor dunklem Hintergrund',
