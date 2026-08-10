@@ -71,10 +71,10 @@ const {
     <a class="back-link" href={backHref}><span aria-hidden="true">←</span> {backLabel}</a>
 
     <header class="case-study-hero">
-      <p class="eyebrow">{eyebrow}</p>
-      <h1>{title}</h1>
-      <p class="case-study-lead">{lead}</p>
-      <p class="status-pill">{status}</p>
+      <p class="eyebrow" data-reveal>{eyebrow}</p>
+      <h1 data-reveal style="--reveal-delay: 60ms">{title}</h1>
+      <p class="case-study-lead" data-reveal style="--reveal-delay: 120ms">{lead}</p>
+      <p class="status-pill" data-reveal style="--reveal-delay: 180ms">{status}</p>
     </header>
 
     {heroMedia && (
@@ -105,7 +105,7 @@ const {
       </figure>
     )}
 
-    <dl class="fact-grid">
+    <dl class="fact-grid" data-reveal>
       {facts.map((fact) => (
         <div>
           <dt>{fact.label}</dt>
@@ -116,7 +116,7 @@ const {
 
     <div class="case-study-body">
       {sections.map((section) => (
-        <section class="case-study-section">
+        <section class="case-study-section" data-reveal>
           <h2>{section.title}</h2>
           <div>
             {section.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}

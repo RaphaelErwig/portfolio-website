@@ -57,16 +57,16 @@ const email = 'raphael.erwig@icloud.com';
 <main id="main-content">
   <section class:list={['hero', 'container', { 'hero-with-image': heroImage.enabled }]}>
     <div class="hero-content">
-      <p class="eyebrow">{content.hero.eyebrow}</p>
-      <h1>
+      <p class="eyebrow" data-reveal>{content.hero.eyebrow}</p>
+      <h1 data-reveal style="--reveal-delay: 60ms">
         {content.hero.title}{' '}
         <span class="highlight">{content.hero.highlight}</span>
       </h1>
       {content.hero.availability && (
-        <p class="availability">{content.hero.availability}</p>
+        <p class="availability" data-reveal style="--reveal-delay: 120ms">{content.hero.availability}</p>
       )}
-      <p class="intro">{content.hero.intro}</p>
-      <div class="buttons">
+      <p class="intro" data-reveal style="--reveal-delay: 180ms">{content.hero.intro}</p>
+      <div class="buttons" data-reveal style="--reveal-delay: 240ms">
         <a class="button button-primary" href="#projects">{content.hero.primary}</a>
         {cv.enabled ? (
           <a class="button button-secondary" href={cvHref} download>{content.hero.secondary}</a>
@@ -76,7 +76,7 @@ const email = 'raphael.erwig@icloud.com';
       </div>
     </div>
     {heroImage.enabled && (
-      <figure class="hero-figure">
+      <figure class="hero-figure" data-reveal style="--reveal-delay: 200ms">
         <img
           src={heroImage.src}
           alt={lang === 'de' ? heroImage.alt.de : heroImage.alt.en}
@@ -90,7 +90,7 @@ const email = 'raphael.erwig@icloud.com';
   </section>
 
   <section id="projects" class="container">
-    <div class="section-heading">
+    <div class="section-heading" data-reveal>
       <div>
         <p class="section-kicker">{content.projects.kicker}</p>
         <h2>{content.projects.title}</h2>
@@ -98,8 +98,8 @@ const email = 'raphael.erwig@icloud.com';
       <p>{content.projects.lead}</p>
     </div>
     <div class="project-grid">
-      {projects.map((project) => (
-        <article>
+      {projects.map((project, index) => (
+        <article data-reveal style={`--reveal-delay: ${index * 90}ms`}>
           <a class="project-card" href={project.href}>
             {project.image && (
               <figure class:list={['project-media', { 'project-media-contain': project.imageFit === 'contain' }]}>
@@ -136,48 +136,50 @@ const email = 'raphael.erwig@icloud.com';
     </div>
   </section>
 
-  <section id="experience" class="container">
-    <div class="section-heading">
-      <div>
-        <p class="section-kicker">{content.experience.kicker}</p>
-        <h2>{content.experience.title}</h2>
+  <section id="experience" class="band">
+    <div class="container">
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="section-kicker">{content.experience.kicker}</p>
+          <h2>{content.experience.title}</h2>
+        </div>
+        <p>{content.experience.lead}</p>
       </div>
-      <p>{content.experience.lead}</p>
-    </div>
-    <div class="experience-list">
-      {experience.map((item) => (
-        <article class:list={['experience-card', { 'experience-card-compact': item.compact }]}>
-          <div class="experience-summary">
-            <p class="experience-period">{item.period}</p>
-            <h3>{item.role}</h3>
-            <p>{item.area}</p>
-          </div>
-          <div class="experience-details">
-            <div class="experience-company">{item.company}</div>
-            <p>{item.text}</p>
-            {item.highlights.length > 0 && (
-              <ul class="experience-highlights">
-                {item.highlights.map((highlight) => <li>{highlight}</li>)}
-              </ul>
-            )}
-            <div class="tool-list" aria-label={content.experience.toolsLabel}>
-              {item.tools.map((tool) => <span>{tool}</span>)}
+      <div class="experience-list">
+        {experience.map((item, index) => (
+          <article data-reveal style={`--reveal-delay: ${index * 80}ms`} class:list={['experience-card', { 'experience-card-compact': item.compact }]}>
+            <div class="experience-summary">
+              <p class="experience-period">{item.period}</p>
+              <h3>{item.role}</h3>
+              <p>{item.area}</p>
             </div>
-          </div>
-        </article>
-      ))}
+            <div class="experience-details">
+              <div class="experience-company">{item.company}</div>
+              <p>{item.text}</p>
+              {item.highlights.length > 0 && (
+                <ul class="experience-highlights">
+                  {item.highlights.map((highlight) => <li>{highlight}</li>)}
+                </ul>
+              )}
+              <div class="tool-list" aria-label={content.experience.toolsLabel}>
+                {item.tools.map((tool) => <span>{tool}</span>)}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 
   <section id="about" class="container">
-    <div class="section-heading">
+    <div class="section-heading" data-reveal>
       <div>
         <p class="section-kicker">{content.about.kicker}</p>
         <h2>{content.about.title}</h2>
       </div>
       <p>{content.about.lead}</p>
     </div>
-    <div class="about-grid">
+    <div class="about-grid" data-reveal>
       <div>
         {portrait.enabled && (
           <figure class="portrait">
@@ -207,36 +209,38 @@ const email = 'raphael.erwig@icloud.com';
     </div>
   </section>
 
-  <section id="skills" class="container">
-    <div class="section-heading">
-      <div>
-        <p class="section-kicker">{content.skills.kicker}</p>
-        <h2>{content.skills.title}</h2>
+  <section id="skills" class="band">
+    <div class="container">
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="section-kicker">{content.skills.kicker}</p>
+          <h2>{content.skills.title}</h2>
+        </div>
+        <p>{content.skills.lead}</p>
       </div>
-      <p>{content.skills.lead}</p>
-    </div>
-    <div class="skill-groups">
-      {skillGroups.map((group) => (
-        <article class="skill-group">
-          <h3>{group.title}</h3>
-          <div class="skills">
-            {group.skills.map((skill) => <span class="skill">{skill}</span>)}
-          </div>
-          {group.evidence && (
-            <a class="skill-evidence" href={group.evidence.href}>
-              {group.evidence.text}<span aria-hidden="true"> →</span>
-            </a>
-          )}
-        </article>
-      ))}
+      <div class="skill-groups">
+        {skillGroups.map((group, index) => (
+          <article class="skill-group" data-reveal style={`--reveal-delay: ${index * 70}ms`}>
+            <h3>{group.title}</h3>
+            <div class="skills">
+              {group.skills.map((skill) => <span class="skill">{skill}</span>)}
+            </div>
+            {group.evidence && (
+              <a class="skill-evidence" href={group.evidence.href}>
+                {group.evidence.text}<span aria-hidden="true"> →</span>
+              </a>
+            )}
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 
   <section id="contact" class="contact container">
-    <p class="eyebrow">{content.contact.eyebrow}</p>
-    <h2>{content.contact.title}</h2>
-    <p>{content.contact.text}</p>
-    <div class="contact-actions">
+    <p class="eyebrow" data-reveal>{content.contact.eyebrow}</p>
+    <h2 data-reveal style="--reveal-delay: 60ms">{content.contact.title}</h2>
+    <p data-reveal style="--reveal-delay: 120ms">{content.contact.text}</p>
+    <div class="contact-actions" data-reveal style="--reveal-delay: 180ms">
       <a class="button button-primary" href={`mailto:${email}`}>{content.contact.button}</a>
       {cv.enabled && <a class="button button-secondary" href={cvHref} download>{content.contact.cv}</a>}
       <a class="button button-linkedin" href="https://www.linkedin.com/in/raphael-erwig" target="_blank" rel="noopener noreferrer">{content.contact.linkedin}</a>
