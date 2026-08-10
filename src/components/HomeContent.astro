@@ -52,6 +52,8 @@ const { projects, strengths, skillGroups, experience, content } = Astro.props;
 const lang = content.lang ?? 'en';
 const cvHref = lang === 'de' ? cv.de : cv.en;
 const email = 'raphael.erwig@icloud.com';
+const featuredProject = projects[0];
+const featuredLabel = lang === 'de' ? 'Aktuelles Projekt' : 'Featured project';
 ---
 
 <main id="main-content">
@@ -75,24 +77,35 @@ const email = 'raphael.erwig@icloud.com';
         )}
       </div>
     </div>
-    {heroImage.enabled && (
-      <figure class="hero-figure" data-reveal style="--reveal-delay: 200ms">
-        <img
-          src={heroImage.src}
-          alt={lang === 'de' ? heroImage.alt.de : heroImage.alt.en}
-          width={heroImage.width}
-          height={heroImage.height}
-          fetchpriority="high"
-          decoding="async"
-        />
-      </figure>
+    {heroImage.enabled && featuredProject && (
+      <a
+        class="hero-visual"
+        href={featuredProject.href}
+        aria-label={`${featuredLabel}: ${featuredProject.title}`}
+        data-reveal
+        style="--reveal-delay: 200ms"
+      >
+        <figure class="hero-figure">
+          <img
+            src={heroImage.src}
+            alt={lang === 'de' ? heroImage.alt.de : heroImage.alt.en}
+            width={heroImage.width}
+            height={heroImage.height}
+            fetchpriority="high"
+            decoding="async"
+          />
+          <figcaption class="hero-figure-caption">
+            <span class="hero-figure-label">{featuredLabel}</span>
+            <strong>{featuredProject.title}</strong>
+            <span>{featuredProject.metric}<span aria-hidden="true"> · </span>{featuredProject.status}</span>
+          </figcaption>
+        </figure>
+      </a>
     )}
     <a
       class="scroll-cue"
       href="#projects"
       aria-label={content.hero.scrollPrompt}
-      data-reveal
-      style="--reveal-delay: 340ms"
     >
       <span>{content.hero.scrollPrompt}</span>
       <span class="scroll-cue-arrow" aria-hidden="true">↓</span>

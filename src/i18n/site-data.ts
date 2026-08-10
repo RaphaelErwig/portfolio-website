@@ -50,17 +50,9 @@ export const portrait = {
   alt: { en: 'Portrait of Raphael Erwig', de: 'Portraitfoto von Raphael Erwig' },
 };
 
-/**
- * Bild im Hero, rechts neben dem Text. Nur ab 900 px Breite sichtbar —
- * auf dem Handy wuerde es den Text nach unten druecken, und dort sorgt
- * schon der niedrigere Hero dafuer, dass die Projekte hineinlugen.
- *
- * Auf `true` stellen, sobald das gewuenschte Bild unter src liegt.
- * Empfehlung: ein Projektbild, kein Portrait — das Portrait steht bereits
- * im Ueber-mich-Abschnitt und wirkt doppelt.
- */
+/** Projektbeleg im Hero; verlinkt auf der Startseite zur ersten Fallstudie. */
 export const heroImage = {
-  enabled: false,
+  enabled: true,
   src: '/images/drone-hero-dark.webp',
   width: 1400,
   height: 787,
