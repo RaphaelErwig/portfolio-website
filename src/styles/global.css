@@ -1112,21 +1112,6 @@ main > section.band + section {
   justify-content: center;
 }
 
-.contact-email {
-  margin-top: 26px;
-  color: var(--ink-subtle);
-  font-size: 0.94rem;
-}
-
-.contact-email a {
-  color: var(--accent-link);
-}
-
-.contact-email a:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
 /* --------------------------------------------------------------------------
    11. Case study
    -------------------------------------------------------------------------- */
