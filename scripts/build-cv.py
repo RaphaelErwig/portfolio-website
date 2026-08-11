@@ -52,7 +52,7 @@ c.drawString(M, y, 'Raphael Erwig'); y -= 17
 c.setFont('LB', 9.6); c.setFillColorRGB(*ACC)
 c.drawString(M, y, 'INDUSTRIAL ENGINEERING · ELECTRICAL ENGINEERING · PRODUCT DEVELOPMENT'); y -= 15
 c.setFont('L', 9); c.setFillColorRGB(*MUTED)
-c.drawString(M, y, 'raphael.erwig@icloud.com   ·   raphaelerwig.com   ·   linkedin.com/in/raphael-erwig-4557b8263   ·   Düsseldorf, Germany')
+c.drawString(M, y, 'raphael@raphaelerwig.com   ·   raphaelerwig.com   ·   linkedin.com/in/raphael-erwig-4557b8263   ·   Düsseldorf, Germany')
 y -= 8
 c.setStrokeColorRGB(*RULE); c.setLineWidth(0.8); c.line(M, y, W - M, y); y -= 20
 

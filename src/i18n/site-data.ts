@@ -5,7 +5,7 @@ export const owner = {
   postalCode: '40472',
   city: 'Düsseldorf',
   country: { en: 'Germany', de: 'Deutschland' },
-  email: 'raphael.erwig@icloud.com',
+  email: 'raphael@raphaelerwig.com',
   /** Optional. Leave empty to hide the phone row. */
   phone: '',
 };
