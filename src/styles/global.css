@@ -572,6 +572,8 @@ main > section.band + section {
 
 .hero .highlight {
   display: inline-block;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
   background: linear-gradient(
     92deg,
     var(--accent-link) 0%,
