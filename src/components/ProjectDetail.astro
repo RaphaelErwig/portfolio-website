@@ -33,6 +33,15 @@ interface Limitations {
   items: string[];
 }
 
+interface Publication {
+  eyebrow: string;
+  title: string;
+  description: string;
+  meta: string;
+  href: string;
+  linkLabel: string;
+}
+
 interface Props {
   backHref: string;
   backLabel: string;
@@ -43,6 +52,7 @@ interface Props {
   facts: Fact[];
   sections: Section[];
   heroMedia?: Media;
+  publication?: Publication;
   limitations?: Limitations;
   nextLabel: string;
   nextHref: string;
@@ -59,6 +69,7 @@ const {
   facts,
   sections,
   heroMedia,
+  publication,
   limitations,
   nextLabel,
   nextHref,
@@ -103,6 +114,25 @@ const {
         )}
         {heroMedia.caption && <figcaption>{heroMedia.caption}</figcaption>}
       </figure>
+    )}
+
+    {publication && (
+      <aside class="publication-card" aria-labelledby="publication-title" data-reveal>
+        <div>
+          <p class="publication-eyebrow">{publication.eyebrow}</p>
+          <h2 id="publication-title">{publication.title}</h2>
+          <p>{publication.description}</p>
+          <p class="publication-meta">{publication.meta}</p>
+        </div>
+        <a
+          class="publication-link"
+          href={publication.href}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {publication.linkLabel}<span aria-hidden="true"> ↗</span>
+        </a>
+      </aside>
     )}
 
     <dl class="fact-grid" data-reveal>

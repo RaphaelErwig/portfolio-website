@@ -13,6 +13,7 @@ interface Project {
   imageWidth?: number;
   imageHeight?: number;
   imageFit?: 'cover' | 'contain';
+  recognition?: string;
 }
 
 interface Strength {
@@ -140,6 +141,9 @@ const featuredLabel = lang === 'de' ? 'Aktuelles Projekt' : 'Featured project';
                 <span class="project-number">{project.number}</span>
                 <span class="project-category">{project.category}</span>
               </div>
+              {project.recognition && (
+                <p class="project-recognition">{project.recognition}</p>
+              )}
               <div class="project-meta">
                 <span class="project-metric">{project.metric}</span>
                 <span>{project.status}</span>
